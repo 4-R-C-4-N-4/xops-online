@@ -31,6 +31,8 @@
 // ※メニュー内のライセンス文章は mainmenu::CreateOptions() 内で定義されている。
 
 #include "gamemain.h"
+#include "net/session.h"	//[XOPS-ONLINE]
+extern xnet::Session g_netSession;	//[XOPS-ONLINE] net/exports.cpp
 #include "platform/vfs.h"
 
 D3DGraphics d3dg;			//!< 描画クラス
@@ -1909,6 +1911,10 @@ int maingame::Create()
 	Event[1].Reset(TOTAL_EVENTENTRYPOINT_1);
 	Event[2].Reset(TOTAL_EVENTENTRYPOINT_2);
 
+	//[XOPS-ONLINE] an armed host/client session takes over this mission
+	g_netSession.Attach(&ObjMgr, &PointData);
+	if( g_netSession.IsActive() ){ ShowInfo_Debugmode = false; }	//direct-launch debug overlay is for mission testing, not matches
+
 	//プレイヤーの向きを取得
 	ObjMgr.GetPlayerHumanObject()->GetRxRy(&mouse_rx, &mouse_ry);
 
@@ -2214,8 +2220,13 @@ void maingame::InputPlayer(human *myHuman, int mouse_x, int mouse_y, float Mouse
 		}
 		LastPlayerCommand = cmd;
 
+		//[XOPS-ONLINE] clients aim locally and send the command; the host moves and shoots
+		if( (g_netSession.GetRole() == xnet::Session::ROLE_CLIENT)&&g_netSession.IsActive() ){
+			myHuman->SetRxRy(cmd.rx, cmd.ry);
+			g_netSession.ClientSendCommand(cmd);
+		}
 		//弾の発射に成功すれば
-		if( ObjMgr.ApplyHumanCommand(PlayerID, &cmd) == 1 ){
+		else if( ObjMgr.ApplyHumanCommand(PlayerID, &cmd) == 1 ){
 			//スコアに加算
 			MainGameInfo.fire += 1;
 
@@ -2467,7 +2478,14 @@ void maingame::Process()
 	else{
 		cmdF5id = -1;
 	}
+	//[XOPS-ONLINE] host applies peer commands before the tick and replicates after it;
+	//clients apply the newest snapshot and events before their (damage-free) tick
+	bool netHost = g_netSession.IsActive() && (g_netSession.GetRole() == xnet::Session::ROLE_HOST);
+	bool netClient = g_netSession.IsActive() && (g_netSession.GetRole() == xnet::Session::ROLE_CLIENT);
+	if( netHost ){ g_netSession.HostPreTick(); }
+	if( netClient ){ g_netSession.ClientApply(); }
 	ObjMgr.Process(cmdF5id, false, DarkScreenFlag);
+	if( netHost ){ g_netSession.HostPostTick(); }
 
 	//プレイヤーの戦歴を加算
 	ObjMgr.GetHumanShotInfo( ObjMgr.GetPlayerID(), &ontarget, &kill, &headshot);
@@ -2485,7 +2503,7 @@ void maingame::Process()
 		if( ObjMgr.TakeAIInitFlag(i) == true ){ HumanAI[i].Init(); }
 	}
 
-	if( AIstop == false ){
+	if( (AIstop == false)&&(netClient == false) ){	//[XOPS-ONLINE] clients run no AI
 		int PlayerID = ObjMgr.GetPlayerID();
 		for(int i=0; i<MAX_HUMAN; i++){
 			if( (PlayerAI == false)&&(i == PlayerID) ){ continue; }
@@ -2499,7 +2517,7 @@ void maingame::Process()
 	//-----------------------------------
 
 	//ミッションが終了していなければ、
-	if( end_framecnt == 0 ){
+	if( (end_framecnt == 0)&&(g_netSession.IsActive() == false) ){	//[XOPS-ONLINE] deathmatch has no win/lose
 		int check = ObjMgr.CheckGameOverorComplete();
 
 		//ゲームクリアー判定
@@ -2518,7 +2536,7 @@ void maingame::Process()
 	//-----------------------------------
 
 	time = GetTimeMS();
-	if( EventStop == false ){
+	if( (EventStop == false)&&(g_netSession.IsActive() == false) ){	//[XOPS-ONLINE] no mission events in deathmatch
 		//イベント実行
 		for(int i=0; i<TOTAL_EVENTLINE; i++){
 			if( end_framecnt == 0 ){
@@ -4675,6 +4693,8 @@ void maingame::RenderConsole()
 
 void maingame::Destroy()
 {
+	g_netSession.Stop();	//[XOPS-ONLINE] leaving the mission ends the match for this peer
+
 	//ブロックデータ解放
 	d3dg->CleanupMapdata();
 

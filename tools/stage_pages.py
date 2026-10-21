@@ -65,6 +65,15 @@ def stage(build, destination):
     for name in names:
         shutil.copyfile(build / name, destination / name)
     shutil.copyfile(ROOT / 'NOTICE.md', destination / 'NOTICE.md')
+    # XOPS ONLINE: static network modules (allowlisted file types only)
+    allowed = ('.js', '.mjs', '.css', '.html', '.md') 
+    for sub in ('net', 'vendor'):
+        for path in sorted((build / sub).rglob('*')):
+            if path.is_file() and (path.suffix in allowed or path.name.startswith('LICENSE')):
+                target = destination / path.relative_to(build)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(path, target)
+                names.append(str(path.relative_to(build)))
     (destination / '.nojekyll').touch()
     return names
 

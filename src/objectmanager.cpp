@@ -38,6 +38,8 @@ ObjectManager::ObjectManager()
 	for(int i=0; i<MAX_HUMAN; i++){ Human_NetControlled[i] = false; }	//[XOPS-ONLINE]
 	NetPuppet = false;	//[XOPS-ONLINE]
 	ForceHumanSlot = -1;	//[XOPS-ONLINE]
+	NetShotLogCount = 0;	//[XOPS-ONLINE]
+	for(int i=0; i<MAX_HUMAN; i++){ Human_LastAttacker[i] = -1; Human_LastHitHead[i] = false; }	//[XOPS-ONLINE]
 	for(int i=0; i<MAX_HUMAN; i++){ Human_NetMove[i] = 0; }	//[XOPS-ONLINE]
 	for(int i=0; i<MAX_BULLET; i++){ Bullet_LaserBolt[i] = false; }
 	for(int i=0; i<MAX_HUMAN; i++){ StagedPending[i] = false; Human_NeedAIInit[i] = false; }
@@ -969,6 +971,7 @@ void ObjectManager::HitBulletHuman(int HitHuman_id, int Hit_id, float x, float y
 	hp_old = HumanIndex[HitHuman_id].GetHP();
 
 	//人にダメージと衝撃を与える
+	if( (0 <= Shothuman_id)&&(Shothuman_id < MAX_HUMAN) ){ Human_LastAttacker[HitHuman_id] = Shothuman_id; Human_LastHitHead[HitHuman_id] = (Hit_id == 0); }	//[XOPS-ONLINE]
 	if( NetPuppet == false ){	//[XOPS-ONLINE] the host applies damage; clients only show effects
 	if( Hit_id == 0 ){ HumanIndex[HitHuman_id].HitBulletHead(attacks); }
 	if( Hit_id == 1 ){ HumanIndex[HitHuman_id].HitBulletUp(attacks); }
@@ -1146,6 +1149,7 @@ bool ObjectManager::GrenadeExplosion(grenade *in_grenade)
 
 			//ダメージを反映
 			if( NetPuppet == false ){ HumanIndex[i].HitGrenadeExplosion(total_damage); }	//[XOPS-ONLINE]
+			{ int gid; in_grenade->GetParamData(NULL, NULL, &gid, NULL); if( (0 <= gid)&&(gid < MAX_HUMAN) ){ Human_LastAttacker[i] = gid; Human_LastHitHead[i] = false; } }	//[XOPS-ONLINE]
 
 			HumanIndex[i].GetParamData(NULL, NULL, NULL, &HitHuman_TeamID);
 
@@ -2049,6 +2053,33 @@ int ObjectManager::ShotWeapon(int human_id)
 		ry += ErrorRange_y * DegreeToRadian(0.15f);
 	}
 
+	//[XOPS-ONLINE] projectiles, muzzle flash and sound are spawned by SpawnShot
+	//so client worlds can replay a host's shot without ammo or cooldown checks.
+	if( NetShotLogCount < MAX_NETSHOTLOG ){
+		NetShotLog[NetShotLogCount].id = human_id;
+		NetShotLog[NetShotLogCount].weapon = weapon_paramid;
+		NetShotLog[NetShotLogCount].rx = rx;
+		NetShotLog[NetShotLogCount].ry = ry;
+		NetShotLogCount += 1;
+	}
+	return SpawnShot(human_id, weapon_paramid, rx, ry);
+}
+
+//! @brief [XOPS-ONLINE] Spawn the projectiles of one shot (base angles already include aim error)
+//! @return 1 bullet(s), 2 grenade, 0 failure
+int ObjectManager::SpawnShot(int human_id, int weapon_paramid, float rx, float ry)
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id) ){ return 0; }
+	WeaponParameter ParamData;
+	if( GameParamInfo->GetWeapon(weapon_paramid, &ParamData) != 0 ){ return 0; }
+	human *MyHuman = &(HumanIndex[human_id]);
+	float pos_x, pos_y, pos_z;
+	int teamid;
+	MyHuman->GetPosData(&pos_x, &pos_y, &pos_z, NULL);
+	MyHuman->GetParamData(NULL, NULL, NULL, &teamid);
+	bool playerflag = (human_id == Player_HumanID);
+	bool grenadeflag = (weapon_paramid == ID_WEAPON_GRENADE);
+
 	//手榴弾でなければ
 	if( grenadeflag == false ){
 		class bullet* newbullet;
@@ -2818,6 +2849,7 @@ int ObjectManager::RespawnHuman(int human_id, float px, float py, float pz, floa
 	signed short int p4;
 	HumanIndex[human_id].GetParamData(&param, NULL, &p4, &team);
 	RemoveHuman(human_id);
+	Human_LastAttacker[human_id] = -1;
 	return AddHumanIndexAt(human_id, px, py, pz, rx, param, team, WeaponID, p4);
 }
 
@@ -2901,6 +2933,25 @@ int ObjectManager::ApplyNetHumanState(const NetHumanState *in, bool keepView)
 }
 
 //! @brief [XOPS-ONLINE] Puppet worlds: keep replicated humans walking between snapshots
+int ObjectManager::TakeNetShots(int *id, int *weapon, float *rx, float *ry, int max)
+{
+	int n = NetShotLogCount;
+	if( n > max ){ n = max; }
+	for(int i=0; i<n; i++){
+		id[i] = NetShotLog[i].id; weapon[i] = NetShotLog[i].weapon;
+		rx[i] = NetShotLog[i].rx; ry[i] = NetShotLog[i].ry;
+	}
+	NetShotLogCount = 0;
+	return n;
+}
+
+int ObjectManager::GetLastAttacker(int human_id, bool *headshot)
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id) ){ return -1; }
+	if( headshot != NULL ){ *headshot = Human_LastHitHead[human_id]; }
+	return Human_LastAttacker[human_id];
+}
+
 void ObjectManager::ApplyNetPuppetMoves()
 {
 	for(int i=0; i<MAX_HUMAN; i++){

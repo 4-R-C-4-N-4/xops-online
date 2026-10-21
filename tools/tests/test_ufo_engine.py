@@ -16,6 +16,7 @@ class UfoEngineTests(unittest.TestCase):
         names = ("ai collision config d3dgraphics-debugfont datafile debug event gamemain "
                  "gui-object object objectmanager parameter resource scene soundmanager statemachine").split()
         sources += [ROOT / "src" / (name + ".cpp") for name in names]
+        sources += sorted((ROOT / "src/net").glob("*.cpp"))  # XOPS ONLINE session/protocol
         sources += [ROOT / "src/platform/common.cpp", ROOT / "src/platform/input-common.cpp",
                     ROOT / "src/platform/vfs.cpp"]
         sources += [ROOT / "src/platform/stub" / (name + "-stub.cpp")

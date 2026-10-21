@@ -38,6 +38,12 @@ OpenXOPS engine/source downloads (1.080.zip / 1.080-src.zip) are not game data.<
 <li>Keep the ZIP as downloaded; do not extract it.</li>
 <li>Load it below. It layers over the free pack, adds the 58 classic missions and stays in this browser; it is not uploaded.</li>
 </ol></details><br>
+<section id="mp-panel" aria-labelledby="mp-title">
+<h2 id="mp-title">Multiplayer deathmatch (experimental)</h2>
+<p>Host a room and send the link, or join with a code. <em>Same-browser test</em> connects tabs of this browser; <em>Online</em> connects browsers directly (WebRTC; signaling over public Nostr relays).</p>
+<p><label for="mp-map">Map (host picks):</label> <select id="mp-map"><option value="hangar">DM HANGAR</option><option value="field">DM FIELD</option></select></p>
+<div id="mp-lobby"></div>
+</section>
 <label for="archive">Load classic X operations data (optional):</label>
 <input id="archive" type="file" accept=".zip">
 <button id="play" disabled>Loading engine…</button>
@@ -49,6 +55,7 @@ OpenXOPS engine/source downloads (1.080.zip / 1.080-src.zip) are not game data.<
 <p id="status" role="status">Preparing WASM…</p>
 <div id="resume-overlay" role="button" aria-label="Resume game" tabindex="-1"><button id="resume-game" type="button" aria-label="Resume game">Resume game</button></div>
 <div id="stage">
+<div id="net-hud" hidden><ol id="net-scores"></ol><ul id="net-feed"></ul></div>
 <canvas id="canvas" width="640" height="480" tabindex="0" oncontextmenu="event.preventDefault()"></canvas>
 <div class="gamebar"><span>Click game for mouse · Esc releases</span><button id="controls" type="button">Controls</button><button id="fullscreen" type="button">Fullscreen</button></div>
 </div>
@@ -77,7 +84,9 @@ function syncPauseState(){const paused=pauseReasons.size>0;Module.browserPaused=
 // (e.g. the controls dialog) must not resume play while another (e.g. focus
 // loss) is still active. Reset happens on entering pause so nothing queued
 // during the pause can move/fire once the user explicitly resumes.
-function addPauseReason(reason){if(!document.body.classList.contains('playing'))return;if(pauseReasons.has(reason))return;pauseReasons.add(reason);resetGameInput();document.exitPointerLock?.();syncPauseState();}
+function addPauseReason(reason){if(!document.body.classList.contains('playing'))return;
+ // XOPS ONLINE: a match never pauses on focus loss (the world keeps running for everyone)
+ if(window.netMatchActive&&(reason==='blur'||reason==='hidden'))return;if(pauseReasons.has(reason))return;pauseReasons.add(reason);resetGameInput();document.exitPointerLock?.();syncPauseState();}
 function removePauseReason(reason){pauseReasons.delete(reason);syncPauseState();}
 // Focus loss pauses until the player explicitly presses Resume; regaining
 // focus or visibility alone never restarts simulation.
@@ -162,7 +171,7 @@ var Module={
    play.disabled=false;play.textContent='Start game';
    status.textContent=savedArchive?'Saved classic data ready. Click Start game.':'Ready. Click Start game (free data), or load classic data first.'}
 };
-play.onclick=async()=>{
+window.startGame=async(extraArgs=[])=>{
  const file=document.getElementById('archive').files[0];
  play.disabled=true;status.dataset.error='false';
  try{
@@ -187,7 +196,7 @@ play.onclick=async()=>{
    status.textContent=record?'Starting with classic data…':'Starting with free data…';
    document.body.classList.add('playing');fitGame();canvas.focus();
    engineError='';enteredMain=true;
-   const code=Module.callMain(['-Dir','/']);
+   const code=Module.callMain(['-Dir','/'].concat(extraArgs));
    if(engineError||code){reportError(engineError||('Startup failed (exit '+code+'). Reload to retry.'));return;}
    status.textContent='Game running. Click canvas for mouse control.';
  }catch(e){
@@ -195,8 +204,65 @@ play.onclick=async()=>{
    console.error(e);if(!enteredMain)play.disabled=false;
  }
 };
+play.onclick=()=>window.startGame();
 canvas.onclick=()=>{canvas.focus();canvas.requestPointerLock?.();
  if(typeof SDL2!=='undefined'&&SDL2.audioContext)SDL2.audioContext.resume();};
+</script>
+<link rel="stylesheet" href="net/lobby.css">
+<style>
+#stage{position:relative}
+#net-hud{position:absolute;top:8px;right:8px;z-index:5;pointer-events:none;font:12px/1.35 monospace;color:#e8f0e0;text-shadow:1px 1px 0 #000;text-align:right}
+#net-hud ol{list-style:none;margin:0 0 6px;padding:4px 8px;background:rgba(0,0,0,.45)}
+#net-hud li.me{color:#ffd860}
+#net-hud ul{list-style:none;margin:0;padding:0}
+#net-feed li{background:rgba(0,0,0,.35);padding:1px 6px;margin-top:2px}
+</style>
+<script type="module">
+import { mountLobby } from './net/lobby.js';
+import { createTransport } from './net/transport.js';
+import { DM_MAPS, mapIndexById, armEngine, connectEngine, readNetState } from './net/game-net.js';
+const mapSelect=document.getElementById('mp-map');
+let link=null, lobby=null;
+function engineReady(){return typeof Module!=='undefined'&&typeof Module._net_arm_buffer==='function'&&!document.getElementById('play').disabled;}
+async function begin(role,room,name,kind){
+ if(!engineReady()){lobby.setStatus('Engine still loading - try again in a moment.',true);return;}
+ if(link){lobby.setStatus('Already in a match on this page. Reload to leave.',true);return;}
+ let transport;
+ try{transport=createTransport({kind:kind==='loopback'?'loopback':'webrtc',room,role,name});}
+ catch(e){lobby.setStatus('Could not open the connection: '+e.message,true);return;}
+ const start=(mapIndex)=>{
+   const map=DM_MAPS[mapIndex]||DM_MAPS[0];
+   armEngine(Module,role,name);window.netMatchActive=true;
+   lobby.setStatus((role==='host'?'Hosting ':'Joined ')+map.title+' in room '+room+'.');
+   document.getElementById('net-hud').hidden=false;
+   window.startGame([map.mif,'-NoBriefing']);
+ };
+ if(role==='host'){
+   const mapIndex=mapIndexById(mapSelect.value);
+   link=connectEngine(Module,transport,{role,mapIndex});window.netDebug={transport};
+   start(mapIndex);
+ }else{
+   lobby.setStatus('Connecting to room '+room+'... (waiting for the host)');
+   let started=false;
+   link=connectEngine(Module,transport,{role,onMap:(i)=>{if(!started){started=true;start(i);}}});
+   window.netDebug={transport};
+ }
+ transport.onPeerJoin?.(()=>refreshPeers(transport));
+ transport.onPeerLeave?.(()=>refreshPeers(transport));
+}
+function refreshPeers(t){try{lobby.setPeers(t.peers().map(id=>({id,name:'peer '+id,pingMs:null})));}catch(_){}}
+lobby=mountLobby(document.getElementById('mp-lobby'),{
+ onHost:(room,name,kind)=>begin('host',room,name,kind),
+ onJoin:(room,name,kind)=>begin('client',room,name,kind)});
+const scoresEl=document.getElementById('net-scores'),feedEl=document.getElementById('net-feed');
+setInterval(()=>{
+ if(!link)return;
+ const st=readNetState(Module);if(!st)return;
+ const rows=[...st.scores].sort((a,b)=>b.frags-a.frags||a.deaths-b.deaths);
+ scoresEl.replaceChildren(...rows.map(r=>{const li=document.createElement('li');li.textContent=r.name+'  '+r.frags+' / '+r.deaths;if(r.slot===st.local)li.className='me';return li;}));
+ const recent=st.feed.filter(k=>st.tick-k.tick<300).slice(-4);
+ feedEl.replaceChildren(...recent.map(k=>{const li=document.createElement('li');li.textContent=k.killer===k.victim?(k.victimName+' died'):(k.killerName+(k.head?' [HEADSHOT] ':' > ')+k.victimName);return li;}));
+},250);
 </script>
 <script src="__ENGINE_SCRIPT__"></script>
 </html>

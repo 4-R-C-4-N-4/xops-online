@@ -124,7 +124,13 @@ class ObjectManager
 	bool Human_NeedAIInit[MAX_HUMAN];		//!< slot deployed this frame; AI must Init()
 	bool Human_NetControlled[MAX_HUMAN];	//!< [XOPS-ONLINE] driven by a network peer, not AI
 	bool NetPuppet;							//!< [XOPS-ONLINE] client world: hits show effects but never change HP
-	int ForceHumanSlot;						//!< [XOPS-ONLINE] AddHumanIndex uses exactly this slot when >= 0
+	int ForceHumanSlot;
+	struct NetShotRecord { int id; int weapon; float rx; float ry; };
+	#define MAX_NETSHOTLOG 64
+	NetShotRecord NetShotLog[MAX_NETSHOTLOG];	//!< [XOPS-ONLINE] shots fired since the last drain
+	int NetShotLogCount;
+	int Human_LastAttacker[MAX_HUMAN];			//!< [XOPS-ONLINE] last human to damage this one (-1 none)
+	bool Human_LastHitHead[MAX_HUMAN];			//!< [XOPS-ONLINE] that hit was a headshot						//!< [XOPS-ONLINE] AddHumanIndex uses exactly this slot when >= 0
 	int Human_NetMove[MAX_HUMAN];			//!< [XOPS-ONLINE] puppet: replicated move flags re-applied each tick
 	bool Bullet_LaserBolt[MAX_BULLET];		//!< [OpenXOPS-web] laser bolt (types 2-4), hidden for its own shooter in first person
 
@@ -171,6 +177,9 @@ public:
 	bool GetNetHumanState(int human_id, NetHumanState *out);		//[XOPS-ONLINE]
 	int ApplyNetHumanState(const NetHumanState *in, bool keepView);	//[XOPS-ONLINE]
 	void ApplyNetPuppetMoves();										//[XOPS-ONLINE]
+	int SpawnShot(int human_id, int weapon_paramid, float rx, float ry);	//[XOPS-ONLINE]
+	int TakeNetShots(int *id, int *weapon, float *rx, float *ry, int max);	//[XOPS-ONLINE]
+	int GetLastAttacker(int human_id, bool *headshot);				//[XOPS-ONLINE]
 	bool IsBulletHiddenInFirstPerson(int id);					//[OpenXOPS-web]							//[OpenXOPS-web]
 	void Recovery();
 	void SetAddCollisionFlag(bool flag);

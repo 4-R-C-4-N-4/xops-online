@@ -5,6 +5,7 @@
 #undef main
 #include "../../src/gamemain.h"
 #include <cassert>
+#include "net/session.h"
 #include <initializer_list>
 #include <map>
 #include <array>
@@ -382,6 +383,91 @@ int main(int argc, char** argv) {
         assert(!client.GetHumanObject(p2)->GetEnableFlag());
         std::puts("PUPPET DEATH, RESPAWN, REMOVAL OK");
         client.Cleanup(); objects.Cleanup();
+    }
+
+    // [XOPS-ONLINE] Full session over an in-memory "transport" on DM HANGAR:
+    // join, command-driven movement, replicated snapshot, frags, killfeed,
+    // same-slot respawn after 3 s, scores on both sides, leaving.
+    {
+        assert(blocks.LoadFiledata("data/dmhangar/temp.bd1")==0);
+        blocks.CalculationBlockdata(false); collision.InitCollision(&blocks);
+        assert(points.LoadFiledata("data/dmhangar/hangar.pd1")==0);
+        ObjectManager clientWorld;
+        clientWorld.SetClass(&params,&graphics,&resources,&blocks,&points,&collision,&sound,&mif);
+        objects.LoadPointData(); clientWorld.LoadPointData();
+        xnet::Session host, cli;
+        host.ArmHost("HOST"); host.Attach(&objects,&points);
+        cli.ArmClient("ALICE"); cli.Attach(&clientWorld,&points);
+        const int PEER=7;
+        size_t bytesDown=0, snaps=0;
+        auto pump=[&](){
+            xnet::Outgoing o;
+            while(cli.PollOutgoing(&o)) host.OnMessage(PEER,o.bytes.data(),o.bytes.size());
+            while(host.PollOutgoing(&o)){ assert(o.peer==-1||o.peer==PEER); bytesDown+=o.bytes.size();
+                if(xnet::peek_type(o.bytes.data(),o.bytes.size())==(uint8_t)xnet::MsgType::SNAP) snaps++;
+                cli.OnMessage(0,o.bytes.data(),o.bytes.size()); }
+        };
+        auto step=[&](const HumanCommand* c){
+            if(c) cli.ClientSendCommand(*c);
+            pump();
+            host.HostPreTick(); objects.Process(-1,false,false); host.HostPostTick();
+            pump();
+            cli.ClientApply(); clientWorld.Process(-1,false,false);
+        };
+        for(int t=0;t<5;t++) step(nullptr);
+        int me=cli.GetLocalSlot();
+        assert(me>0 && me!=objects.GetPlayerID() && objects.GetNetControlled(me));
+        assert(clientWorld.GetPlayerID()==me && clientWorld.GetNetPuppet());
+        // The client walks forward for 2 s via commands; the host world moves it.
+        float x0,y0,z0; objects.GetHumanObject(me)->GetPosData(&x0,&y0,&z0,NULL);
+        float face; objects.GetHumanObject(me)->GetRxRy(&face,NULL);
+        HumanCommand go; go.held=HCMD_FORWARD; go.pressed=0; go.rx=face; go.ry=0;
+        for(int t=0;t<60;t++) step(&go);
+        float hx,hy,hz,cx,cy,cz;
+        objects.GetHumanObject(me)->GetPosData(&hx,&hy,&hz,NULL);
+        clientWorld.GetHumanObject(me)->GetPosData(&cx,&cy,&cz,NULL);
+        float moved=sqrtf((hx-x0)*(hx-x0)+(hz-z0)*(hz-z0)), drift=sqrtf((hx-cx)*(hx-cx)+(hz-cz)*(hz-cz));
+        std::printf("SESSION client moved %.1f on host; client view off by %.2f; %zu snapshots, %zu bytes down\n",moved,drift,snaps,bytesDown);
+        assert(moved>5.0f && drift<2.0f && snaps>=60);
+        // The host kills the client: frag, death, killfeed, mirrored scores.
+        human* victim=objects.GetHumanObject(me);
+        for(int t=0;t<50;t++) step(nullptr);  // spawn protection over
+        assert(victim->GetInvincibleFlag()==false);
+        float vx,vy,vz; victim->GetPosData(&vx,&vy,&vz,NULL);
+        for(int i=0;i<MAX_BULLET;i++) objects.GetBulletObject(i)->SetEnableFlag(false);
+        bullet* b=objects.GetBulletObject(0);
+        b->SetPosData(vx-20,vy+18.5f,vz,0,0); b->SetParamData(500,1,40,0,objects.GetPlayerID(),1,true); b->SetEnableFlag(true);
+        for(int t=0;t<5;t++) step(nullptr);
+        assert(victim->GetHP()<=0);
+        assert(clientWorld.GetHumanObject(me)->GetHP()<=0);
+        auto frags=[&](const xnet::Session& s,int slot,int* f,int* d){ for(auto& e:s.GetScores()) if(e.used&&e.slot==slot){*f=e.frags;*d=e.deaths;return true;} return false; };
+        int hf=0,hd=0,cf=0,cd=0;
+        for(int t=0;t<31;t++) step(nullptr);
+        assert(frags(host,objects.GetPlayerID(),&hf,&hd) && hf==1);
+        assert(frags(cli,objects.GetPlayerID(),&cf,&cd) && cf==1);
+        assert(frags(cli,me,&cf,&cd) && cd==1);
+        assert(!cli.GetKillFeed().empty() && cli.GetKillFeed().back().victim==me && cli.GetKillFeed().back().headshot);
+        // Same-slot respawn after 3 s, alive on both sides.
+        for(int t=0;t<70;t++) step(nullptr);
+        assert(objects.GetHumanObject(me)->GetHP()>0 && clientWorld.GetHumanObject(me)->GetHP()>0);
+        assert(objects.GetNetControlled(me));
+        std::puts("SESSION FRAG, KILLFEED, SCORES, RESPAWN OK");
+        // Host shots replay on the client as projectiles (no damage there).
+        for(int i=0;i<MAX_BULLET;i++) clientWorld.GetBulletObject(i)->SetEnableFlag(false);
+        { int s; weapon* hw[TOTAL_HAVEWEAPON]; objects.GetPlayerHumanObject()->GetWeapon(&s,hw,NULL,NULL); assert(hw[s]); }
+        HumanCommand fire; fire.held=HCMD_FIRE; fire.pressed=HCMD_FIRE; fire.rx=0; fire.ry=0;
+        objects.ApplyHumanCommand(objects.GetPlayerID(),&fire);
+        step(nullptr);
+        int flying=0; for(int i=0;i<MAX_BULLET;i++) if(clientWorld.GetBulletObject(i)->GetEnableFlag()) flying++;
+        assert(flying>0);
+        std::puts("SESSION SHOT REPLAY OK");
+        // Leaving removes the player everywhere.
+        host.OnPeerLeft(PEER);
+        step(nullptr);
+        assert(!objects.GetHumanObject(me)->GetEnableFlag());
+        std::puts("SESSION LEAVE OK");
+        host.Stop(); cli.Stop();
+        clientWorld.Cleanup(); objects.Cleanup();
     }
 
     // A thrown rock empties the hand: no reserve, slot freed for a laser pickup.
