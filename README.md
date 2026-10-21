@@ -2,8 +2,14 @@
 
 Browser multiplayer deathmatch built on OpenXOPS (BSD) via the OpenXOPS-web
 port. Work in progress: see docs/ONLINE-PLAN.md and PROGRESS.md.
-Play: https://4-r-c-4-n-4.github.io/xops-online/ (single-player works today;
-multiplayer lands phase by phase).
+Play: https://4-r-c-4-n-4.github.io/xops-online/
+
+Multiplayer (experimental): in the "Multiplayer deathmatch" panel, pick a map,
+enter a name and press Host; send the room code (or Copy link) to a friend,
+who enters it and presses Join. "Online (WebRTC)" connects browsers directly
+(signaling over public Nostr relays, no server of ours); "Same-browser test"
+connects two windows of one browser. Keep the host's window visible: browsers
+pause hidden tabs. Players behind strict NATs may not connect yet (no TURN).
 
 Unofficial fan project; not affiliated with the original X operations.
 
