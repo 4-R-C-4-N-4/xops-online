@@ -1,3 +1,14 @@
+# XOPS ONLINE
+
+Browser multiplayer deathmatch built on OpenXOPS (BSD) via the OpenXOPS-web
+port. Work in progress: see docs/ONLINE-PLAN.md and PROGRESS.md.
+Play: https://4-r-c-4-n-4.github.io/xops-online/ (single-player works today;
+multiplayer lands phase by phase).
+
+Unofficial fan project; not affiliated with the original X operations.
+
+---
+
 # OpenXOPS-web (unofficial fork)
 
 A work-in-progress port of OpenXOPS 1.080 to the browser (WebAssembly) and Linux.
