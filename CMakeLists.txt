@@ -47,6 +47,9 @@ set(OPENXOPS_GAME_SOURCES
   ${SRC}/soundmanager.cpp
   ${SRC}/statemachine.cpp
 )
+# XOPS ONLINE network modules
+file(GLOB OPENXOPS_NET_SOURCES CONFIGURE_DEPENDS ${SRC}/net/*.cpp)
+list(APPEND OPENXOPS_GAME_SOURCES ${OPENXOPS_NET_SOURCES})
 
 # Upstream helpers moved out of window.cpp / input.cpp (shared by all backends).
 set(OPENXOPS_COMMON_SOURCES

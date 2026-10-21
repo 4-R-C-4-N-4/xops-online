@@ -8,6 +8,8 @@ if [[ "${OPENXOPS_TEST_HOOKS:-0}" == 1 ]]; then
   sources+=(tests/browser/qa_hooks.cpp)
 fi
 for n in ai collision config d3dgraphics-debugfont datafile debug event gamemain gui-object main object objectmanager parameter resource scene soundmanager statemachine; do sources+=("src/$n.cpp"); done
+# XOPS ONLINE: network modules (protocol, session, exports) are picked up by glob.
+shopt -s nullglob; for f in src/net/*.cpp; do sources+=("$f"); done; shopt -u nullglob
 em++ -std=c++17 -O1 -g2 -Isrc -DGRAPHIC_ENGINE=8 -DINPUT_INTERFACE=3 -DSOUND_ENGINE=3 \
  -DOPENXOPS_PORTABLE_GL -DOPENXOPS_WINDOW_SDL -DOPENXOPS_INPUT_SDL -DOPENXOPS_SOUND_OPENAL -DENABLE_AUTOCREATECONFIG \
  "${sources[@]}" src/platform/common.cpp src/platform/input-common.cpp src/platform/vfs.cpp \
