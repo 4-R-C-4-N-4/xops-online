@@ -2195,117 +2195,32 @@ void maingame::InputPlayer(human *myHuman, int mouse_x, int mouse_y, float Mouse
 		if( mouse_ry < DegreeToRadian(-70) ) mouse_ry = DegreeToRadian(-70);
 
 
-		//プレイヤー（オブジェクト）の向きを設定
-		myHuman->SetRxRy(mouse_rx, mouse_ry);
+		//[XOPS-ONLINE] keyboard/mouse -> HumanCommand -> ObjectManager::ApplyHumanCommand
+		//(network peers drive their humans through the same function)
+		HumanCommand cmd;
+		cmd.held = 0;
+		cmd.pressed = 0;
+		cmd.rx = mouse_rx;
+		cmd.ry = mouse_ry;
+		static const struct { int key; unsigned short bit; } bindings[] = {
+			{KEY_MOVEFORWARD, HCMD_FORWARD}, {KEY_MOVEBACKWARD, HCMD_BACK}, {KEY_MOVELEFT, HCMD_LEFT}, {KEY_MOVERIGHT, HCMD_RIGHT},
+			{KEY_WALK, HCMD_WALK}, {KEY_JUMP, HCMD_JUMP}, {KEY_SHOT, HCMD_FIRE}, {KEY_RELOAD, HCMD_RELOAD},
+			{KEY_SWITCHWEAPON, HCMD_SWITCH}, {KEY_WEAPON1, HCMD_WEAPON1}, {KEY_WEAPON2, HCMD_WEAPON2},
+			{KEY_DROPWEAPON, HCMD_DROP}, {KEY_ZOOMSCOPE, HCMD_SCOPE}, {KEY_SHOTMODE, HCMD_SHOTMODE},
+		};
+		for(unsigned int i=0; i<sizeof(bindings)/sizeof(bindings[0]); i++){
+			if( CheckInputControl(bindings[i].key, 0) ){ cmd.held |= bindings[i].bit; }
+			if( CheckInputControl(bindings[i].key, 1) ){ cmd.pressed |= bindings[i].bit; }
+		}
+		LastPlayerCommand = cmd;
 
+		//弾の発射に成功すれば
+		if( ObjMgr.ApplyHumanCommand(PlayerID, &cmd) == 1 ){
+			//スコアに加算
+			MainGameInfo.fire += 1;
 
-		//前後左右の移動（走り）操作かチェック
-		if( CheckInputControl(KEY_MOVEFORWARD, 0) ){
-			ObjMgr.MoveForward(PlayerID);
-		}
-		else{
-			if( CheckInputControl(KEY_MOVEBACKWARD, 0) ){
-				ObjMgr.MoveBack(PlayerID);
-			}
-		}
-		if( CheckInputControl(KEY_MOVELEFT, 0) ){
-			ObjMgr.MoveLeft(PlayerID);
-		}
-		else{
-			if( CheckInputControl(KEY_MOVERIGHT, 0) ){
-				ObjMgr.MoveRight(PlayerID);
-			}
-		}
-
-		//歩き操作かチェック
-		if( CheckInputControl(KEY_WALK, 0) ){
-			ObjMgr.MoveWalk(PlayerID);
-		}
-
-		//ジャンプ操作かチェック
-		if( CheckInputControl(KEY_JUMP, 1) ){
-			ObjMgr.MoveJump(PlayerID);
-		}
-
-		HumanParameter humandata;
-		int id_param;
-		bool zombie;
-		int keymode;
-
-		//ゾンビかどうか判定
-		myHuman->GetParamData(&id_param, NULL, NULL, NULL);
-		GameParamInfo.GetHuman(id_param, &humandata);
-		if( humandata.type == 2 ){
-			zombie = true;
-		}
-		else{
-			zombie = false;
-		}
-
-		//連射モードを取得
-		if( zombie == true ){
-			keymode = 1;
-		}
-		else if( myHuman->GetWeaponBlazingmode() == false ){
-			keymode = 1;
-		}
-		else{
-			keymode = 0;
-		}
-
-		//発砲操作かチェック
-		if( CheckInputControl(KEY_SHOT, keymode) ){
-
-			if( zombie == false ){
-				//弾の発射に成功すれば
-				if( ObjMgr.ShotWeapon(PlayerID) == 1 ){
-					//スコアに加算
-					MainGameInfo.fire += 1;
-
-					//プレイヤーの向きを取得
-					ObjMgr.GetPlayerHumanObject()->GetRxRy(&mouse_rx, &mouse_ry);
-				}
-			}
-			else{
-				for(int i=0; i<MAX_HUMAN; i++){
-					human *EnemyHuman = ObjMgr.GetHumanObject(i);
-					if( ObjMgr.CheckZombieAttack(myHuman, EnemyHuman) == true ){
-						ObjMgr.HitZombieAttack(myHuman, EnemyHuman);
-					}
-				}
-			}
-
-		}
-
-		//リロード操作かチェック
-		if( CheckInputControl(KEY_RELOAD, 1) ){
-			ObjMgr.ReloadWeapon(PlayerID);
-		}
-
-		//武器の切り替え操作かチェック
-		if( CheckInputControl(KEY_SWITCHWEAPON, 1) ){
-			ObjMgr.ChangeHaveWeapon(PlayerID, -1);
-		}
-		if( CheckInputControl(KEY_WEAPON1, 1) ){
-			ObjMgr.ChangeHaveWeapon(PlayerID, 0);
-		}
-		if( CheckInputControl(KEY_WEAPON2, 1) ){
-			ObjMgr.ChangeHaveWeapon(PlayerID, 1);
-		}
-
-		//連射モード変更操作かチェック
-		if( CheckInputControl(KEY_SHOTMODE, 1) ){
-			ObjMgr.ChangeWeaponID(PlayerID);
-		}
-
-		//武器の廃棄操作かチェック
-		if( CheckInputControl(KEY_DROPWEAPON, 1) ){
-			ObjMgr.DumpWeapon(PlayerID);
-		}
-
-		//スコープ操作かチェック
-		if( CheckInputControl(KEY_ZOOMSCOPE, 1) ){
-			ObjMgr.ChangeScopeMode(PlayerID);
+			//プレイヤーの向きを取得（反動）
+			ObjMgr.GetPlayerHumanObject()->GetRxRy(&mouse_rx, &mouse_ry);
 		}
 
 	}
@@ -2574,6 +2489,7 @@ void maingame::Process()
 		int PlayerID = ObjMgr.GetPlayerID();
 		for(int i=0; i<MAX_HUMAN; i++){
 			if( (PlayerAI == false)&&(i == PlayerID) ){ continue; }
+			if( ObjMgr.GetNetControlled(i) == true ){ continue; }	//[XOPS-ONLINE] driven by a network peer
 			//AIを実行
 			HumanAI[i].Process();
 		}

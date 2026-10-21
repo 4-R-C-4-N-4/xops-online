@@ -77,6 +77,8 @@ typedef struct
 
 //! @brief オブジェクト管理クラス
 //! @details 各オブジェクトの初期化・計算・描画などを行い管理します。
+#include "humancommand.h"	//[XOPS-ONLINE]
+
 class ObjectManager
 {
 	class human *HumanIndex;					//!< 人オブジェクト
@@ -120,6 +122,10 @@ class ObjectManager
 	bool StagedPending[MAX_HUMAN];			//!< not yet deployed
 	int StagedTotal;						//!< number of staged entries
 	bool Human_NeedAIInit[MAX_HUMAN];		//!< slot deployed this frame; AI must Init()
+	bool Human_NetControlled[MAX_HUMAN];	//!< [XOPS-ONLINE] driven by a network peer, not AI
+	bool NetPuppet;							//!< [XOPS-ONLINE] client world: hits show effects but never change HP
+	int ForceHumanSlot;						//!< [XOPS-ONLINE] AddHumanIndex uses exactly this slot when >= 0
+	int Human_NetMove[MAX_HUMAN];			//!< [XOPS-ONLINE] puppet: replicated move flags re-applied each tick
 	bool Bullet_LaserBolt[MAX_BULLET];		//!< [OpenXOPS-web] laser bolt (types 2-4), hidden for its own shooter in first person
 
 	int AddHumanIndex(pointdata data, pointdata infodata, bool RandomFlag);
@@ -154,6 +160,17 @@ public:
 	int CountLivingHostiles();									//[OpenXOPS-web]
 	int DeployStagedGroup(signed short int group);				//[OpenXOPS-web]
 	bool TakeAIInitFlag(int human_id);
+	int ApplyHumanCommand(int human_id, const HumanCommand *cmd);	//[XOPS-ONLINE]
+	void SetNetControlled(int human_id, bool flag);					//[XOPS-ONLINE]
+	bool GetNetControlled(int human_id);							//[XOPS-ONLINE]
+	void SetNetPuppet(bool flag);									//[XOPS-ONLINE]
+	bool GetNetPuppet();											//[XOPS-ONLINE]
+	int AddHumanIndexAt(int slot, float px, float py, float pz, float rx, int CharacterID, int TeamID, int WeaponID[], signed short int param4);	//[XOPS-ONLINE]
+	int RespawnHuman(int human_id, float px, float py, float pz, float rx, int WeaponID[]);	//[XOPS-ONLINE]
+	void RemoveHuman(int human_id);									//[XOPS-ONLINE]
+	bool GetNetHumanState(int human_id, NetHumanState *out);		//[XOPS-ONLINE]
+	int ApplyNetHumanState(const NetHumanState *in, bool keepView);	//[XOPS-ONLINE]
+	void ApplyNetPuppetMoves();										//[XOPS-ONLINE]
 	bool IsBulletHiddenInFirstPerson(int id);					//[OpenXOPS-web]							//[OpenXOPS-web]
 	void Recovery();
 	void SetAddCollisionFlag(bool flag);

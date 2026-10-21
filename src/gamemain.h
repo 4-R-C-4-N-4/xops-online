@@ -65,6 +65,7 @@
  #define H_LAYERLEVEL 3		//!< Select include file.
 #endif
 #include "main.h"
+#include "humancommand.h"	//[XOPS-ONLINE]
 
 #ifdef ENABLE_MENUOPTIONS
  #define OPTIONS_P1_W 340															//!< オプション画面 No.1　幅
@@ -267,6 +268,7 @@ class maingame : public D3Dscene
 	int time_render;				//!< 描画の処理時間
 	GameInfo MainGameInfo;			//!< リザルト用管理クラス
 	bool CheckInputControl(int CheckKey, int mode);
+	HumanCommand LastPlayerCommand;	//!< [XOPS-ONLINE] this tick's local command (sent to the host by clients)
 	void InputPlayer(human *myHuman, int mouse_x, int mouse_y, float MouseSensitivity);
 	void InputViewCamera(int mouse_x, int mouse_y, float MouseSensitivity);
 	void Render3D();

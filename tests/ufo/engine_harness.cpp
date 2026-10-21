@@ -239,6 +239,151 @@ int main(int argc, char** argv) {
     std::puts("COW BODY STOPS LASERS OK");
     objects.Cleanup();
 
+    // [XOPS-ONLINE] HumanCommand seam: a command-driven human moves exactly
+    // like one driven by direct ObjectManager calls; semi-auto fires once
+    // per press, full-auto while held; puppet worlds never apply damage.
+    {
+        objects.LoadPointData();
+        for(int i=0;i<MAX_HUMAN;i++) if(i!=objects.GetPlayerID()) objects.GetHumanObject(i)->SetEnableFlag(false);
+        int lever[2]={23,ID_WEAPON_NONE}, ak[2]={10,ID_WEAPON_NONE};
+        int a=objects.AddHumanIndex(-40,0,140,0,43,0,lever,40,false);
+        int b=objects.AddHumanIndex(40,0,140,0,43,0,lever,41,false);
+        assert(a>=0 && b>=0);
+        // Same human, same start, same tick sequence: once via commands, once direct.
+        auto run=[&](bool viaCommand, float* dx, float* dy, float* dz){
+            human* h=objects.GetHumanObject(a);
+            h->SetPosData(-40,0,140,0); h->SetRxRy(0.7f,0.0f);
+            for(int t=0;t<30;t++) objects.Process(-1,false,false);
+            float x0,y0,z0,x1,y1,z1; h->GetPosData(&x0,&y0,&z0,NULL);
+            HumanCommand c; c.rx=0.7f; c.ry=0.0f;
+            for(int t=0;t<40;t++){
+                c.held = (t<25 ? HCMD_FORWARD : HCMD_BACK) | (t>10 && t<20 ? HCMD_LEFT : 0) | (t>30 ? HCMD_WALK : 0);
+                c.pressed = (t==5 ? HCMD_JUMP : 0);
+                if(viaCommand) objects.ApplyHumanCommand(a,&c);
+                else {
+                    h->SetRxRy(0.7f,0.0f);
+                    if(t<25) objects.MoveForward(a); else objects.MoveBack(a);
+                    if(t>10 && t<20) objects.MoveLeft(a);
+                    if(t>30) objects.MoveWalk(a);
+                    if(t==5) objects.MoveJump(a);
+                }
+                objects.Process(-1,false,false);
+            }
+            for(int t=0;t<30;t++) objects.Process(-1,false,false);
+            h->GetPosData(&x1,&y1,&z1,NULL); *dx=x1-x0; *dy=y1-y0; *dz=z1-z0;
+        };
+        float ax,ay,az,bx,by,bz;
+        run(true,&ax,&ay,&az); run(false,&bx,&by,&bz);
+        std::printf("CMD HUMAN moved (%.3f,%.3f,%.3f) direct (%.3f,%.3f,%.3f)\n",ax,ay,az,bx,by,bz);
+        assert(fabsf(ax-bx)<1e-3f && fabsf(ay-by)<1e-3f && fabsf(az-bz)<1e-3f);
+        assert(fabsf(ax)+fabsf(az)>10.0f);
+        std::puts("COMMAND MOVEMENT MATCHES DIRECT CONTROL OK");
+
+        auto count_shots=[&](int id,int ticks,bool tapOnce){
+            int shots=0; HumanCommand f; f.held=HCMD_FIRE; f.rx=0; f.ry=0;
+            for(int t=0;t<ticks;t++){ f.pressed=(t==0||!tapOnce)?HCMD_FIRE:0; if(!tapOnce) f.pressed=(t%2==0)?HCMD_FIRE:0;
+                if(objects.ApplyHumanCommand(id,&f)==1) shots++; objects.Process(-1,false,false); }
+            return shots;
+        };
+        auto give=[&](int id,int w,int loaded){ assert(objects.CheatNewWeapon(id,w)); int s; weapon* hw[TOTAL_HAVEWEAPON];
+            objects.GetHumanObject(id)->GetWeapon(&s,hw,NULL,NULL); hw[s]->SetParamData(w,loaded,loaded,false); };
+        give(a,23,8);
+        assert(objects.GetHumanObject(a)->GetWeaponBlazingmode()==false);
+        int semi=count_shots(a,60,true);
+        give(b,10,30);
+        assert(objects.GetHumanObject(b)->GetWeaponBlazingmode()==true);
+        int full=count_shots(b,60,true);
+        std::printf("SEMI held 60 ticks: %d shot(s); FULL held 60 ticks: %d shots\n",semi,full);
+        assert(semi==1 && full>5);
+        std::puts("COMMAND FIRE MODES OK");
+
+        objects.SetNetControlled(a,true);
+        assert(objects.GetNetControlled(a) && !objects.GetNetControlled(b) && !objects.GetNetControlled(-1) && !objects.GetNetControlled(MAX_HUMAN));
+        objects.SetNetControlled(a,false);
+
+        // Puppet worlds: a headshot shows effects but never changes HP.
+        auto headshot=[&](bool puppet){
+            objects.SetNetPuppet(puppet);
+            human* t=objects.GetHumanObject(b); t->SetHP(200); t->SetPosData(40,0,140,0);
+            for(int i=0;i<MAX_BULLET;i++) objects.GetBulletObject(i)->SetEnableFlag(false);
+            bullet* s=objects.GetBulletObject(0);
+            s->SetPosData(10,18.5f,140,0,0); s->SetParamData(64,1,40,9,a,0,true); s->SetEnableFlag(true);
+            for(int k=0;k<4;k++) objects.Process(-1,false,false);
+            return t->GetHP();
+        };
+        int real=headshot(false), puppet=headshot(true);
+        objects.SetNetPuppet(false);
+        std::printf("HEADSHOT HP host %d puppet %d\n",real,puppet);
+        assert(real<200 && puppet==200);
+        std::puts("PUPPET WORLD APPLIES NO DAMAGE OK");
+        objects.Cleanup();
+    }
+
+    // [XOPS-ONLINE] Two worlds in one process: a host world and a client
+    // puppet world sharing the map. Replicating NetHumanState each tick keeps
+    // positions, deaths, respawns (same slot) and held weapons in step.
+    {
+        ObjectManager client;
+        client.SetClass(&params,&graphics,&resources,&blocks,&points,&collision,&sound,&mif);
+        objects.LoadPointData(); client.LoadPointData();
+        client.SetNetPuppet(true);
+        int lever[2]={23,ID_WEAPON_NONE}, ak[2]={10,ID_WEAPON_NONE};
+        int p1=objects.AddHumanIndex(-40,0,120,0,43,1,lever,50,false);
+        int p2=objects.AddHumanIndex(40,0,120,0,43,2,ak,51,false);
+        assert(p1>=0 && p2>=0);
+        auto sync=[&](){
+            for(int i=0;i<MAX_HUMAN;i++){
+                NetHumanState s;
+                if(objects.GetNetHumanState(i,&s)) assert(client.ApplyNetHumanState(&s,false)>=0);
+                else if(client.GetHumanObject(i)->GetEnableFlag()) client.RemoveHuman(i);
+            }
+        };
+        auto pos=[&](ObjectManager& w,int id,float* x,float* y,float* z){ w.GetHumanObject(id)->GetPosData(x,y,z,NULL); };
+        HumanCommand run; run.held=HCMD_FORWARD|HCMD_LEFT; run.pressed=0; run.rx=1.1f; run.ry=0;
+        int created=0;
+        for(int t=0;t<60;t++){
+            objects.ApplyHumanCommand(p1,&run);
+            objects.Process(-1,false,false);
+            if(t%2==0){ for(int i=0;i<MAX_HUMAN;i++){ NetHumanState s; if(objects.GetNetHumanState(i,&s)) created+=client.ApplyNetHumanState(&s,false)==1; } }
+            client.ApplyNetPuppetMoves();
+            client.Process(-1,false,false);
+        }
+        sync();
+        float hx,hy,hz,cx,cy,cz;
+        pos(objects,p1,&hx,&hy,&hz); pos(client,p1,&cx,&cy,&cz);
+        std::printf("REPLICA host (%.2f,%.2f,%.2f) client (%.2f,%.2f,%.2f), created %d\n",hx,hy,hz,cx,cy,cz,created);
+        assert(fabsf(hx-cx)<1e-4f && fabsf(hy-cy)<1e-4f && fabsf(hz-cz)<1e-4f);
+        assert(created>=2);
+        NetHumanState cs; assert(client.GetNetHumanState(p2,&cs) && cs.weapon==10 && cs.team==2);
+        // Between snapshots the puppet keeps walking with the host's last move flags.
+        objects.ApplyHumanCommand(p1,&run); objects.Process(-1,false,false); sync();
+        pos(client,p1,&cx,&cy,&cz);
+        client.ApplyNetPuppetMoves(); client.Process(-1,false,false);
+        float ex,ey,ez; pos(client,p1,&ex,&ey,&ez);
+        { NetHumanState hs; objects.GetNetHumanState(p1,&hs); std::printf("EXTRAP move flags %d, moved %.3f\n",hs.move,fabsf(ex-cx)+fabsf(ez-cz)); }
+        assert(fabsf(ex-cx)+fabsf(ez-cz)>0.05f); // accelerates from rest after a snap; smoothing is phase 6
+        std::puts("PUPPET REPLICATES POSITION, WEAPON, TEAM OK");
+
+        // Kill on the host -> dead on the client; the client never kills by itself.
+        objects.GetHumanObject(p2)->SetHP(1);
+        objects.GetHumanObject(p2)->HitBulletHead(500);
+        for(int t=0;t<5;t++){ objects.Process(-1,false,false); sync(); client.Process(-1,false,false); }
+        assert(objects.GetHumanObject(p2)->GetHP()<=0);
+        assert(client.GetHumanObject(p2)->GetHP()<=0);
+        // Respawn in the same slot with a new weapon at a new place.
+        int lev[2]={23,ID_WEAPON_NONE};
+        assert(objects.RespawnHuman(p2,0,0,60,0,lev)==p2);
+        assert(objects.GetHumanObject(p2)->GetHP()>0);
+        sync(); client.Process(-1,false,false);
+        assert(client.GetHumanObject(p2)->GetHP()>0);
+        assert(client.GetNetHumanState(p2,&cs) && cs.weapon==23 && fabsf(cs.z-60)<2.0f);
+        // Leaving players disappear.
+        objects.RemoveHuman(p2); sync();
+        assert(!client.GetHumanObject(p2)->GetEnableFlag());
+        std::puts("PUPPET DEATH, RESPAWN, REMOVAL OK");
+        client.Cleanup(); objects.Cleanup();
+    }
+
     // A thrown rock empties the hand: no reserve, slot freed for a laser pickup.
     objects.LoadPointData();
     int rockonly[2]={27,ID_WEAPON_NONE};

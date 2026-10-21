@@ -35,6 +35,10 @@
 ObjectManager::ObjectManager()
 {
 	StagedTotal = 0;	//[OpenXOPS-web]
+	for(int i=0; i<MAX_HUMAN; i++){ Human_NetControlled[i] = false; }	//[XOPS-ONLINE]
+	NetPuppet = false;	//[XOPS-ONLINE]
+	ForceHumanSlot = -1;	//[XOPS-ONLINE]
+	for(int i=0; i<MAX_HUMAN; i++){ Human_NetMove[i] = 0; }	//[XOPS-ONLINE]
 	for(int i=0; i<MAX_BULLET; i++){ Bullet_LaserBolt[i] = false; }
 	for(int i=0; i<MAX_HUMAN; i++){ StagedPending[i] = false; Human_NeedAIInit[i] = false; }
 	HumanIndex = new human[MAX_HUMAN];
@@ -325,6 +329,7 @@ int ObjectManager::AddHumanIndex(float px, float py, float pz, float rx, int par
 	}
 
 	for(int i=0; i<MAX_HUMAN; i++){
+		if( (ForceHumanSlot >= 0)&&(i != ForceHumanSlot) ){ continue; }	//[XOPS-ONLINE]
 		if( HumanIndex[i].GetEnableFlag() == false ){
 			//初期化する
 			HumanIndex[i].SetPosData(px, py, pz, rx);
@@ -964,9 +969,11 @@ void ObjectManager::HitBulletHuman(int HitHuman_id, int Hit_id, float x, float y
 	hp_old = HumanIndex[HitHuman_id].GetHP();
 
 	//人にダメージと衝撃を与える
+	if( NetPuppet == false ){	//[XOPS-ONLINE] the host applies damage; clients only show effects
 	if( Hit_id == 0 ){ HumanIndex[HitHuman_id].HitBulletHead(attacks); }
 	if( Hit_id == 1 ){ HumanIndex[HitHuman_id].HitBulletUp(attacks); }
 	if( Hit_id == 2 ){ HumanIndex[HitHuman_id].HitBulletLeg(attacks); }
+	}
 	HumanIndex[HitHuman_id].AddPosOrder(brx, 0.0f, 1.0f);
 
 #ifdef ENABLE_BUG_TEAMID
@@ -1138,7 +1145,7 @@ bool ObjectManager::GrenadeExplosion(grenade *in_grenade)
 			hp_old = HumanIndex[i].GetHP();
 
 			//ダメージを反映
-			HumanIndex[i].HitGrenadeExplosion(total_damage);
+			if( NetPuppet == false ){ HumanIndex[i].HitGrenadeExplosion(total_damage); }	//[XOPS-ONLINE]
 
 			HumanIndex[i].GetParamData(NULL, NULL, NULL, &HitHuman_TeamID);
 
@@ -2569,7 +2576,7 @@ void ObjectManager::HitZombieAttack(human* MyHuman, human* EnemyHuman)
 	hp_old = EnemyHuman->GetHP();
 
 	//ダメージなどを計算
-	EnemyHuman->HitZombieAttack();
+	if( NetPuppet == false ){ EnemyHuman->HitZombieAttack(); }	//[XOPS-ONLINE]
 
 #ifdef ENABLE_BUG_TEAMID
 	bool flag = true;
@@ -2701,6 +2708,210 @@ bool ObjectManager::TakeAIInitFlag(int human_id)
 	bool flag = Human_NeedAIInit[human_id];
 	Human_NeedAIInit[human_id] = false;
 	return flag;
+}
+
+//! @brief [XOPS-ONLINE] Apply one tick of player-style control to a human.
+//! @return ShotWeapon() result for this tick (1 bullet, 2 grenade, 0 none)
+//! @attention Same calls, in the same order, as the original keyboard path
+//!            in maingame::InputPlayer, which now builds a HumanCommand.
+int ObjectManager::ApplyHumanCommand(int human_id, const HumanCommand *cmd)
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id)||(cmd == NULL) ){ return 0; }
+	human *myHuman = &(HumanIndex[human_id]);
+	if( myHuman->GetEnableFlag() == false ){ return 0; }
+	if( myHuman->GetHP() <= 0 ){ return 0; }
+
+	int shot = 0;
+	myHuman->SetRxRy(cmd->rx, cmd->ry);
+
+	if( cmd->held & HCMD_FORWARD ){ MoveForward(human_id); }
+	else if( cmd->held & HCMD_BACK ){ MoveBack(human_id); }
+	if( cmd->held & HCMD_LEFT ){ MoveLeft(human_id); }
+	else if( cmd->held & HCMD_RIGHT ){ MoveRight(human_id); }
+	if( cmd->held & HCMD_WALK ){ MoveWalk(human_id); }
+	if( cmd->pressed & HCMD_JUMP ){ MoveJump(human_id); }
+
+	HumanParameter humandata;
+	int id_param;
+	myHuman->GetParamData(&id_param, NULL, NULL, NULL);
+	GameParamInfo->GetHuman(id_param, &humandata);
+	bool zombie = (humandata.type == 2);
+
+	//full-auto weapons fire while held; others fire once per press
+	bool fire;
+	if( (zombie == false)&&(myHuman->GetWeaponBlazingmode() == true) ){ fire = (cmd->held & HCMD_FIRE) != 0; }
+	else{ fire = (cmd->pressed & HCMD_FIRE) != 0; }
+	if( fire ){
+		if( zombie == false ){
+			shot = ShotWeapon(human_id);
+		}
+		else{
+			for(int i=0; i<MAX_HUMAN; i++){
+				human *EnemyHuman = &(HumanIndex[i]);
+				if( CheckZombieAttack(myHuman, EnemyHuman) == true ){
+					HitZombieAttack(myHuman, EnemyHuman);
+				}
+			}
+		}
+	}
+
+	if( cmd->pressed & HCMD_RELOAD ){ ReloadWeapon(human_id); }
+	if( cmd->pressed & HCMD_SWITCH ){ ChangeHaveWeapon(human_id, -1); }
+	if( cmd->pressed & HCMD_WEAPON1 ){ ChangeHaveWeapon(human_id, 0); }
+	if( cmd->pressed & HCMD_WEAPON2 ){ ChangeHaveWeapon(human_id, 1); }
+	if( cmd->pressed & HCMD_SHOTMODE ){ ChangeWeaponID(human_id); }
+	if( cmd->pressed & HCMD_DROP ){ DumpWeapon(human_id); }
+	if( cmd->pressed & HCMD_SCOPE ){ ChangeScopeMode(human_id); }
+	return shot;
+}
+
+void ObjectManager::SetNetControlled(int human_id, bool flag)
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id) ){ return; }
+	Human_NetControlled[human_id] = flag;
+}
+
+bool ObjectManager::GetNetControlled(int human_id)
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id) ){ return false; }
+	return Human_NetControlled[human_id];
+}
+
+void ObjectManager::SetNetPuppet(bool flag){ NetPuppet = flag; }
+bool ObjectManager::GetNetPuppet(){ return NetPuppet; }
+
+//! @brief [XOPS-ONLINE] AddHumanIndex into exactly this slot (clients mirror host slot ids)
+//! @return slot id, or -1 if the slot is in use or the add failed
+int ObjectManager::AddHumanIndexAt(int slot, float px, float py, float pz, float rx, int CharacterID, int TeamID, int WeaponID[], signed short int param4)
+{
+	if( (slot < 0)||(MAX_HUMAN <= slot) ){ return -1; }
+	ForceHumanSlot = slot;
+	int id = AddHumanIndex(px, py, pz, rx, CharacterID, TeamID, WeaponID, param4, false);
+	ForceHumanSlot = -1;
+	return id;
+}
+
+//! @brief [XOPS-ONLINE] Take a human out of the world, releasing the weapons it holds
+void ObjectManager::RemoveHuman(int human_id)
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id) ){ return; }
+	human *h = &(HumanIndex[human_id]);
+	if( h->GetEnableFlag() == true ){
+		int selectweapon;
+		weapon *held[TOTAL_HAVEWEAPON];
+		for(int i=0; i<TOTAL_HAVEWEAPON; i++){ held[i] = NULL; }
+		h->GetWeapon(&selectweapon, held, NULL, NULL);
+		for(int i=0; i<TOTAL_HAVEWEAPON; i++){
+			if( held[i] != NULL ){ held[i]->SetEnableFlag(false); }
+		}
+	}
+	h->SetEnableFlag(false);
+	Human_NetMove[human_id] = 0;
+	Human_FrameTextureRefresh[human_id] = false;
+}
+
+//! @brief [XOPS-ONLINE] Bring a human back in the same slot with full HP and new weapons
+int ObjectManager::RespawnHuman(int human_id, float px, float py, float pz, float rx, int WeaponID[])
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id) ){ return -1; }
+	int param, team;
+	signed short int p4;
+	HumanIndex[human_id].GetParamData(&param, NULL, &p4, &team);
+	RemoveHuman(human_id);
+	return AddHumanIndexAt(human_id, px, py, pz, rx, param, team, WeaponID, p4);
+}
+
+//! @brief [XOPS-ONLINE] Read the replicated state of one human (host side)
+bool ObjectManager::GetNetHumanState(int human_id, NetHumanState *out)
+{
+	if( (human_id < 0)||(MAX_HUMAN <= human_id)||(out == NULL) ){ return false; }
+	human *h = &(HumanIndex[human_id]);
+	if( h->GetEnableFlag() == false ){ return false; }
+	out->id = human_id;
+	h->GetPosData(&out->x, &out->y, &out->z, NULL);
+	h->GetRxRy(&out->rx, &out->ry);
+	out->hp = h->GetHP();
+	out->flags = 0;
+	if( h->GetDeadFlag() == true ){ out->flags |= NETHUMAN_DEAD; }
+	if( h->GetScopeMode() != 0 ){ out->flags |= NETHUMAN_SCOPE; }
+	if( h->GetInvincibleFlag() == true ){ out->flags |= NETHUMAN_INVINCIBLE; }
+	signed short int p4;
+	h->GetParamData(&out->param, NULL, &p4, &out->team);
+	int selectweapon;
+	weapon *held[TOTAL_HAVEWEAPON];
+	for(int i=0; i<TOTAL_HAVEWEAPON; i++){ held[i] = NULL; }
+	h->GetWeapon(&selectweapon, held, NULL, NULL);
+	out->weapon = NETHUMAN_NOWEAPON;
+	if( held[selectweapon] != NULL ){ held[selectweapon]->GetParamData(&out->weapon, NULL, NULL); }
+	out->move = h->GetMoveFlag(false);
+	return true;
+}
+
+//! @brief [XOPS-ONLINE] Apply replicated state to a puppet world (client side)
+//! @param keepView true for the local player: its own aim is not overwritten
+//! @return 1 if the human was created or respawned in its slot, 0 if updated, -1 on error
+int ObjectManager::ApplyNetHumanState(const NetHumanState *in, bool keepView)
+{
+	if( (in == NULL)||(in->id < 0)||(MAX_HUMAN <= in->id) ){ return -1; }
+	human *h = &(HumanIndex[in->id]);
+	int created = 0;
+	bool alive = (in->hp > 0)&&((in->flags & NETHUMAN_DEAD) == 0);
+
+	int param = -1, team = 0;
+	if( h->GetEnableFlag() == true ){ h->GetParamData(&param, NULL, NULL, &team); }
+	bool respawned = alive && (h->GetEnableFlag() == true) && (h->GetHP() <= 0);
+	if( (h->GetEnableFlag() == false)||(param != in->param)||(team != in->team)||respawned ){
+		RemoveHuman(in->id);
+		int weapons[TOTAL_HAVEWEAPON];
+		for(int i=0; i<TOTAL_HAVEWEAPON; i++){ weapons[i] = ID_WEAPON_NONE; }
+		if( in->weapon != NETHUMAN_NOWEAPON ){ weapons[0] = in->weapon; }
+		if( AddHumanIndexAt(in->id, in->x, in->y, in->z, in->rx, in->param, in->team, weapons, 0) != in->id ){ return -1; }
+		created = 1;
+	}
+
+	float ox, oy, oz, orx, ory;
+	h->GetPosData(&ox, &oy, &oz, &orx);
+	h->GetRxRy(&orx, &ory);
+	if( keepView == true ){
+		h->SetPosData(in->x, in->y, in->z, orx);
+		h->SetRxRy(orx, ory);
+	}
+	else{
+		h->SetPosData(in->x, in->y, in->z, in->rx);
+		h->SetRxRy(in->rx, in->ry);
+	}
+
+	if( alive == false ){
+		if( h->GetHP() > 0 ){ h->SetHP(0); }	//the engine plays the death on its next tick
+	}
+	else{
+		h->SetHP(in->hp);
+		//keep the held weapon's model in step with the host
+		int selectweapon;
+		weapon *held[TOTAL_HAVEWEAPON];
+		for(int i=0; i<TOTAL_HAVEWEAPON; i++){ held[i] = NULL; }
+		h->GetWeapon(&selectweapon, held, NULL, NULL);
+		int current = NETHUMAN_NOWEAPON;
+		if( held[selectweapon] != NULL ){ held[selectweapon]->GetParamData(&current, NULL, NULL); }
+		if( (in->weapon != current)&&(in->weapon != NETHUMAN_NOWEAPON) ){ CheatNewWeapon(in->id, in->weapon); }
+	}
+	h->SetInvincibleFlag( (in->flags & NETHUMAN_INVINCIBLE) != 0 );
+	Human_NetMove[in->id] = alive ? in->move : 0;
+	return created;
+}
+
+//! @brief [XOPS-ONLINE] Puppet worlds: keep replicated humans walking between snapshots
+void ObjectManager::ApplyNetPuppetMoves()
+{
+	for(int i=0; i<MAX_HUMAN; i++){
+		int m = Human_NetMove[i];
+		if( (m == 0)||(HumanIndex[i].GetEnableFlag() == false) ){ continue; }
+		if( m & MOVEFLAG_FORWARD ){ HumanIndex[i].SetMoveForward(); }
+		if( m & MOVEFLAG_BACK ){ HumanIndex[i].SetMoveBack(); }
+		if( m & MOVEFLAG_LEFT ){ HumanIndex[i].SetMoveLeft(); }
+		if( m & MOVEFLAG_RIGHT ){ HumanIndex[i].SetMoveRight(); }
+		if( m & MOVEFLAG_WALK ){ HumanIndex[i].SetMoveWalk(); }
+	}
 }
 
 int ObjectManager::CheckGameOverorComplete()
