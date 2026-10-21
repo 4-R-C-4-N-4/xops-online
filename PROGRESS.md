@@ -32,3 +32,11 @@ Forked from OpenXOPS-web at b4d1676 (history kept; its log is docs/UPSTREAM-PROG
 - Known gaps: no client-side prediction (own movement waits one host tick), ammo HUD on clients is not replicated, a hidden host tab stalls the match (browsers throttle background tabs), no bots/match timer yet, WebRTC not yet exercised inside the game.
 - Live (deploy run 39688813518, engine 8228fab618f5ef7b, no QA exports): two browser windows on https://4-r-c-4-n-4.github.io/xops-online/ connected over the WebRTC transport (Trystero/Nostr signaling) in about 1 s; client joined DM FIELD as slot 1; scores mirrored on both HUDs. Both windows ran on one machine, so cross-NAT connectivity is still untested.
 - CI fix: the manifest generator reads the pinned `upstream-1.080` tag; tags were not pushed to the new repo (pushed now).
+
+## Phase 7a — better arenas (in progress)
+User playtest: "the map is bad" (DM HANGAR): too small/cramped, hard to get around; wants more room, verified jump heights, hallways linking up and down, hanging cover on catwalks, Lockout-style levels + fast vertical travel + cover everywhere but not from all angles, and enough maps to play with a friend. Next arena: multi-level alien ship deck.
+- Engine: gravity lifts (pd1 p1=61: radius p2, height p3, exit = rotation): steady climb ~1.2 units/tick, push toward the exit near the top; host/single-player only (puppets follow snapshots). Native test: rises 32 in ~31 ticks, exits along +x.
+- Engine: MAX_BLOCKS 160 -> 400 (bigger arenas; classic data unaffected).
+- `tools/dmcheck.py` + `tests/dm/dmcheck.cpp`: real-engine map gate (standing-spot graph with walk/jump/drop/lift edges, lift physics ride, one-way traps, sight-line fraction, spawn exposure, ambiguous ledge heights, void leaks). Jump limit measured with a step fixture: walking + jump clears 16, not 17.
+- The original DM HANGAR fails the gate exactly as the playtest said: play area 42.6k (the catwalk is cut off from the floor), 87% of pairs see each other, spawns visible from up to 96% of the map. DM FIELD (open field) also fails sight lines (64%).
+- Rules in docs/DM-MAP-GUIDE.md. Workers dispatched: DM HANGAR rebuild, DM SHIPDECK (new), DM SPIRE (new, Lockout-inspired towers + lifts).

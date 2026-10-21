@@ -32,7 +32,7 @@
 #ifndef DATAFILE_H
 #define DATAFILE_H
 
-#define MAX_BLOCKS 160			//!< 最大ブロック数
+#define MAX_BLOCKS 400			//!< 最大ブロック数 [XOPS-ONLINE] 160 -> 400 for bigger arenas
 #define TOTAL_BLOCKTEXTURE 10	//!< 合計テクスチャ数
 
 //#define MAX_POINTS 200

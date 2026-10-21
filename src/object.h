@@ -136,6 +136,7 @@ protected:
 	float move_z;				//!< Z軸速度
 	bool move_y_flag;			//!< Y軸移動フラグ
 	int move_y_upper;			//!< Y軸上昇禁止カウンター
+	float LiftSpeed;			//!< [XOPS-ONLINE] gravity lift climb speed for the next tick (0 = none)
 	bool move_y_landing;		//!< 着地フラグ
 	int underblock_id;			//!< 足元のブロックID
 	int underblock_face;		//!< 足元のブロックの面番号
@@ -221,6 +222,8 @@ public:
 	virtual int GetJumpLanding(bool nowdata);
 	virtual void GetUnderBlock(int *id, int *face);
 	virtual void AddPosOrder(float rx, float ry, float speed);
+	virtual void SetLift(float speed){ LiftSpeed = speed; }	//[XOPS-ONLINE] one tick of gravity lift
+	virtual float GetMoveY(){ return move_y; }					//[XOPS-ONLINE]
 	virtual void HitBulletHead(int attacks);
 	virtual void HitBulletUp(int attacks);
 	virtual void HitBulletLeg(int attacks);

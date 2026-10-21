@@ -38,6 +38,7 @@ ObjectManager::ObjectManager()
 	for(int i=0; i<MAX_HUMAN; i++){ Human_NetControlled[i] = false; }	//[XOPS-ONLINE]
 	NetPuppet = false;	//[XOPS-ONLINE]
 	ForceHumanSlot = -1;	//[XOPS-ONLINE]
+	LiftCount = 0;	//[XOPS-ONLINE]
 	NetShotLogCount = 0;	//[XOPS-ONLINE]
 	for(int i=0; i<MAX_HUMAN; i++){ Human_LastAttacker[i] = -1; Human_LastHitHead[i] = false; }	//[XOPS-ONLINE]
 	for(int i=0; i<MAX_HUMAN; i++){ Human_NetMove[i] = 0; }	//[XOPS-ONLINE]
@@ -1456,6 +1457,19 @@ void ObjectManager::LoadPointData()
 {
 	AddCollisionFlag = false;
 	Player_HumanID = 0;
+
+	//[XOPS-ONLINE] gravity lifts: p1=61, x/y/z = column foot, r = exit direction,
+	//p2 = radius, p3 = height (top = y + p3). Unknown to classic data.
+	LiftCount = 0;
+	for(int i=0; i<PointData->GetTotaldatas(); i++){
+		pointdata lp;
+		if( PointData->Getdata(&lp, i) != 0 ){ continue; }
+		if( (lp.p1 != POINT_P1TYPE_GRAVITYLIFT)||(LiftCount >= MAX_GRAVITYLIFT) ){ continue; }
+		if( (lp.p2 <= 0)||(lp.p3 <= 0) ){ continue; }
+		Lifts[LiftCount].x = lp.x; Lifts[LiftCount].y = lp.y; Lifts[LiftCount].z = lp.z; Lifts[LiftCount].r = lp.r;
+		Lifts[LiftCount].radius = (float)lp.p2; Lifts[LiftCount].height = (float)lp.p3;
+		LiftCount += 1;
+	}
 
 	//[OpenXOPS-web] reset staged humans
 	StagedTotal = 0;
@@ -2952,6 +2966,40 @@ int ObjectManager::GetLastAttacker(int human_id, bool *headshot)
 	return Human_LastAttacker[human_id];
 }
 
+int ObjectManager::GetGravityLiftCount(){ return LiftCount; }
+
+bool ObjectManager::AddGravityLift(float x, float y, float z, float r, float radius, float height)
+{
+	if( (LiftCount >= MAX_GRAVITYLIFT)||(radius <= 0.0f)||(height <= 0.0f) ){ return false; }
+	GravityLift g = { x, y, z, r, radius, height };
+	Lifts[LiftCount++] = g;
+	return true;
+}
+
+//! @brief [XOPS-ONLINE] Gravity lifts: anyone standing in a column rises
+//! steadily to its top and is pushed off toward the lift's exit direction.
+void ObjectManager::ProcessGravityLifts()
+{
+	for(int l=0; l<LiftCount; l++){
+		const GravityLift &g = Lifts[l];
+		float top = g.y + g.height;
+		//exit direction uses the point rotation convention (sin r, cos r);
+		//AddPosOrder takes a math angle (cos a, sin a)
+		float exitangle = (float)M_PI/2 - g.r;
+		for(int i=0; i<MAX_HUMAN; i++){
+			human *h = &(HumanIndex[i]);
+			if( (h->GetEnableFlag() == false)||(h->GetHP() <= 0) ){ continue; }
+			float x, y, z;
+			h->GetPosData(&x, &y, &z, NULL);
+			float dx = x - g.x, dz = z - g.z;
+			if( dx*dx + dz*dz > g.radius*g.radius ){ continue; }
+			if( (y < g.y - 2.0f)||(y > top + 8.0f) ){ continue; }
+			if( y < top ){ h->SetLift(GRAVITYLIFT_SPEED); }
+			if( y > top - 6.0f ){ h->AddPosOrder(exitangle, 0.0f, GRAVITYLIFT_EXITPUSH); }
+		}
+	}
+}
+
 void ObjectManager::ApplyNetPuppetMoves()
 {
 	for(int i=0; i<MAX_HUMAN; i++){
@@ -3123,6 +3171,10 @@ int ObjectManager::Process(int cmdF5id, bool demomode, bool screen)
 		Human_kill[i] = 0;
 		Human_headshot[i] = 0;
 	}
+
+	//[XOPS-ONLINE] lifts act before humans move (host/single-player only:
+	//puppet worlds take positions from the host)
+	if( NetPuppet == false ){ ProcessGravityLifts(); }
 
 	//人オブジェクトの処理
 	for(int i=0; i<MAX_HUMAN; i++){

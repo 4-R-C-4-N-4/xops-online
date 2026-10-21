@@ -171,6 +171,7 @@ human::human(class ParameterInfo *in_Param, float x, float y, float z, float rx,
 	move_y_flag = false;
 	move_y_upper = 0;
 	move_y_landing = false;
+	LiftSpeed = 0.0f;	//[XOPS-ONLINE]
 	underblock_id = -1;
 	underblock_face = -1;
 	rotation_x = rx;
@@ -259,6 +260,7 @@ void human::SetParamData(int id_param, int dataid, signed short int p4, int team
 		move_y_flag = false;
 		move_y_upper = 0;
 		move_y_landing = false;
+		LiftSpeed = 0.0f;	//[XOPS-ONLINE]
 		underblock_id = -1;
 		underblock_face = -1;
 		rotation_y = 0.0f;
@@ -1868,6 +1870,13 @@ void human::CollisionMap(class Collision *CollD, class BlockDataInterface *inblo
 				}
 			}
 		}
+	}
+
+	//[XOPS-ONLINE] gravity lift: hold a steady climb while inside a lift column
+	if( LiftSpeed > 0.0f ){
+		if( move_y < LiftSpeed ){ move_y = LiftSpeed; }
+		move_y_landing = false;
+		LiftSpeed = 0.0f;
 	}
 
 	//移動ベクトル再算出

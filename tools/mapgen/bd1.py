@@ -72,7 +72,7 @@ from dataclasses import dataclass, field
 from typing import List, Sequence, Tuple
 
 TOTAL_BLOCKTEXTURE = 10       # datafile.h:36
-MAX_BLOCKS = 160              # datafile.h:35
+MAX_BLOCKS = 400              # datafile.h:35 (XOPS ONLINE raised 160 -> 400)
 TEXNAME_FIELD_LEN = 31        # datafile.cpp:129 (fread(..., 1, 31, fp))
 TEXNAME_MAX_CHARS = TEXNAME_FIELD_LEN - 1  # must leave room for the NUL
 

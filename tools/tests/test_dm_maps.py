@@ -63,7 +63,7 @@ class LimitsTests(unittest.TestCase):
             with self.subTest(name=name):
                 doc = json.loads(cfg["json_src"].read_text())
                 blocks = bd1.loads(cfg["bd1"].read_bytes()).blocks
-                self.assertLessEqual(len(blocks), 160)
+                self.assertLessEqual(len(blocks), 400)
                 self.assertLessEqual(len(doc["textures"]), 10)
 
 

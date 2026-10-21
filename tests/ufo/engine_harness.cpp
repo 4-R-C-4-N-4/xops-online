@@ -385,6 +385,34 @@ int main(int argc, char** argv) {
         client.Cleanup(); objects.Cleanup();
     }
 
+    // [XOPS-ONLINE] Movement envelope for arena design (UFO FIELD flat ground):
+    // measured jump height, and a gravity lift that carries a player up and
+    // pushes them toward its exit direction.
+    {
+        assert(blocks.LoadFiledata("data/ufofield/temp.bd1")==0);
+        blocks.CalculationBlockdata(false); collision.InitCollision(&blocks);
+        assert(points.LoadFiledata("data/ufofield/ufo.pd1")==0);
+        objects.LoadPointData();
+        for(int i=0;i<MAX_HUMAN;i++) if(i!=objects.GetPlayerID()) objects.GetHumanObject(i)->SetEnableFlag(false);
+        human* p=objects.GetPlayerHumanObject();
+        p->SetPosData(60,0,100,0); for(int t=0;t<30;t++) objects.Process(-1,false,false);
+        float x,y0,z,y; p->GetPosData(&x,&y0,&z,NULL);
+        float peak=y0; int air=0;
+        objects.MoveJump(objects.GetPlayerID());
+        for(int t=0;t<90;t++){ objects.Process(-1,false,false); p->GetPosData(&x,&y,&z,NULL); if(y>peak) peak=y; if(y>y0+0.05f) air++; }
+        std::printf("JUMP HEIGHT %.2f units, airborne %d ticks\n",peak-y0,air);
+        assert(peak-y0>4.0f && peak-y0<20.0f);
+        // Gravity lift: radius 6, height 32, exit toward +x (r = pi/2).
+        assert(objects.AddGravityLift(0,0,100,(float)M_PI/2,6,32));
+        p->SetPosData(0,0,100,0); for(int t=0;t<3;t++) objects.Process(-1,false,false);
+        float top=0; int reach=-1; float xs,zs; p->GetPosData(&xs,&y,&zs,NULL);
+        for(int t=0;t<150;t++){ objects.Process(-1,false,false); p->GetPosData(&x,&y,&z,NULL); if(y>top) top=y; if(reach<0&&y>=30) reach=t; }
+        std::printf("LIFT top %.1f reached 30 after %d ticks, pushed %.1f toward +x (z drift %.1f)\n",top,reach,x-xs,z-zs);
+        assert(top>=30.0f && top<=40.0f && reach>0 && reach<60 && x-xs>6.0f && fabsf(z-zs)<2.0f);
+        std::puts("GRAVITY LIFT CARRIES AND EXITS OK");
+        objects.Cleanup();
+    }
+
     // [XOPS-ONLINE] Full session over an in-memory "transport" on DM HANGAR:
     // join, command-driven movement, replicated snapshot, frags, killfeed,
     // same-slot respawn after 3 s, scores on both sides, leaving.

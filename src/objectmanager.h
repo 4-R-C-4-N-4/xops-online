@@ -79,6 +79,10 @@ typedef struct
 //! @details 各オブジェクトの初期化・計算・描画などを行い管理します。
 #include "humancommand.h"	//[XOPS-ONLINE]
 
+#define POINT_P1TYPE_GRAVITYLIFT 61		//!< [XOPS-ONLINE] gravity lift column (p2 radius, p3 height)
+#define GRAVITYLIFT_SPEED 1.0f			//!< [XOPS-ONLINE] upward speed held inside a lift (jump is 2.2; ~1.2 units/tick)
+#define GRAVITYLIFT_EXITPUSH 0.5f		//!< [XOPS-ONLINE] per-tick push toward the exit near the top
+
 class ObjectManager
 {
 	class human *HumanIndex;					//!< 人オブジェクト
@@ -125,6 +129,11 @@ class ObjectManager
 	bool Human_NetControlled[MAX_HUMAN];	//!< [XOPS-ONLINE] driven by a network peer, not AI
 	bool NetPuppet;							//!< [XOPS-ONLINE] client world: hits show effects but never change HP
 	int ForceHumanSlot;
+	struct GravityLift { float x, y, z, r, radius, height; };
+	#define MAX_GRAVITYLIFT 16
+	GravityLift Lifts[MAX_GRAVITYLIFT];		//!< [XOPS-ONLINE] point type 61 lift columns
+	int LiftCount;
+	void ProcessGravityLifts();
 	struct NetShotRecord { int id; int weapon; float rx; float ry; };
 	#define MAX_NETSHOTLOG 64
 	NetShotRecord NetShotLog[MAX_NETSHOTLOG];	//!< [XOPS-ONLINE] shots fired since the last drain
@@ -180,6 +189,8 @@ public:
 	int SpawnShot(int human_id, int weapon_paramid, float rx, float ry);	//[XOPS-ONLINE]
 	int TakeNetShots(int *id, int *weapon, float *rx, float *ry, int max);	//[XOPS-ONLINE]
 	int GetLastAttacker(int human_id, bool *headshot);				//[XOPS-ONLINE]
+	int GetGravityLiftCount();										//[XOPS-ONLINE]
+	bool AddGravityLift(float x, float y, float z, float r, float radius, float height);	//[XOPS-ONLINE]
 	bool IsBulletHiddenInFirstPerson(int id);					//[OpenXOPS-web]							//[OpenXOPS-web]
 	void Recovery();
 	void SetAddCollisionFlag(bool flag);
