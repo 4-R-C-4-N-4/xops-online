@@ -1,0 +1,1404 @@
+{
+  "schema": 1,
+  "textures": [
+    "grass.bmp",
+    "dirt.bmp",
+    "hay.bmp",
+    "fence.bmp",
+    "barn_red.bmp",
+    "barn_roof.bmp",
+    "trim_white.bmp",
+    "ufo_hull.bmp",
+    "ufo_light.bmp",
+    "ufo_dark.bmp"
+  ],
+  "blocks": [
+    {
+      "comment": "grass field floor",
+      "min": [
+        -240.0,
+        -8.0,
+        -240.0
+      ],
+      "max": [
+        240.0,
+        0.0,
+        240.0
+      ],
+      "texture": "grass.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "fence north",
+      "min": [
+        -240.0,
+        0.0,
+        -248.0
+      ],
+      "max": [
+        240.0,
+        24.0,
+        -240.0
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "fence south",
+      "min": [
+        -240.0,
+        0.0,
+        240.0
+      ],
+      "max": [
+        240.0,
+        24.0,
+        248.0
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "fence east",
+      "min": [
+        240.0,
+        0.0,
+        -248.0
+      ],
+      "max": [
+        248.0,
+        24.0,
+        248.0
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "fence west",
+      "min": [
+        -248.0,
+        0.0,
+        -248.0
+      ],
+      "max": [
+        -240.0,
+        24.0,
+        248.0
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "barn dirt pad",
+      "min": [
+        -100.0,
+        -8.0,
+        -360.0
+      ],
+      "max": [
+        100.0,
+        0.0,
+        -240.0
+      ],
+      "texture": "dirt.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "barn north wall",
+      "min": [
+        -40.0,
+        0.0,
+        -324.0
+      ],
+      "max": [
+        40.0,
+        40.0,
+        -320.0
+      ],
+      "texture": "barn_red.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "barn south wall left",
+      "min": [
+        -40.0,
+        0.0,
+        -280.0
+      ],
+      "max": [
+        -10.0,
+        40.0,
+        -276.0
+      ],
+      "texture": "barn_red.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "barn south wall right",
+      "min": [
+        10.0,
+        0.0,
+        -280.0
+      ],
+      "max": [
+        40.0,
+        40.0,
+        -276.0
+      ],
+      "texture": "barn_red.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "barn big door",
+      "min": [
+        -10.0,
+        0.0,
+        -280.0
+      ],
+      "max": [
+        10.0,
+        32.0,
+        -276.0
+      ],
+      "texture": "barn_roof.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "barn east wall",
+      "min": [
+        36.0,
+        0.0,
+        -324.0
+      ],
+      "max": [
+        40.0,
+        40.0,
+        -276.0
+      ],
+      "texture": "barn_red.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "barn west wall",
+      "min": [
+        -40.0,
+        0.0,
+        -324.0
+      ],
+      "max": [
+        -36.0,
+        40.0,
+        -276.0
+      ],
+      "texture": "barn_red.bmp",
+      "texture_world_units": 16
+    },
+    {
+      "comment": "barn roof",
+      "min": [
+        -44.0,
+        40.0,
+        -328.0
+      ],
+      "max": [
+        44.0,
+        48.0,
+        -272.0
+      ],
+      "texture": "barn_roof.bmp",
+      "texture_world_units": 24
+    },
+    {
+      "comment": "barn trim NW",
+      "min": [
+        -41,
+        0.0,
+        -323.0
+      ],
+      "max": [
+        -37,
+        40.0,
+        -319.0
+      ],
+      "texture": "trim_white.bmp",
+      "texture_world_units": 8
+    },
+    {
+      "comment": "barn trim NE",
+      "min": [
+        37,
+        0.0,
+        -323.0
+      ],
+      "max": [
+        41,
+        40.0,
+        -319.0
+      ],
+      "texture": "trim_white.bmp",
+      "texture_world_units": 8
+    },
+    {
+      "comment": "barn trim SW",
+      "min": [
+        -41,
+        0.0,
+        -281.0
+      ],
+      "max": [
+        -37,
+        40.0,
+        -277.0
+      ],
+      "texture": "trim_white.bmp",
+      "texture_world_units": 8
+    },
+    {
+      "comment": "barn trim SE",
+      "min": [
+        37,
+        0.0,
+        -281.0
+      ],
+      "max": [
+        41,
+        40.0,
+        -277.0
+      ],
+      "texture": "trim_white.bmp",
+      "texture_world_units": 8
+    },
+    {
+      "comment": "ufo leg 0",
+      "min": [
+        -46.0,
+        0.0,
+        -196.0
+      ],
+      "max": [
+        -38.0,
+        18.0,
+        -188.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        2
+      ]
+    },
+    {
+      "comment": "ufo leg 1",
+      "min": [
+        38.0,
+        0.0,
+        -196.0
+      ],
+      "max": [
+        46.0,
+        18.0,
+        -188.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        2
+      ]
+    },
+    {
+      "comment": "ufo leg 2",
+      "min": [
+        38.0,
+        0.0,
+        -112.0
+      ],
+      "max": [
+        46.0,
+        18.0,
+        -104.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        2
+      ]
+    },
+    {
+      "comment": "ufo leg 3",
+      "min": [
+        -46.0,
+        0.0,
+        -112.0
+      ],
+      "max": [
+        -38.0,
+        18.0,
+        -104.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        2
+      ]
+    },
+    {
+      "comment": "ufo lower hull taper",
+      "vertices": [
+        [
+          -55.0,
+          30.0,
+          -205.0
+        ],
+        [
+          55.0,
+          30.0,
+          -205.0
+        ],
+        [
+          55.0,
+          30.0,
+          -95.0
+        ],
+        [
+          -55.0,
+          30.0,
+          -95.0
+        ],
+        [
+          -70.0,
+          18.0,
+          -220.0
+        ],
+        [
+          70.0,
+          18.0,
+          -220.0
+        ],
+        [
+          70.0,
+          18.0,
+          -80.0
+        ],
+        [
+          -70.0,
+          18.0,
+          -80.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "ufo_hull.bmp",
+          "u": [
+            0.0,
+            0.0,
+            4,
+            4
+          ],
+          "v": [
+            0.0,
+            0.0,
+            4,
+            4
+          ]
+        },
+        {
+          "texture": "ufo_hull.bmp",
+          "u": [
+            0.0,
+            0.0,
+            4,
+            4
+          ],
+          "v": [
+            0.0,
+            0.0,
+            4,
+            4
+          ]
+        },
+        {
+          "texture": "ufo_hull.bmp",
+          "u": [
+            0.0,
+            0.0,
+            4,
+            4
+          ],
+          "v": [
+            0.0,
+            0.0,
+            4,
+            4
+          ]
+        },
+        {
+          "texture": "ufo_hull.bmp",
+          "u": [
+            0.0,
+            0.0,
+            4,
+            4
+          ],
+          "v": [
+            0.0,
+            0.0,
+            4,
+            4
+          ]
+        },
+        {
+          "texture": "ufo_hull.bmp",
+          "u": [
+            0.0,
+            0.0,
+            4,
+            4
+          ],
+          "v": [
+            0.0,
+            0.0,
+            4,
+            4
+          ]
+        },
+        {
+          "texture": "ufo_hull.bmp",
+          "u": [
+            0.0,
+            0.0,
+            4,
+            4
+          ],
+          "v": [
+            0.0,
+            0.0,
+            4,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ufo light ring",
+      "vertices": [
+        [
+          -70.0,
+          30.5,
+          -220.0
+        ],
+        [
+          70.0,
+          30.5,
+          -220.0
+        ],
+        [
+          70.0,
+          30.5,
+          -80.0
+        ],
+        [
+          -70.0,
+          30.5,
+          -80.0
+        ],
+        [
+          -73.0,
+          29.0,
+          -223.0
+        ],
+        [
+          73.0,
+          29.0,
+          -223.0
+        ],
+        [
+          73.0,
+          29.0,
+          -77.0
+        ],
+        [
+          -73.0,
+          29.0,
+          -77.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "ufo_light.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_light.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_light.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_light.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_light.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_light.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ufo hatch deck",
+      "min": [
+        -55.0,
+        30.0,
+        -205.0
+      ],
+      "max": [
+        55.0,
+        32.0,
+        -95.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        2,
+        2
+      ]
+    },
+    {
+      "comment": "ufo dome",
+      "vertices": [
+        [
+          -3.0,
+          50.0,
+          -153.0
+        ],
+        [
+          3.0,
+          50.0,
+          -153.0
+        ],
+        [
+          3.0,
+          50.0,
+          -147.0
+        ],
+        [
+          -3.0,
+          50.0,
+          -147.0
+        ],
+        [
+          -25.0,
+          32.0,
+          -175.0
+        ],
+        [
+          25.0,
+          32.0,
+          -175.0
+        ],
+        [
+          25.0,
+          32.0,
+          -125.0
+        ],
+        [
+          -25.0,
+          32.0,
+          -125.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "ufo_dark.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_dark.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_dark.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_dark.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_dark.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        },
+        {
+          "texture": "ufo_dark.bmp",
+          "u": [
+            0.0,
+            0.0,
+            2,
+            2
+          ],
+          "v": [
+            0.0,
+            0.0,
+            2,
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ufo ramp step 0",
+      "min": [
+        -15.0,
+        0.0,
+        -95.0
+      ],
+      "max": [
+        15.0,
+        32.0,
+        -88.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "ufo ramp step 1",
+      "min": [
+        -15.0,
+        0.0,
+        -88.0
+      ],
+      "max": [
+        15.0,
+        28.0,
+        -81.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "ufo ramp step 2",
+      "min": [
+        -15.0,
+        0.0,
+        -81.0
+      ],
+      "max": [
+        15.0,
+        24.0,
+        -74.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "ufo ramp step 3",
+      "min": [
+        -15.0,
+        0.0,
+        -74.0
+      ],
+      "max": [
+        15.0,
+        20.0,
+        -67.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "ufo ramp step 4",
+      "min": [
+        -15.0,
+        0.0,
+        -67.0
+      ],
+      "max": [
+        15.0,
+        16.0,
+        -60.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "ufo ramp step 5",
+      "min": [
+        -15.0,
+        0.0,
+        -60.0
+      ],
+      "max": [
+        15.0,
+        12.0,
+        -53.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "ufo ramp step 6",
+      "min": [
+        -15.0,
+        0.0,
+        -53.0
+      ],
+      "max": [
+        15.0,
+        8.0,
+        -46.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "ufo ramp step 7",
+      "min": [
+        -15.0,
+        0.0,
+        -46.0
+      ],
+      "max": [
+        15.0,
+        4.0,
+        -39.0
+      ],
+      "texture": "ufo_hull.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale full-height cover 0",
+      "min": [
+        -136.0,
+        0,
+        -68.0
+      ],
+      "max": [
+        -104.0,
+        24,
+        -52.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale full-height cover 1",
+      "min": [
+        104.0,
+        0,
+        -68.0
+      ],
+      "max": [
+        136.0,
+        24,
+        -52.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale full-height cover 2",
+      "min": [
+        -166.0,
+        0,
+        32.0
+      ],
+      "max": [
+        -134.0,
+        24,
+        48.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale full-height cover 3",
+      "min": [
+        134.0,
+        0,
+        32.0
+      ],
+      "max": [
+        166.0,
+        24,
+        48.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale single 4",
+      "min": [
+        -24.0,
+        0.0,
+        170.0
+      ],
+      "max": [
+        24.0,
+        24.0,
+        182.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale full-height cover 5",
+      "min": [
+        44.0,
+        0,
+        112.0
+      ],
+      "max": [
+        76.0,
+        24,
+        128.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale stack 0 bottom",
+      "min": [
+        -38.0,
+        0.0,
+        -26.0
+      ],
+      "max": [
+        -22.0,
+        12.0,
+        -14.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale stack 0 top",
+      "min": [
+        -38.0,
+        12.0,
+        -26.0
+      ],
+      "max": [
+        -22.0,
+        24.0,
+        -14.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale stack 1 bottom",
+      "min": [
+        22.0,
+        0.0,
+        -26.0
+      ],
+      "max": [
+        38.0,
+        12.0,
+        -14.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    },
+    {
+      "comment": "hay bale stack 1 top",
+      "min": [
+        22.0,
+        12.0,
+        -26.0
+      ],
+      "max": [
+        38.0,
+        24.0,
+        -14.0
+      ],
+      "texture": "hay.bmp",
+      "uv_scale": [
+        1,
+        1
+      ]
+    }
+  ],
+  "points": [
+    {
+      "type": "small_object",
+      "pos": [
+        -100.0,
+        0.0,
+        60.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 0"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        100.0,
+        0.0,
+        60.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 1"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -140.0,
+        0.0,
+        -10.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 2"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        140.0,
+        0.0,
+        -10.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 3"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -50.0,
+        0.0,
+        170.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 4"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        50.0,
+        0.0,
+        170.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 5"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -20.0,
+        0.0,
+        -100.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 6"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        20.0,
+        0.0,
+        -100.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 7"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -100.0,
+        2.0,
+        120.0
+      ],
+      "rotation": 2.6344941491974563,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 0
+    },
+    {
+      "type": "raw",
+      "pos": [
+        100.0,
+        2.0,
+        120.0
+      ],
+      "rotation": -2.6344941491974563,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 1
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -150.0,
+        2.0,
+        70.0
+      ],
+      "rotation": 2.2848870254070546,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 2
+    },
+    {
+      "type": "raw",
+      "pos": [
+        150.0,
+        2.0,
+        70.0
+      ],
+      "rotation": -2.2848870254070546,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 3
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -100.0,
+        2.0,
+        -20.0
+      ],
+      "rotation": 1.9513027039072615,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 4
+    },
+    {
+      "type": "raw",
+      "pos": [
+        100.0,
+        2.0,
+        -20.0
+      ],
+      "rotation": -1.9513027039072615,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 5
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0.0,
+        2.0,
+        160.0
+      ],
+      "rotation": -3.141592653589793,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 6
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0.0,
+        2.0,
+        60.0
+      ],
+      "rotation": -3.141592653589793,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 7
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -60.0,
+        2.0,
+        -70.0
+      ],
+      "rotation": 1.4056476493802699,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 8
+    },
+    {
+      "type": "raw",
+      "pos": [
+        60.0,
+        2.0,
+        -70.0
+      ],
+      "rotation": -1.4056476493802699,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 9
+    },
+    {
+      "type": "player_spawn",
+      "pos": [
+        0.0,
+        2.0,
+        200.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 43
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -100.0,
+        2.0,
+        60.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 23,
+      "ammo": 40
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        100.0,
+        2.0,
+        60.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 1,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -56.0,
+        2.0,
+        -98.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 24,
+      "ammo": 50
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        56.0,
+        2.0,
+        -98.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 26,
+      "ammo": 50
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        0.0,
+        2.0,
+        160.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 9,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -150.0,
+        2.0,
+        70.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 10,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        150.0,
+        2.0,
+        70.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 13,
+      "ammo": 4
+    }
+  ]
+}
