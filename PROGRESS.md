@@ -13,3 +13,9 @@ Forked from OpenXOPS-web at b4d1676 (history kept; its log is docs/UPSTREAM-PROG
 - Replication: `NetHumanState` + `GetNetHumanState` (host) / `ApplyNetHumanState` (client: creates the human in the same slot, mirrors death, respawn, team, held weapon model; keeps the local player's own aim) / `ApplyNetPuppetMoves` (keeps puppets walking between snapshots). Host helpers `AddHumanIndexAt`, `RespawnHuman` (same slot, weapons released), `RemoveHuman`.
 - Native harness (real engine): command movement equals direct control to 1e-3; semi-auto fires once per press, full-auto 15 shots/60 ticks; puppet headshot leaves HP 200 while host drops to 61; two ObjectManagers in one process stay in sync (position exact, team, weapon, death, same-slot respawn, removal). 287 tests OK; browser single-player still moves.
 - Known: a puppet accelerates from rest after each snap (0.14 vs ~0.8 units/tick); phase 3 sends snapshots every tick, phase 6 smooths.
+
+## In flight (Sonnet workers, deleg_ba3ca583)
+- net-proto: src/net/protocol.{h,cpp} + native tests (phase 2).
+- net-web: web/net transports (BroadcastChannel loopback, Trystero/Nostr WebRTC), lobby shell, node tests.
+- dm-maps: DM HANGAR (new two-level arena) and DM FIELD (UFO FIELD variant), DM spawn points p1=60.
+- Next for the parent: src/net/session (host/client loop on top of the protocol and the engine seam), C exports, direct mission launch via the existing `.mif -NoBriefing` command line, two-tab spike.
