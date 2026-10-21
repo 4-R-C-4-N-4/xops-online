@@ -23,14 +23,15 @@ delivery is allowed for `CMD` and `SNAP`, reliable ordered for the rest.
 | Field | Type | Notes |
 |-------|------|-------|
 | seq | u32 | client tick counter, increasing |
-| buttons | u16 | bit0 forward, 1 back, 2 left, 3 right, 4 walk, 5 jump (edge), 6 fire (held), 7 reload (edge), 8 switch weapon (edge), 9 weapon slot 1 (edge), 10 weapon slot 2 (edge), 11 drop weapon (edge), 12 scope toggle (edge) |
+| buttons | u16 | bit0 forward, 1 back, 2 left, 3 right, 4 walk, 5 jump, 6 fire, 7 reload, 8 switch weapon, 9 weapon slot 1, 10 weapon slot 2, 11 drop weapon, 12 scope toggle, 13 fire-mode toggle (shotmode) |
 | rx | i16 | yaw, radians * 10430.378 (2^16 / 2pi), wrapped |
 | ry | i16 | pitch, radians * 10430.378, clamped to +-70 deg |
 | weapon_hint | u8 | reserved 0 |
 
-Edge bits are set only on the tick the key went down; the host applies each
-seq once (it tracks the last applied seq per slot and replays missed
-redundant commands in order).
+Every `buttons` bit carries the HELD key state for that tick (not an edge).
+The host derives press edges itself by comparing a slot's current command
+against the last command it applied for that slot; it tracks the last
+applied seq per slot and replays missed redundant commands in order.
 
 ## Snapshot
 
