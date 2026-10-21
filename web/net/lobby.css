@@ -1,0 +1,104 @@
+/* lobby.css — minimal dark retro styling for the XOPS ONLINE lobby. */
+
+.xops-lobby {
+  font-family: 'Courier New', Consolas, monospace;
+  background: #0c0d10;
+  color: #c9d1c0;
+  border: 2px solid #3a3f33;
+  padding: 1rem 1.25rem;
+  max-width: 420px;
+  box-shadow: 0 0 0 1px #000, 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.xops-lobby h2 {
+  margin: 0 0 0.75rem;
+  color: #e8d44d;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+}
+
+.xops-lobby label {
+  display: block;
+  font-size: 0.75rem;
+  color: #8f9684;
+  margin: 0.5rem 0 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.xops-lobby input,
+.xops-lobby select {
+  width: 100%;
+  background: #15171a;
+  border: 1px solid #3a3f33;
+  color: #e8e4d4;
+  padding: 0.4rem 0.5rem;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.xops-lobby input:focus,
+.xops-lobby select:focus,
+.xops-lobby button:focus {
+  outline: 2px solid #e8d44d;
+  outline-offset: 1px;
+}
+
+.xops-lobby .xops-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.xops-lobby button {
+  background: #2b2f24;
+  border: 1px solid #5c6349;
+  color: #e8e4d4;
+  padding: 0.45rem 0.8rem;
+  font: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  flex: 1;
+}
+
+.xops-lobby button:hover:not(:disabled) {
+  background: #3a4030;
+  border-color: #e8d44d;
+}
+
+.xops-lobby button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.xops-lobby .xops-status {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: #8fb08f;
+  min-height: 1.1em;
+}
+
+.xops-lobby .xops-status.xops-error {
+  color: #d9705a;
+}
+
+.xops-lobby .xops-peers {
+  margin-top: 0.75rem;
+  list-style: none;
+  padding: 0;
+  font-size: 0.8rem;
+  border-top: 1px solid #22251e;
+}
+
+.xops-lobby .xops-peers li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed #22251e;
+}
+
+.xops-lobby .xops-peer-ping {
+  color: #8f9684;
+}

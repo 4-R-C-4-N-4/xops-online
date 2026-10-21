@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>XOPS Online — transport demo</title>
+<link rel="stylesheet" href="lobby.css">
+<style>
+  body { background: #05050a; color: #c9d1c0; font-family: Consolas, monospace; display: flex; gap: 2rem; padding: 2rem; align-items: flex-start; }
+  #chat { max-width: 420px; }
+  #log { background: #0c0d10; border: 2px solid #3a3f33; height: 220px; overflow-y: auto; padding: 0.5rem; font-size: 0.8rem; margin-top: 1rem; }
+  #log p { margin: 0 0 0.25rem; }
+  #chatForm { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+  #chatForm input { flex: 1; }
+</style>
+</head>
+<body>
+<div id="lobby"></div>
+<div id="chat">
+  <h3>Messages</h3>
+  <div id="log" role="log" aria-live="polite"></div>
+  <form id="chatForm">
+    <input id="chatInput" type="text" placeholder="Type a message…" disabled>
+    <button type="submit" disabled>Send</button>
+  </form>
+  <p><button id="pingBtn" type="button" disabled>Ping all</button></p>
+</div>
+
+<script type="module">
+import { mountLobby } from './lobby.js';
+import { createTransport } from './transport.js';
+import { parseHash } from './room.js';
+
+const logEl = document.getElementById('log');
+const chatForm = document.getElementById('chatForm');
+const chatInput = document.getElementById('chatInput');
+const pingBtn = document.getElementById('pingBtn');
+
+function log(text) {
+  const p = document.createElement('p');
+  p.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+  logEl.append(p);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+let transport = null;
+const peerNames = new Map();
+const pingSent = new Map(); // peerId -> send timestamp, for naive RTT display
+
+function textToBytes(s) {
+  return new TextEncoder().encode(s);
+}
+function bytesToText(b) {
+  return new TextDecoder().decode(b);
+}
+
+// Tiny demo wire format: first byte is a tag, rest is payload.
+const TAG_CHAT = 1;
+const TAG_PING = 2;
+const TAG_PONG = 3;
+
+function send(tag, body, peerId = null) {
+  if (!transport) return;
+  const bodyBytes = typeof body === 'string' ? textToBytes(body) : body;
+  const out = new Uint8Array(1 + bodyBytes.length);
+  out[0] = tag;
+  out.set(bodyBytes, 1);
+  transport.send(peerId, out, true);
+}
+
+function start(room, name, kind, role) {
+  if (transport) transport.close();
+  lobbyCtl.setStatus(`Connecting (${kind}, ${role})…`);
+
+  transport = createTransport({ kind, room, role, name });
+  peerNames.clear();
+
+  transport.onPeerJoin((peerId) => {
+    peerNames.set(peerId, `peer ${peerId}`);
+    log(`peer ${peerId} joined`);
+    refreshPeers();
+    lobbyCtl.setStatus(`Connected as ${role}. selfId=${transport.selfId}`);
+  });
+
+  transport.onPeerLeave((peerId) => {
+    log(`peer ${peerId} left`);
+    peerNames.delete(peerId);
+    pingSent.delete(peerId);
+    refreshPeers();
+  });
+
+  transport.onMessage((peerId, bytes) => {
+    const tag = bytes[0];
+    const body = bytes.subarray(1);
+    if (tag === TAG_CHAT) {
+      log(`peer ${peerId}: ${bytesToText(body)}`);
+    } else if (tag === TAG_PING) {
+      send(TAG_PONG, body, peerId);
+    } else if (tag === TAG_PONG) {
+      const sentAt = pingSent.get(peerId);
+      if (sentAt !== undefined) {
+        log(`ping peer ${peerId}: ${Math.round(performance.now() - sentAt)} ms`);
+        pingSent.delete(peerId);
+        refreshPeers();
+      }
+    }
+  });
+
+  chatInput.disabled = false;
+  chatForm.querySelector('button').disabled = false;
+  pingBtn.disabled = false;
+}
+
+function refreshPeers() {
+  lobbyCtl.setPeers(
+    Array.from(peerNames.entries()).map(([id, name]) => ({ id, name }))
+  );
+}
+
+const lobbyCtl = mountLobby(document.getElementById('lobby'), {
+  onHost(room, name, kind) {
+    start(room, name, kind, 'host');
+  },
+  onJoin(room, name, kind) {
+    start(room, name, kind, 'client');
+  },
+});
+
+chatForm.addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const text = chatInput.value.trim();
+  if (!text) return;
+  send(TAG_CHAT, text);
+  log(`me: ${text}`);
+  chatInput.value = '';
+});
+
+pingBtn.addEventListener('click', () => {
+  if (!transport) return;
+  for (const peerId of transport.peers()) {
+    pingSent.set(peerId, performance.now());
+    send(TAG_PING, new Uint8Array(0), peerId);
+  }
+});
+
+// If the URL already carries #room=..., prefill is handled by mountLobby;
+// user still clicks Host/Join explicitly (keeps roles unambiguous).
+const { room } = parseHash(location.hash);
+if (room) log(`Room ${room} from URL — click Join (or Host if you created it).`);
+</script>
+</body>
+</html>
