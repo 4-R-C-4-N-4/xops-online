@@ -1,0 +1,975 @@
+{
+  "schema": 1,
+  "textures": [
+    "hull.bmp",
+    "floor.bmp",
+    "ceiling.bmp",
+    "bulkhead.bmp",
+    "console.bmp",
+    "lightstrip.bmp",
+    "hazard.bmp",
+    "labpanel.bmp"
+  ],
+  "blocks": [
+    {
+      "comment": "hangar floor",
+      "min": [
+        -100.0,
+        -2.0,
+        -100.0
+      ],
+      "max": [
+        100.0,
+        0.0,
+        100.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "hangar ceiling",
+      "min": [
+        -100.0,
+        56.0,
+        -100.0
+      ],
+      "max": [
+        100.0,
+        58.0,
+        100.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "ceiling.bmp"
+    },
+    {
+      "comment": "hangar west wall [0]",
+      "min": [
+        -102.0,
+        0.0,
+        -100.0
+      ],
+      "max": [
+        -98.0,
+        56.0,
+        100.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "hangar east wall [0]",
+      "min": [
+        98.0,
+        0.0,
+        -100.0
+      ],
+      "max": [
+        102.0,
+        56.0,
+        100.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "hangar south wall [0]",
+      "min": [
+        -100.0,
+        0.0,
+        98.0
+      ],
+      "max": [
+        100.0,
+        56.0,
+        102.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "hangar north wall [0]",
+      "min": [
+        -100.0,
+        0.0,
+        -102.0
+      ],
+      "max": [
+        100.0,
+        56.0,
+        -98.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "catwalk north",
+      "min": [
+        -96.0,
+        26.0,
+        -96.0
+      ],
+      "max": [
+        96.0,
+        28.0,
+        -80.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk south",
+      "min": [
+        -96.0,
+        26.0,
+        80.0
+      ],
+      "max": [
+        96.0,
+        28.0,
+        96.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk west",
+      "min": [
+        -96.0,
+        26.0,
+        -80.0
+      ],
+      "max": [
+        -80.0,
+        28.0,
+        80.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk east",
+      "min": [
+        80.0,
+        26.0,
+        -80.0
+      ],
+      "max": [
+        96.0,
+        28.0,
+        80.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "ramp north",
+      "vertices": [
+        [
+          -10.0,
+          28.0,
+          -80.0
+        ],
+        [
+          10.0,
+          28.0,
+          -80.0
+        ],
+        [
+          10.0,
+          0.0,
+          -3.0
+        ],
+        [
+          -10.0,
+          0.0,
+          -3.0
+        ],
+        [
+          -10.0,
+          24.0,
+          -80.0
+        ],
+        [
+          10.0,
+          24.0,
+          -80.0
+        ],
+        [
+          10.0,
+          -4.0,
+          -3.0
+        ],
+        [
+          -10.0,
+          -4.0,
+          -3.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ramp east",
+      "vertices": [
+        [
+          3.0,
+          0.0,
+          55.0
+        ],
+        [
+          80.0,
+          28.0,
+          55.0
+        ],
+        [
+          80.0,
+          28.0,
+          71.0
+        ],
+        [
+          3.0,
+          0.0,
+          71.0
+        ],
+        [
+          3.0,
+          -4.0,
+          55.0
+        ],
+        [
+          80.0,
+          24.0,
+          55.0
+        ],
+        [
+          80.0,
+          24.0,
+          71.0
+        ],
+        [
+          3.0,
+          -4.0,
+          71.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ramp west",
+      "vertices": [
+        [
+          -80.0,
+          28.0,
+          -71.0
+        ],
+        [
+          -12.0,
+          0.0,
+          -71.0
+        ],
+        [
+          -12.0,
+          0.0,
+          -55.0
+        ],
+        [
+          -80.0,
+          28.0,
+          -55.0
+        ],
+        [
+          -80.0,
+          24.0,
+          -71.0
+        ],
+        [
+          -12.0,
+          -4.0,
+          -71.0
+        ],
+        [
+          -12.0,
+          -4.0,
+          -55.0
+        ],
+        [
+          -80.0,
+          24.0,
+          -55.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "crate 0",
+      "min": [
+        -58.0,
+        0.0,
+        -58.0
+      ],
+      "max": [
+        -42.0,
+        16.0,
+        -42.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "crate 1",
+      "min": [
+        42.0,
+        0.0,
+        -58.0
+      ],
+      "max": [
+        58.0,
+        16.0,
+        -42.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "crate 2",
+      "min": [
+        -58.0,
+        0.0,
+        42.0
+      ],
+      "max": [
+        -42.0,
+        16.0,
+        58.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "crate 3",
+      "min": [
+        42.0,
+        0.0,
+        42.0
+      ],
+      "max": [
+        58.0,
+        16.0,
+        58.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "crate 4",
+      "min": [
+        -8.0,
+        0.0,
+        22.0
+      ],
+      "max": [
+        8.0,
+        16.0,
+        38.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "crate 5",
+      "min": [
+        -8.0,
+        0.0,
+        -38.0
+      ],
+      "max": [
+        8.0,
+        16.0,
+        -22.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "crate 6",
+      "min": [
+        22.0,
+        0.0,
+        -8.0
+      ],
+      "max": [
+        38.0,
+        16.0,
+        8.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "crate 7",
+      "min": [
+        -38.0,
+        0.0,
+        -8.0
+      ],
+      "max": [
+        -22.0,
+        16.0,
+        8.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "pillar 0",
+      "min": [
+        -94.0,
+        28.0,
+        -94.0
+      ],
+      "max": [
+        -82.0,
+        50.0,
+        -82.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "pillar 1",
+      "min": [
+        82.0,
+        28.0,
+        -94.0
+      ],
+      "max": [
+        94.0,
+        50.0,
+        -82.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "pillar 2",
+      "min": [
+        -94.0,
+        28.0,
+        82.0
+      ],
+      "max": [
+        -82.0,
+        50.0,
+        94.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "pillar 3",
+      "min": [
+        82.0,
+        28.0,
+        82.0
+      ],
+      "max": [
+        94.0,
+        50.0,
+        94.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    }
+  ],
+  "points": [
+    {
+      "type": "raw",
+      "pos": [
+        62.0,
+        2.0,
+        20.0
+      ],
+      "rotation": -1.8828384483574299,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 0
+    },
+    {
+      "type": "raw",
+      "pos": [
+        62.0,
+        2.0,
+        -20.0
+      ],
+      "rotation": -1.2587542052323633,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 1
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -62.0,
+        2.0,
+        20.0
+      ],
+      "rotation": 1.8828384483574299,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 2
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -62.0,
+        2.0,
+        -20.0
+      ],
+      "rotation": 1.2587542052323633,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 3
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -25.0,
+        2.0,
+        65.0
+      ],
+      "rotation": 2.774418819771574,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 4
+    },
+    {
+      "type": "raw",
+      "pos": [
+        25.0,
+        2.0,
+        -65.0
+      ],
+      "rotation": -0.3671738338182192,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 5
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0.0,
+        30.0,
+        88.0
+      ],
+      "rotation": -3.141592653589793,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 6
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0.0,
+        30.0,
+        -88.0
+      ],
+      "rotation": -0.0,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 7
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -88.0,
+        30.0,
+        0.0
+      ],
+      "rotation": 1.5707963267948966,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 8
+    },
+    {
+      "type": "raw",
+      "pos": [
+        88.0,
+        30.0,
+        0.0
+      ],
+      "rotation": -1.5707963267948966,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 9
+    },
+    {
+      "type": "player_spawn",
+      "pos": [
+        0.0,
+        2.0,
+        90.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 43
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        0.0,
+        2.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 13,
+      "ammo": 4
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        40.0,
+        2.0,
+        40.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 1,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -40.0,
+        2.0,
+        -40.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 10,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        40.0,
+        2.0,
+        -40.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 9,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -40.0,
+        2.0,
+        40.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 3,
+      "ammo": 60
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        60.0,
+        30.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 24,
+      "ammo": 50
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -60.0,
+        30.0,
+        0.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 26,
+      "ammo": 50
+    }
+  ]
+}

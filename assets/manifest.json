@@ -7230,7 +7230,7 @@
       "uv_layout": null,
       "summary": "Free pack's own mission list (replaces the hardcoded 58-mission official list for the web build).",
       "priority": "P2",
-      "status": "generated",
+      "status": "missing",
       "note": "free_only: ships with the free pack; not present/required in classic XOPS 0.96.",
       "free_only": true
     },

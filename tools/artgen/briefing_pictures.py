@@ -206,6 +206,20 @@ def generate_ufoescape(out_dir: Path) -> Path:
                          world_min=(-120.0, -210.0), world_max=(600.0, 430.0))
 
 
+def generate_dmhangar(out_dir: Path) -> Path:
+    map_json = ROOT / "tools" / "mapgen" / "examples" / "dm_hangar.json"
+    # Hangar is 200x200 (+/-100); pad a little.
+    return generate_for(map_json, "DM HANGAR", out_dir / "dmhangar.bmp",
+                         world_min=(-120.0, -120.0), world_max=(120.0, 120.0))
+
+
+def generate_dmfield(out_dir: Path) -> Path:
+    map_json = ROOT / "tools" / "mapgen" / "examples" / "dm_field.json"
+    # Same footprint as UFO FIELD.
+    return generate_for(map_json, "DM FIELD", out_dir / "dmfield.bmp",
+                         world_min=(-260.0, -380.0), world_max=(260.0, 260.0))
+
+
 def main() -> int:
     out_dir = ROOT / "assets" / "pack" / "data" / "briefing"
     path = generate_starter(out_dir)
@@ -214,6 +228,10 @@ def main() -> int:
     print(f"wrote {path2}")
     path3 = generate_ufoescape(out_dir)
     print(f"wrote {path3}")
+    path4 = generate_dmhangar(out_dir)
+    print(f"wrote {path4}")
+    path5 = generate_dmfield(out_dir)
+    print(f"wrote {path5}")
     return 0
 
 
