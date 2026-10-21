@@ -11,6 +11,7 @@ export const MAP_MSG = 0x40;
 export const DM_MAPS = [
   { id: 'hangar', title: 'DM HANGAR', mif: 'data/dmhangar/hangar.mif' },
   { id: 'field', title: 'DM FIELD', mif: 'data/dmfield/field.mif' },
+  { id: 'shipdeck', title: 'DM SHIPDECK', mif: 'data/dmship/ship.mif' },
 ];
 
 export function mapIndexById(id) {

@@ -232,8 +232,8 @@ class MissionWiringTests(unittest.TestCase):
         self.assertIn("UFO FIELD", names)
         self.assertIn("UFO ESCAPE", names)
         self.assertIn("STARTER", names)
-        self.assertEqual(names[-2:], ["DM HANGAR", "DM FIELD"])
-        for l in lines[-2:]:
+        self.assertEqual(names[-3:], ["DM HANGAR", "DM FIELD", "DM SHIPDECK"])
+        for l in lines[-3:]:
             parts = l.split("|")
             self.assertLessEqual(len(parts[1]), 35)
 

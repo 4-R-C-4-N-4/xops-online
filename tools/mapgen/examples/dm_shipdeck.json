@@ -1,0 +1,3122 @@
+{
+  "schema": 1,
+  "textures": [
+    "hull.bmp",
+    "floor.bmp",
+    "ceiling.bmp",
+    "bulkhead.bmp",
+    "console.bmp",
+    "lightstrip.bmp",
+    "hazard.bmp",
+    "labpanel.bmp",
+    "goo.bmp",
+    "vat.bmp"
+  ],
+  "blocks": [
+    {
+      "comment": "engineering deck floor",
+      "min": [
+        -180.0,
+        -2.0,
+        -150.0
+      ],
+      "max": [
+        180.0,
+        0.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "ship roof",
+      "min": [
+        -180.0,
+        96.0,
+        -150.0
+      ],
+      "max": [
+        180.0,
+        98.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "ceiling.bmp"
+    },
+    {
+      "comment": "hull west wall [0]",
+      "min": [
+        -182.0,
+        0.0,
+        -150.0
+      ],
+      "max": [
+        -178.0,
+        96.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "hull east wall [0]",
+      "min": [
+        178.0,
+        0.0,
+        -150.0
+      ],
+      "max": [
+        182.0,
+        96.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "hull south wall [0]",
+      "min": [
+        -180.0,
+        0.0,
+        148.0
+      ],
+      "max": [
+        180.0,
+        96.0,
+        152.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "hull north wall [0]",
+      "min": [
+        -180.0,
+        0.0,
+        -152.0
+      ],
+      "max": [
+        180.0,
+        96.0,
+        -148.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "ramp R1 eng->mid (south)",
+      "vertices": [
+        [
+          -20.0,
+          0.0,
+          34.0
+        ],
+        [
+          20.0,
+          0.0,
+          34.0
+        ],
+        [
+          20.0,
+          32.0,
+          120.0
+        ],
+        [
+          -20.0,
+          32.0,
+          120.0
+        ],
+        [
+          -20.0,
+          -4.0,
+          34.0
+        ],
+        [
+          20.0,
+          -4.0,
+          34.0
+        ],
+        [
+          20.0,
+          28.0,
+          120.0
+        ],
+        [
+          -20.0,
+          28.0,
+          120.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ramp R1 shaft west wall [0]",
+      "min": [
+        -24.0,
+        0.0,
+        34.0
+      ],
+      "max": [
+        -20.0,
+        64.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "ramp R1 shaft east wall [0]",
+      "min": [
+        20.0,
+        0.0,
+        34.0
+      ],
+      "max": [
+        24.0,
+        64.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "ramp R2 mid->cat (east)",
+      "vertices": [
+        [
+          50.0,
+          32.0,
+          -12.0
+        ],
+        [
+          140.0,
+          64.0,
+          -12.0
+        ],
+        [
+          140.0,
+          64.0,
+          12.0
+        ],
+        [
+          50.0,
+          32.0,
+          12.0
+        ],
+        [
+          50.0,
+          28.0,
+          -12.0
+        ],
+        [
+          140.0,
+          60.0,
+          -12.0
+        ],
+        [
+          140.0,
+          60.0,
+          12.0
+        ],
+        [
+          50.0,
+          28.0,
+          12.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ramp R2 shaft south wall [0]",
+      "min": [
+        50.0,
+        32.0,
+        -16.0
+      ],
+      "max": [
+        140.0,
+        96.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "ramp R2 shaft north wall [0]",
+      "min": [
+        50.0,
+        32.0,
+        12.0
+      ],
+      "max": [
+        140.0,
+        96.0,
+        16.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "ramp R3 mid->cat (west)",
+      "vertices": [
+        [
+          -140.0,
+          64.0,
+          -12.0
+        ],
+        [
+          -50.0,
+          32.0,
+          -12.0
+        ],
+        [
+          -50.0,
+          32.0,
+          12.0
+        ],
+        [
+          -140.0,
+          64.0,
+          12.0
+        ],
+        [
+          -140.0,
+          60.0,
+          -12.0
+        ],
+        [
+          -50.0,
+          28.0,
+          -12.0
+        ],
+        [
+          -50.0,
+          28.0,
+          12.0
+        ],
+        [
+          -140.0,
+          60.0,
+          12.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "ramp R3 shaft south wall [0]",
+      "min": [
+        -140.0,
+        32.0,
+        -16.0
+      ],
+      "max": [
+        -50.0,
+        96.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "ramp R3 shaft north wall [0]",
+      "min": [
+        -140.0,
+        32.0,
+        12.0
+      ],
+      "max": [
+        -50.0,
+        96.0,
+        16.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "mid deck floor [1]",
+      "min": [
+        -180.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        -140.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [2]",
+      "min": [
+        -180.0,
+        30.0,
+        -34.0
+      ],
+      "max": [
+        -140.0,
+        32.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [3]",
+      "min": [
+        -180.0,
+        30.0,
+        -12.0
+      ],
+      "max": [
+        -140.0,
+        32.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [4]",
+      "min": [
+        -180.0,
+        30.0,
+        12.0
+      ],
+      "max": [
+        -140.0,
+        32.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [5]",
+      "min": [
+        -180.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        -140.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [6]",
+      "min": [
+        -180.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        -140.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [7]",
+      "min": [
+        -140.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        -50.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [8]",
+      "min": [
+        -140.0,
+        30.0,
+        -34.0
+      ],
+      "max": [
+        -50.0,
+        32.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [9]",
+      "min": [
+        -140.0,
+        30.0,
+        12.0
+      ],
+      "max": [
+        -50.0,
+        32.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [10]",
+      "min": [
+        -140.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        -50.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [11]",
+      "min": [
+        -140.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        -50.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [12]",
+      "min": [
+        -50.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        -34.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [13]",
+      "min": [
+        -50.0,
+        30.0,
+        -34.0
+      ],
+      "max": [
+        -34.0,
+        32.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [14]",
+      "min": [
+        -50.0,
+        30.0,
+        -12.0
+      ],
+      "max": [
+        -34.0,
+        32.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [15]",
+      "min": [
+        -50.0,
+        30.0,
+        12.0
+      ],
+      "max": [
+        -34.0,
+        32.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [16]",
+      "min": [
+        -50.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        -34.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [17]",
+      "min": [
+        -50.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        -34.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [18]",
+      "min": [
+        -34.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        -22.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [19]",
+      "min": [
+        -34.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        -22.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [20]",
+      "min": [
+        -34.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        -22.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [21]",
+      "min": [
+        -22.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        22.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [22]",
+      "min": [
+        -22.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        22.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [23]",
+      "min": [
+        22.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        34.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [24]",
+      "min": [
+        22.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        34.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [25]",
+      "min": [
+        22.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        34.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [26]",
+      "min": [
+        34.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        50.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [27]",
+      "min": [
+        34.0,
+        30.0,
+        -34.0
+      ],
+      "max": [
+        50.0,
+        32.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [28]",
+      "min": [
+        34.0,
+        30.0,
+        -12.0
+      ],
+      "max": [
+        50.0,
+        32.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [29]",
+      "min": [
+        34.0,
+        30.0,
+        12.0
+      ],
+      "max": [
+        50.0,
+        32.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [30]",
+      "min": [
+        34.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        50.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [31]",
+      "min": [
+        34.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        50.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [32]",
+      "min": [
+        50.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        140.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [33]",
+      "min": [
+        50.0,
+        30.0,
+        -34.0
+      ],
+      "max": [
+        140.0,
+        32.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [34]",
+      "min": [
+        50.0,
+        30.0,
+        12.0
+      ],
+      "max": [
+        140.0,
+        32.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [35]",
+      "min": [
+        50.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        140.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [36]",
+      "min": [
+        50.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        140.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [37]",
+      "min": [
+        140.0,
+        30.0,
+        -150.0
+      ],
+      "max": [
+        180.0,
+        32.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [38]",
+      "min": [
+        140.0,
+        30.0,
+        -34.0
+      ],
+      "max": [
+        180.0,
+        32.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [39]",
+      "min": [
+        140.0,
+        30.0,
+        -12.0
+      ],
+      "max": [
+        180.0,
+        32.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [40]",
+      "min": [
+        140.0,
+        30.0,
+        12.0
+      ],
+      "max": [
+        180.0,
+        32.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [41]",
+      "min": [
+        140.0,
+        30.0,
+        34.0
+      ],
+      "max": [
+        180.0,
+        32.0,
+        120.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "mid deck floor [42]",
+      "min": [
+        140.0,
+        30.0,
+        120.0
+      ],
+      "max": [
+        180.0,
+        32.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [1]",
+      "min": [
+        -180.0,
+        62.0,
+        -150.0
+      ],
+      "max": [
+        -140.0,
+        64.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [2]",
+      "min": [
+        -180.0,
+        62.0,
+        -34.0
+      ],
+      "max": [
+        -140.0,
+        64.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [3]",
+      "min": [
+        -180.0,
+        62.0,
+        -12.0
+      ],
+      "max": [
+        -140.0,
+        64.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [4]",
+      "min": [
+        -180.0,
+        62.0,
+        12.0
+      ],
+      "max": [
+        -140.0,
+        64.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [5]",
+      "min": [
+        -180.0,
+        62.0,
+        34.0
+      ],
+      "max": [
+        -140.0,
+        64.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [6]",
+      "min": [
+        -140.0,
+        62.0,
+        -150.0
+      ],
+      "max": [
+        -50.0,
+        64.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [7]",
+      "min": [
+        -140.0,
+        62.0,
+        -34.0
+      ],
+      "max": [
+        -50.0,
+        64.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [8]",
+      "min": [
+        -140.0,
+        62.0,
+        12.0
+      ],
+      "max": [
+        -50.0,
+        64.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [9]",
+      "min": [
+        -140.0,
+        62.0,
+        34.0
+      ],
+      "max": [
+        -50.0,
+        64.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [10]",
+      "min": [
+        -50.0,
+        62.0,
+        -150.0
+      ],
+      "max": [
+        -34.0,
+        64.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [11]",
+      "min": [
+        -50.0,
+        62.0,
+        -34.0
+      ],
+      "max": [
+        -34.0,
+        64.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [12]",
+      "min": [
+        -50.0,
+        62.0,
+        -12.0
+      ],
+      "max": [
+        -34.0,
+        64.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [13]",
+      "min": [
+        -50.0,
+        62.0,
+        12.0
+      ],
+      "max": [
+        -34.0,
+        64.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [14]",
+      "min": [
+        -50.0,
+        62.0,
+        34.0
+      ],
+      "max": [
+        -34.0,
+        64.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [15]",
+      "min": [
+        -34.0,
+        62.0,
+        -150.0
+      ],
+      "max": [
+        34.0,
+        64.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [16]",
+      "min": [
+        -34.0,
+        62.0,
+        34.0
+      ],
+      "max": [
+        34.0,
+        64.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [17]",
+      "min": [
+        34.0,
+        62.0,
+        -150.0
+      ],
+      "max": [
+        50.0,
+        64.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [18]",
+      "min": [
+        34.0,
+        62.0,
+        -34.0
+      ],
+      "max": [
+        50.0,
+        64.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [19]",
+      "min": [
+        34.0,
+        62.0,
+        -12.0
+      ],
+      "max": [
+        50.0,
+        64.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [20]",
+      "min": [
+        34.0,
+        62.0,
+        12.0
+      ],
+      "max": [
+        50.0,
+        64.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [21]",
+      "min": [
+        34.0,
+        62.0,
+        34.0
+      ],
+      "max": [
+        50.0,
+        64.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [22]",
+      "min": [
+        50.0,
+        62.0,
+        -150.0
+      ],
+      "max": [
+        140.0,
+        64.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [23]",
+      "min": [
+        50.0,
+        62.0,
+        -34.0
+      ],
+      "max": [
+        140.0,
+        64.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [24]",
+      "min": [
+        50.0,
+        62.0,
+        12.0
+      ],
+      "max": [
+        140.0,
+        64.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [25]",
+      "min": [
+        50.0,
+        62.0,
+        34.0
+      ],
+      "max": [
+        140.0,
+        64.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [26]",
+      "min": [
+        140.0,
+        62.0,
+        -150.0
+      ],
+      "max": [
+        180.0,
+        64.0,
+        -34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [27]",
+      "min": [
+        140.0,
+        62.0,
+        -34.0
+      ],
+      "max": [
+        180.0,
+        64.0,
+        -12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [28]",
+      "min": [
+        140.0,
+        62.0,
+        -12.0
+      ],
+      "max": [
+        180.0,
+        64.0,
+        12.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [29]",
+      "min": [
+        140.0,
+        62.0,
+        12.0
+      ],
+      "max": [
+        180.0,
+        64.0,
+        34.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk deck floor [30]",
+      "min": [
+        140.0,
+        62.0,
+        34.0
+      ],
+      "max": [
+        180.0,
+        64.0,
+        150.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk bridge N-S",
+      "min": [
+        -4.0,
+        62.0,
+        -34.0
+      ],
+      "max": [
+        4.0,
+        64.0,
+        34.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "catwalk bridge E-W",
+      "min": [
+        -34.0,
+        62.0,
+        -4.0
+      ],
+      "max": [
+        34.0,
+        64.0,
+        4.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "reactor core centre",
+      "vertices": [
+        [
+          -20.0,
+          54.0,
+          -11.0
+        ],
+        [
+          20.0,
+          54.0,
+          -11.0
+        ],
+        [
+          20.0,
+          54.0,
+          11.0
+        ],
+        [
+          -20.0,
+          54.0,
+          11.0
+        ],
+        [
+          -20.0,
+          0.0,
+          -11.0
+        ],
+        [
+          20.0,
+          0.0,
+          -11.0
+        ],
+        [
+          20.0,
+          0.0,
+          11.0
+        ],
+        [
+          -20.0,
+          0.0,
+          11.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "goo.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "reactor core north cap",
+      "vertices": [
+        [
+          -11.0,
+          54.0,
+          -20.0
+        ],
+        [
+          11.0,
+          54.0,
+          -20.0
+        ],
+        [
+          11.0,
+          54.0,
+          -11.0
+        ],
+        [
+          -11.0,
+          54.0,
+          -11.0
+        ],
+        [
+          -11.0,
+          0.0,
+          -20.0
+        ],
+        [
+          11.0,
+          0.0,
+          -20.0
+        ],
+        [
+          11.0,
+          0.0,
+          -11.0
+        ],
+        [
+          -11.0,
+          0.0,
+          -11.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "goo.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "reactor core south cap",
+      "vertices": [
+        [
+          -11.0,
+          54.0,
+          11.0
+        ],
+        [
+          11.0,
+          54.0,
+          11.0
+        ],
+        [
+          11.0,
+          54.0,
+          20.0
+        ],
+        [
+          -11.0,
+          54.0,
+          20.0
+        ],
+        [
+          -11.0,
+          0.0,
+          11.0
+        ],
+        [
+          11.0,
+          0.0,
+          11.0
+        ],
+        [
+          11.0,
+          0.0,
+          20.0
+        ],
+        [
+          -11.0,
+          0.0,
+          20.0
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "goo.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "vat.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "goo trough 0",
+      "min": [
+        -134.0,
+        0.0,
+        -108.0
+      ],
+      "max": [
+        -106.0,
+        11.0,
+        -92.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "goo.bmp"
+    },
+    {
+      "comment": "goo trough 1",
+      "min": [
+        106.0,
+        0.0,
+        -108.0
+      ],
+      "max": [
+        134.0,
+        11.0,
+        -92.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "goo.bmp"
+    },
+    {
+      "comment": "goo trough 2",
+      "min": [
+        -134.0,
+        0.0,
+        92.0
+      ],
+      "max": [
+        -106.0,
+        11.0,
+        108.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "goo.bmp"
+    },
+    {
+      "comment": "goo trough 3",
+      "min": [
+        106.0,
+        0.0,
+        92.0
+      ],
+      "max": [
+        134.0,
+        11.0,
+        108.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "goo.bmp"
+    },
+    {
+      "comment": "goo trough 4",
+      "min": [
+        -164.0,
+        0.0,
+        -8.0
+      ],
+      "max": [
+        -136.0,
+        11.0,
+        8.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "goo.bmp"
+    },
+    {
+      "comment": "goo trough 5",
+      "min": [
+        136.0,
+        0.0,
+        -8.0
+      ],
+      "max": [
+        164.0,
+        11.0,
+        8.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "goo.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 0",
+      "min": [
+        -76.0,
+        0.0,
+        -76.0
+      ],
+      "max": [
+        -64.0,
+        24.0,
+        -64.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 1",
+      "min": [
+        64.0,
+        0.0,
+        -76.0
+      ],
+      "max": [
+        76.0,
+        24.0,
+        -64.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 2",
+      "min": [
+        -76.0,
+        0.0,
+        64.0
+      ],
+      "max": [
+        -64.0,
+        24.0,
+        76.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 3",
+      "min": [
+        64.0,
+        0.0,
+        64.0
+      ],
+      "max": [
+        76.0,
+        24.0,
+        76.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 4",
+      "min": [
+        -156.0,
+        0.0,
+        -96.0
+      ],
+      "max": [
+        -144.0,
+        24.0,
+        -84.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 5",
+      "min": [
+        144.0,
+        0.0,
+        -96.0
+      ],
+      "max": [
+        156.0,
+        24.0,
+        -84.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 6",
+      "min": [
+        -156.0,
+        0.0,
+        84.0
+      ],
+      "max": [
+        -144.0,
+        24.0,
+        96.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "eng pipe pillar 7",
+      "min": [
+        144.0,
+        0.0,
+        84.0
+      ],
+      "max": [
+        156.0,
+        24.0,
+        96.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "mid crate 0",
+      "min": [
+        -139.0,
+        32.0,
+        -69.0
+      ],
+      "max": [
+        -121.0,
+        44.0,
+        -51.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "mid crate 1",
+      "min": [
+        121.0,
+        32.0,
+        -69.0
+      ],
+      "max": [
+        139.0,
+        44.0,
+        -51.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "mid crate 2",
+      "min": [
+        -139.0,
+        32.0,
+        51.0
+      ],
+      "max": [
+        -121.0,
+        44.0,
+        69.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "mid crate 3",
+      "min": [
+        121.0,
+        32.0,
+        51.0
+      ],
+      "max": [
+        139.0,
+        44.0,
+        69.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "mid crate 4",
+      "min": [
+        -9.0,
+        32.0,
+        -149.0
+      ],
+      "max": [
+        9.0,
+        44.0,
+        -131.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "mid crate 5",
+      "min": [
+        -9.0,
+        32.0,
+        131.0
+      ],
+      "max": [
+        9.0,
+        44.0,
+        149.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y0.0 z-92.0 [0]",
+      "min": [
+        -110.0,
+        0.0,
+        -94.0
+      ],
+      "max": [
+        -26.0,
+        30.0,
+        -90.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y0.0 z-92.0 [1]",
+      "min": [
+        26.0,
+        0.0,
+        -94.0
+      ],
+      "max": [
+        110.0,
+        30.0,
+        -90.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y0.0 z92.0 [0]",
+      "min": [
+        -110.0,
+        0.0,
+        90.0
+      ],
+      "max": [
+        -26.0,
+        30.0,
+        94.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y0.0 z92.0 [1]",
+      "min": [
+        26.0,
+        0.0,
+        90.0
+      ],
+      "max": [
+        110.0,
+        30.0,
+        94.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y32.0 z-92.0 [0]",
+      "min": [
+        -110.0,
+        32.0,
+        -94.0
+      ],
+      "max": [
+        -26.0,
+        62.0,
+        -90.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y32.0 z-92.0 [1]",
+      "min": [
+        26.0,
+        32.0,
+        -94.0
+      ],
+      "max": [
+        110.0,
+        62.0,
+        -90.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y32.0 z92.0 [0]",
+      "min": [
+        -110.0,
+        32.0,
+        90.0
+      ],
+      "max": [
+        -26.0,
+        62.0,
+        94.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y32.0 z92.0 [1]",
+      "min": [
+        26.0,
+        32.0,
+        90.0
+      ],
+      "max": [
+        110.0,
+        62.0,
+        94.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y64.0 z-92.0 [0]",
+      "min": [
+        -110.0,
+        64.0,
+        -94.0
+      ],
+      "max": [
+        -26.0,
+        96.0,
+        -90.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y64.0 z-92.0 [1]",
+      "min": [
+        26.0,
+        64.0,
+        -94.0
+      ],
+      "max": [
+        110.0,
+        96.0,
+        -90.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y64.0 z92.0 [0]",
+      "min": [
+        -110.0,
+        64.0,
+        90.0
+      ],
+      "max": [
+        -26.0,
+        96.0,
+        94.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "lab corridor bulkhead y64.0 z92.0 [1]",
+      "min": [
+        26.0,
+        64.0,
+        90.0
+      ],
+      "max": [
+        110.0,
+        96.0,
+        94.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "catwalk pillar 0",
+      "min": [
+        -156.0,
+        64.0,
+        -116.0
+      ],
+      "max": [
+        -144.0,
+        88.0,
+        -104.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "catwalk pillar 1",
+      "min": [
+        144.0,
+        64.0,
+        -116.0
+      ],
+      "max": [
+        156.0,
+        88.0,
+        -104.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "catwalk pillar 2",
+      "min": [
+        -156.0,
+        64.0,
+        104.0
+      ],
+      "max": [
+        -144.0,
+        88.0,
+        116.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "catwalk pillar 3",
+      "min": [
+        144.0,
+        64.0,
+        104.0
+      ],
+      "max": [
+        156.0,
+        88.0,
+        116.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "catwalk pillar 4",
+      "min": [
+        -66.0,
+        64.0,
+        -26.0
+      ],
+      "max": [
+        -54.0,
+        88.0,
+        -14.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "catwalk pillar 5",
+      "min": [
+        54.0,
+        64.0,
+        14.0
+      ],
+      "max": [
+        66.0,
+        88.0,
+        26.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "catwalk hanging bulkhead 0",
+      "min": [
+        -28.0,
+        90.0,
+        -75.0
+      ],
+      "max": [
+        -8.0,
+        96.0,
+        -65.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "catwalk hanging bulkhead 1",
+      "min": [
+        8.0,
+        90.0,
+        65.0
+      ],
+      "max": [
+        28.0,
+        96.0,
+        75.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "catwalk hanging bulkhead 2",
+      "min": [
+        -80.0,
+        90.0,
+        13.0
+      ],
+      "max": [
+        -60.0,
+        96.0,
+        23.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "catwalk hanging bulkhead 3",
+      "min": [
+        60.0,
+        90.0,
+        -23.0
+      ],
+      "max": [
+        80.0,
+        96.0,
+        -13.0
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    }
+  ],
+  "points": [
+    {
+      "type": "raw",
+      "pos": [
+        0.0,
+        0.0,
+        -32.0
+      ],
+      "rotation": 3.141592653589793,
+      "p1": 61,
+      "p2": 6,
+      "p3": 32
+    },
+    {
+      "type": "raw",
+      "pos": [
+        30.0,
+        0.0,
+        20.0
+      ],
+      "rotation": 1.5707963267948966,
+      "p1": 61,
+      "p2": 6,
+      "p3": 64
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -30.0,
+        0.0,
+        -20.0
+      ],
+      "rotation": -1.5707963267948966,
+      "p1": 61,
+      "p2": 6,
+      "p3": 64
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -100.0,
+        34.0,
+        -20.0
+      ],
+      "rotation": 0.0,
+      "object_type": 12
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        100.0,
+        34.0,
+        -20.0
+      ],
+      "rotation": 0.0,
+      "object_type": 12
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -100.0,
+        34.0,
+        20.0
+      ],
+      "rotation": 0.0,
+      "object_type": 12
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        100.0,
+        34.0,
+        20.0
+      ],
+      "rotation": 0.0,
+      "object_type": 12
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -60.0,
+        34.0,
+        -130.0
+      ],
+      "rotation": 0.0,
+      "object_type": 12
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        60.0,
+        34.0,
+        -130.0
+      ],
+      "rotation": 0.0,
+      "object_type": 12
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -160.0,
+        2.0,
+        -130.0
+      ],
+      "rotation": 0.8884797719201485,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 0
+    },
+    {
+      "type": "raw",
+      "pos": [
+        160.0,
+        2.0,
+        -130.0
+      ],
+      "rotation": -0.8884797719201485,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 1
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -160.0,
+        2.0,
+        130.0
+      ],
+      "rotation": 2.2531128816696446,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 2
+    },
+    {
+      "type": "raw",
+      "pos": [
+        160.0,
+        2.0,
+        130.0
+      ],
+      "rotation": -2.2531128816696446,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 3
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -160.0,
+        2.0,
+        0.0
+      ],
+      "rotation": 1.5707963267948966,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 4
+    },
+    {
+      "type": "raw",
+      "pos": [
+        160.0,
+        2.0,
+        0.0
+      ],
+      "rotation": -1.5707963267948966,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 5
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -160.0,
+        34.0,
+        -60.0
+      ],
+      "rotation": 1.2120256565243244,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 6
+    },
+    {
+      "type": "raw",
+      "pos": [
+        160.0,
+        34.0,
+        -60.0
+      ],
+      "rotation": -1.2120256565243244,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 7
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -160.0,
+        34.0,
+        60.0
+      ],
+      "rotation": 1.9295669970654687,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 8
+    },
+    {
+      "type": "raw",
+      "pos": [
+        160.0,
+        34.0,
+        60.0
+      ],
+      "rotation": -1.9295669970654687,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 9
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -160.0,
+        66.0,
+        -120.0
+      ],
+      "rotation": 0.9272952180016122,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 10
+    },
+    {
+      "type": "raw",
+      "pos": [
+        160.0,
+        66.0,
+        120.0
+      ],
+      "rotation": -2.214297435588181,
+      "p1": 60,
+      "p2": 0,
+      "p3": 0,
+      "p4": 11
+    },
+    {
+      "type": "player_spawn",
+      "pos": [
+        0.0,
+        2.0,
+        -140.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 43
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -150.0,
+        2.0,
+        -110.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 1,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        150.0,
+        34.0,
+        -40.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 3,
+      "ammo": 60
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -150.0,
+        34.0,
+        40.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 9,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        150.0,
+        2.0,
+        110.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 10,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -150.0,
+        2.0,
+        40.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 24,
+      "ammo": 50
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        110.0,
+        66.0,
+        -130.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 25,
+      "ammo": 100
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -45.0,
+        66.0,
+        -20.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 26,
+      "ammo": 80
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        0.0,
+        2.0,
+        26.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 23,
+      "ammo": 20
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -100.0,
+        34.0,
+        100.0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 13,
+      "ammo": 4
+    }
+  ]
+}

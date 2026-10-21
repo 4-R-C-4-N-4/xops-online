@@ -220,6 +220,13 @@ def generate_dmfield(out_dir: Path) -> Path:
                          world_min=(-260.0, -380.0), world_max=(260.0, 260.0))
 
 
+def generate_dmshipdeck(out_dir: Path) -> Path:
+    map_json = ROOT / "tools" / "mapgen" / "examples" / "dm_shipdeck.json"
+    # Footprint is 360x300 (+-180 x, +-150 z); pad a little.
+    return generate_for(map_json, "DM SHIPDECK", out_dir / "dmship.bmp",
+                         world_min=(-200.0, -170.0), world_max=(200.0, 170.0))
+
+
 def main() -> int:
     out_dir = ROOT / "assets" / "pack" / "data" / "briefing"
     path = generate_starter(out_dir)
@@ -232,6 +239,8 @@ def main() -> int:
     print(f"wrote {path4}")
     path5 = generate_dmfield(out_dir)
     print(f"wrote {path5}")
+    path6 = generate_dmshipdeck(out_dir)
+    print(f"wrote {path6}")
     return 0
 
 

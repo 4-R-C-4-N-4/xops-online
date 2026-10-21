@@ -3,3 +3,4 @@ UFO ESCAPE|UFO ESCAPE - break out of the ship|data\ufoescape\|escape.mif|0|0
 STARTER|STARTER compound|data\starter\|start|0|0
 DM HANGAR|DM HANGAR - deathmatch arena|data\dmhangar\|hangar.mif|0|0
 DM FIELD|DM FIELD - deathmatch pasture|data\dmfield\|field.mif|0|0
+DM SHIPDECK|DM SHIPDECK - deathmatch arena|data\dmship\|ship.mif|0|0
