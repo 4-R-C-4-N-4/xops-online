@@ -16,6 +16,13 @@
 //   - sight lines: 10%..45% of random standing pairs see each other
 //   - no obstacle top sits 1.5 units either side of the jump limit
 //     (ambiguous: looks climbable, sometimes is not)
+//   - every walkable ramp (sloped block top) is walked up AND down by the
+//     real player with engine physics (catches ramps blocked by railings,
+//     guards, low ceilings or hanging cover)
+//   --mission: a single-player map; start from the player spawn (p1=1) and
+//     skip the deathmatch-only gates (spawn count, sight lines, exposure)
+//   --outdoor: no play spot may walk or jump into a floorless column (a
+//     death pit) within jump reach, over any barrier lower than the jump
 #define main openxops_original_entry
 #include "../../src/main.cpp"
 #undef main
@@ -39,13 +46,15 @@ typedef std::tuple<int,int,int> Key;
 
 int main(int argc, char** argv)
 {
-	if( argc < 4 ){ std::fprintf(stderr, "usage: dmcheck <pack> <mapdir> <pd1> [--sealed] [--overlay DIR] [--jumpprobe]\n"); return 2; }
+	if( argc < 4 ){ std::fprintf(stderr, "usage: dmcheck <pack> <mapdir> <pd1> [--sealed] [--mission] [--outdoor] [--overlay DIR] [--jumpprobe]\n"); return 2; }
 	std::setvbuf(stdout, nullptr, _IONBF, 0);
-	bool sealed = false, jumpprobe = false;
+	bool sealed = false, jumpprobe = false, mission = false, outdoor = false;
 	const char* overlay = nullptr;
 	for(int a=4; a<argc; a++){
 		if( !strcmp(argv[a], "--sealed") ) sealed = true;
 		else if( !strcmp(argv[a], "--jumpprobe") ) jumpprobe = true;
+		else if( !strcmp(argv[a], "--mission") ) mission = true;
+		else if( !strcmp(argv[a], "--outdoor") ) outdoor = true;
 		else if( !strcmp(argv[a], "--overlay") && a+1 < argc ) overlay = argv[++a];
 	}
 	InitRand();
@@ -151,17 +160,23 @@ int main(int argc, char** argv)
 
 	// ---- points ----------------------------------------------------------------
 	struct P { float x, y, z, r; int p1, p2, p3, p4; };
-	std::vector<P> spawns, pickups, lifts;
+	std::vector<P> spawns, pickups, lifts, players;
 	for(int n=0; n<points.GetTotaldatas(); n++){
 		pointdata p; if( points.Getdata(&p, n) != 0 ) continue;
 		P q = {p.x, p.y, p.z, p.r, p.p1, p.p2, p.p3, p.p4};
 		if( p.p1 == 60 ) spawns.push_back(q);
 		if( p.p1 == 2 || p.p1 == 3 ) pickups.push_back(q);
 		if( p.p1 == 61 ) lifts.push_back(q);
+
 	}
 	std::sort(spawns.begin(), spawns.end(), [](const P& a, const P& b){ return a.p4 < b.p4; });
 	std::printf("METRIC dm_spawns %zu\nMETRIC pickups %zu\nMETRIC lifts %zu\n", spawns.size(), pickups.size(), lifts.size());
-	if( spawns.size() < 8 ) fail("only %zu DM spawns (need >= 8)", spawns.size());
+	if( !mission && spawns.size() < 8 ) fail("only %zu DM spawns (need >= 8)", spawns.size());
+	if( mission ){	//the engine's own player (as placed by LoadPointData)
+		human* pl = objects.GetPlayerHumanObject();
+		if( !pl || !pl->GetEnableFlag() ){ fail("no player human in the point file"); return 1; }
+		P q = {0,0,0,0,0,0,0,0}; pl->GetPosData(&q.x, &q.y, &q.z, &q.r); players.push_back(q);
+	}
 
 	auto nearest = [&](float x, float y, float z, float* dist)->Key{
 		Key best; float bd = 1e9f;
@@ -204,17 +219,19 @@ int main(int argc, char** argv)
 		float d1, d2; Key foot = nearest(L.x, L.y, L.z, &d1), dest = nearest(x, y, z, &d2);
 		if( d1 < 16 && d2 < 16 ) adj[foot].push_back(dest);
 	}
-	auto bfs = [&](Key s, bool reverse)->std::set<Key>{
+	auto bfsx = [&](Key s, bool reverse, const std::set<Key>* skip)->std::set<Key>{
 		std::map<Key, std::vector<Key>> radj;
 		if( reverse ) for(auto& kv : adj) for(auto& t : kv.second) radj[t].push_back(kv.first);
 		auto& g = reverse ? radj : adj;
 		std::set<Key> seen{s}; std::vector<Key> st{s};
 		while( !st.empty() ){ Key k = st.back(); st.pop_back(); auto it = g.find(k); if( it == g.end() ) continue;
-			for(auto& t : it->second) if( seen.insert(t).second ) st.push_back(t); }
+			for(auto& t : it->second) if( !(skip && skip->count(t)) && seen.insert(t).second ) st.push_back(t); }
 		return seen;
 	};
+	auto bfs = [&](Key s, bool reverse){ return bfsx(s, reverse, nullptr); };
 	float d;
-	Key s0 = nearest(spawns.empty() ? 0 : spawns[0].x, spawns.empty() ? 0 : spawns[0].y, spawns.empty() ? 0 : spawns[0].z, &d);
+	const P* start = mission ? &players[0] : (spawns.empty() ? nullptr : &spawns[0]);
+	Key s0 = nearest(start ? start->x : 0, start ? start->y : 0, start ? start->z : 0, &d);
 	auto fwd = bfs(s0, false), back = bfs(s0, true);
 	//play area = spots you can reach from spawn 0 and get back from; spots you
 	//can reach but never leave are traps (fell into a pit, dropped behind cover)
@@ -228,7 +245,9 @@ int main(int argc, char** argv)
 		for(auto& k : fwd) if( !back.count(k) && shown++ < 5 ){ int i, j, l; std::tie(i, j, l) = k; std::printf("NOTE trap at (%.0f,%.0f,%.0f)\n", i*G, nodes[k], j*G); }
 	}
 	auto checkPoint = [&](const char* what, size_t idx, const P& q){
-		float dist; Key k = nearest(q.x, q.y, q.z, &dist);
+		float dist, rest = q.y;	//items and humans settle onto the floor below their point
+		floorAt(q.x, q.y + 2.0f, q.z, &rest);
+		Key k = nearest(q.x, rest, q.z, &dist);
 		if( dist > 12 ){ fail("%s %zu at (%.0f,%.0f,%.0f) is not on a standing spot", what, idx, q.x, q.y, q.z); return; }
 		if( !fwd.count(k) ) fail("%s %zu at (%.0f,%.0f,%.0f) cannot be reached from spawn 0", what, idx, q.x, q.y, q.z);
 		if( !back.count(k) ) fail("%s %zu at (%.0f,%.0f,%.0f) has no way back to spawn 0", what, idx, q.x, q.y, q.z);
@@ -254,7 +273,7 @@ int main(int argc, char** argv)
 	}
 	float losfrac = (float)vis / pairs;
 	std::printf("METRIC sightline_fraction %.3f\nMETRIC longest_sightline %.0f\n", losfrac, longest);
-	if( losfrac < 0.10f || losfrac > 0.45f ) fail("sight-line fraction %.2f outside 0.10..0.45", losfrac);
+	if( !mission && (losfrac < 0.10f || losfrac > 0.45f) ) fail("sight-line fraction %.2f outside 0.10..0.45", losfrac);
 	float worst = 0;
 	for(size_t k=0; k<spawns.size(); k++){
 		int seen = 0, n = 600;
@@ -262,7 +281,7 @@ int main(int argc, char** argv)
 			if( sees(ax, ay, az, spawns[k].x, spawns[k].y + 15.0f, spawns[k].z) ) seen++; }
 		float e = (float)seen / n; worst = std::max(worst, e);
 		std::printf("METRIC spawn_%zu_exposure %.2f\n", k, e);
-		if( e > 0.35f ) fail("spawn %zu at (%.0f,%.0f,%.0f) is visible from %.0f%% of the map", k, spawns[k].x, spawns[k].y, spawns[k].z, e*100);
+		if( !mission && e > 0.35f ) fail("spawn %zu at (%.0f,%.0f,%.0f) is visible from %.0f%% of the map", k, spawns[k].x, spawns[k].y, spawns[k].z, e*100);
 	}
 	std::printf("METRIC worst_spawn_exposure %.2f\n", worst);
 
@@ -280,7 +299,112 @@ int main(int argc, char** argv)
 		}
 	}
 	std::printf("METRIC ambiguous_ledges %d\n", ambiguous);
-	if( ambiguous > 0 ) fail("%d ledge edges within 1.5 of the jump limit %.1f (make them clearly jumpable or clearly not)", ambiguous, JUMP_UP);
+	if( ambiguous > 0 && mission ) std::printf("NOTE %d ambiguous ledges (deathmatch maps fail on this; missions only report it)\n", ambiguous);
+	else if( ambiguous > 0 ) fail("%d ledge edges within 1.5 of the jump limit %.1f (make them clearly jumpable or clearly not)", ambiguous, JUMP_UP);
+
+	// ---- ramps: walk each one up and down with real physics ---------------------------
+	{
+		human* p = objects.GetPlayerHumanObject();
+		int pid = objects.GetPlayerID();
+		int ramps = 0;
+		for(int b=0; b<blocks.GetTotaldatas(); b++){
+			blockdata bd; blocks.Getdata(&bd, b);
+			int idx[4] = {0,1,2,3};
+			std::sort(idx, idx+4, [&](int a, int c){ return bd.y[a] < bd.y[c]; });
+			float rise = bd.y[idx[3]] - bd.y[idx[0]];
+			if( rise < 2.0f ) continue;
+			float lx = (bd.x[idx[0]]+bd.x[idx[1]])/2, ly = (bd.y[idx[0]]+bd.y[idx[1]])/2, lz = (bd.z[idx[0]]+bd.z[idx[1]])/2;
+			float hx = (bd.x[idx[2]]+bd.x[idx[3]])/2, hy = (bd.y[idx[2]]+bd.y[idx[3]])/2, hz = (bd.z[idx[2]]+bd.z[idx[3]])/2;
+			float run = sqrtf((hx-lx)*(hx-lx)+(hz-lz)*(hz-lz));
+			float width = sqrtf((bd.x[idx[0]]-bd.x[idx[1]])*(bd.x[idx[0]]-bd.x[idx[1]])+(bd.z[idx[0]]-bd.z[idx[1]])*(bd.z[idx[0]]-bd.z[idx[1]]));
+			if( run < 4.0f || (hy-ly)/run > 0.9f || width < 6.0f ) continue;	//steep or thin: decorative
+			ramps++;
+			float dx = (hx-lx)/run, dz = (hz-lz)/run;
+			//both ends must belong to the play area (entered from below, from a side
+			//or from a landing), and the real player must walk it both ways
+			bool endsok = true;
+			//the ramp's own surface does not count as a way to reach its ends
+			std::set<Key> surface;
+			for(auto& kv : nodes){
+				int i, j, l; std::tie(i, j, l) = kv.first;
+				float px = i*G - lx, pz = j*G - lz, along = px*dx + pz*dz, across = fabsf(-px*dz + pz*dx);
+				float sy = ly + (hy-ly)*along/run;
+				if( along > 0.5f && along < run - 0.5f && across < width/2 + 0.5f && fabsf(kv.second - sy) < 3.0f ) surface.insert(kv.first);
+			}
+			for(int e=0; e<2; e++){
+				float prog = e == 0 ? 2.0f : run - 2.0f;
+				float ex = lx + dx*prog, ez = lz + dz*prog, ey;
+				float dist = 99; Key k;
+				if( floorAt(ex, ly + (hy-ly)*prog/run + 6.0f, ez, &ey) ) k = nearest(ex, ey, ez, &dist);
+				//the far end of the ramp beyond the surface: step off it, outside the footprint
+				bool open = false;
+				//an exit: a two-way step from the ramp's end onto play area that is not ramp
+				std::vector<Key> ends{k};
+				for(auto& t : adj[k]) if( surface.count(t) ) ends.push_back(t);	//first row of the ramp
+				if( dist <= 8.0f && play.count(k) ){
+					for(auto& kk : ends) for(auto& t : adj[kk]){
+						if( surface.count(t) || t == k || !play.count(t) ) continue;
+						auto& back = adj[t];
+						if( std::find(back.begin(), back.end(), kk) != back.end() ){ open = true; break; }
+					}
+				}
+				if( !open ){
+					fail("ramp block %d (%.0f,%.0f,%.0f)->(%.0f,%.0f,%.0f): its %s end is not reachable from the play area (blocked passage)", b, lx, ly, lz, hx, hy, hz, e == 0 ? "bottom" : "top");
+					endsok = false;
+				}
+			}
+			if( !endsok ) continue;
+			for(int dirn=0; dirn<2; dirn++){
+				bool up = dirn == 0;
+				float sp = up ? 2.0f : run - 2.0f, sx = lx + dx*sp, sz = lz + dz*sp, fy;
+				floorAt(sx, ly + (hy-ly)*sp/run + 6.0f, sz, &fy);
+				p->SetHP(100000);
+				p->SetPosData(sx, fy + 0.5f, sz, 0);
+				p->SetRxRy(atan2f(up ? dx : -dx, up ? dz : -dz), 0);
+				for(int t=0; t<5; t++) objects.Process(-1, false, false);
+				bool ok = false; float x = sx, y = fy, z = sz;
+				for(int t=0; t<600 && !ok; t++){
+					objects.MoveForward(pid);
+					objects.Process(-1, false, false);
+					p->GetPosData(&x, &y, &z, NULL);
+					float prog = (x-lx)*dx + (z-lz)*dz;
+					ok = up ? (prog >= run - 1.0f && y >= hy - 3.0f) : (prog <= 1.0f && y <= ly + 3.0f);
+				}
+				if( !ok ) fail("ramp block %d (%.0f,%.0f,%.0f)->(%.0f,%.0f,%.0f) cannot be walked %s: player stopped at (%.1f,%.1f,%.1f)", b, lx, ly, lz, hx, hy, hz, up ? "up" : "down", x, y, z);
+			}
+		}
+		std::printf("METRIC walkable_ramps %d\n", ramps);
+	}
+
+	// ---- outdoor: no walking or jumping into a death pit ----------------------------
+	if( outdoor ){
+		int pits = 0;
+		std::set<std::pair<int,int>> reported;
+		for(auto& kv : nodes){
+			if( !play.count(kv.first) ) continue;
+			int i, j, l; std::tie(i, j, l) = kv.first; float y = kv.second;
+			for(int a=0; a<8; a++){
+				float yaw = a*(float)M_PI/4, ux = cosf(yaw), uz = sinf(yaw);
+				for(float r=4; r<=48; r+=4){
+					float qx = i*G + ux*r, qz = j*G + uz*r, qy;
+					if( floorAt(qx, bmax[1] + 5, qz, &qy) ) continue;
+					//a floorless column within reach: can the body pass over whatever is between?
+					bool clear = true;
+					for(float h : {JUMP_UP + 1.0f, JUMP_UP + 19.0f}){
+						if( coll.CheckALLBlockIntersectRay(i*G, y + h, j*G, ux, 0, uz, NULL, NULL, &d, r) ) clear = false;
+					}
+					if( clear ){
+						pits++;
+						if( reported.insert(std::make_pair(i/4, j/4)).second && reported.size() <= 6 )
+							std::printf("NOTE death-pit edge: from (%.0f,%.0f,%.0f) toward yaw %d, floorless at %.0f units\n", i*G, y, j*G, a*45, r);
+					}
+					break;
+				}
+			}
+		}
+		std::printf("METRIC death_pit_edges %d\n", pits);
+		if( pits ) fail("%d play spots can walk or jump into a floorless pit", pits);
+	}
 
 	// ---- sealed ------------------------------------------------------------------------
 	if( sealed ){

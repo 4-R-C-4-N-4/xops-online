@@ -29,6 +29,10 @@ class DmCheckTests(unittest.TestCase):
         self.assertIn("DMCHECK OK", out)
         self.assertEqual(metric(out, "lifts"), 2, out)
 
+    def test_escape_mission_passes_engine_gate(self):
+        code, out = run("data/ufoescape", "escape.pd1", "--mission", "--sealed")
+        self.assertEqual(code, 0, out)
+
     def test_jump_limit_is_16(self):
         code, out = run("--jumpprobe")
         self.assertEqual(code, 0, out)

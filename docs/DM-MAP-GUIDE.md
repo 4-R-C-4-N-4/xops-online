@@ -88,6 +88,20 @@ Deck16) — principles only, never their geometry:
 | spawn exposure | each spawn visible from <= 35% of the map |
 | `ambiguous_ledges` | 0 (no ledges 14.5..17.5 above an adjacent floor) |
 | `void_leaks` (`--sealed`) | 0 |
+| ramps | every sloped block top (rise >= 2, slope <= 0.9, width >= 6): both ends open onto play area that is not the ramp, and the real player walks it up and down |
+| `death_pit_edges` (`--outdoor`) | 0: no play spot can walk or jump (over anything lower than the jump) into a floorless column within 48 units |
+
+`--mission` runs the same gate on single-player maps from the player's own
+spawn and skips the deathmatch-only gates (spawn count, sight lines, spawn
+exposure, ambiguous ledges are reported only).
+
+## Rendering hygiene
+
+Faces that share a plane and overlap flicker (z-fighting). `tools.mapgen
+build` now insets the smaller face of every such pair by 0.08 units
+(tools/mapgen/zfight.py), so overlapping corners and flush trims are safe to
+author; `python3 tools/geomcheck.py --all` audits the committed binaries and
+`python3 tools/rebuild_maps.py` rebuilds every pack map from its source.
 
 ## Content
 

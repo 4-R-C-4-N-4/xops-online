@@ -13,7 +13,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from . import bd1, pd1
+from . import bd1, pd1, zfight
 
 SCHEMA_VERSION = 1
 
@@ -305,6 +305,10 @@ def build(doc: Dict[str, Any]) -> BuildResult:
         raise AuthorError("'textures' must be a list of strings")
 
     blocks = [_build_block(b, textures) for b in doc.get("blocks", [])]
+    if doc.get("resolve_zfighting", True):
+        # Coplanar overlapping faces flicker in the depth buffer; inset the
+        # smaller face slightly (see zfight.py). Idempotent.
+        blocks, _moved = zfight.resolve(blocks)
     bd1_file = bd1.BD1File(textures=textures, blocks=blocks)
 
     points = [_build_point(p) for p in doc.get("points", [])]

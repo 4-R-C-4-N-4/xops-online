@@ -72,6 +72,8 @@ def main(argv=None):
     ap.add_argument("pd1", nargs="?")
     ap.add_argument("--sealed", action="store_true")
     ap.add_argument("--jumpprobe", action="store_true")
+    ap.add_argument("--mission", action="store_true", help="single-player map: start from the player spawn")
+    ap.add_argument("--outdoor", action="store_true", help="fail on reachable death pits")
     ap.add_argument("--pack", default=str(ROOT / "assets/pack"))
     a = ap.parse_args(argv)
     exe = build()
@@ -81,7 +83,7 @@ def main(argv=None):
             r = subprocess.run([str(exe), a.pack, "data/jumptest", "jump.pd1", "--jumpprobe", "--overlay", str(fx)],
                                capture_output=True, text=True)
     else:
-        args = [str(exe), a.pack, a.mapdir, a.pd1] + (["--sealed"] if a.sealed else [])
+        args = [str(exe), a.pack, a.mapdir, a.pd1] + [f for f, on in (("--sealed", a.sealed), ("--mission", a.mission), ("--outdoor", a.outdoor)) if on]
         r = subprocess.run(args, capture_output=True, text=True)
     sys.stdout.write(r.stdout)
     sys.stderr.write(r.stderr[-2000:])
