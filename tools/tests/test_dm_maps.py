@@ -13,6 +13,13 @@ from tools.mapgen import author, bd1, pd1  # noqa: E402
 PLAYER_HEIGHT = 20.0
 
 MAPS = {
+    "spire": dict(
+        json_src=ROOT / "tools/mapgen/examples/dm_spire.json",
+        bd1=ROOT / "assets/pack/data/dmspire/temp.bd1",
+        pd1=ROOT / "assets/pack/data/dmspire/spire.pd1",
+        mif=ROOT / "assets/pack/data/dmspire/spire.mif",
+        msg=ROOT / "assets/pack/data/dmspire/spire.msg",
+    ),
     "hangar": dict(
         json_src=ROOT / "tools/mapgen/examples/dm_hangar.json",
         bd1=ROOT / "assets/pack/data/dmhangar/temp.bd1",
@@ -232,7 +239,7 @@ class MissionWiringTests(unittest.TestCase):
         self.assertIn("UFO FIELD", names)
         self.assertIn("UFO ESCAPE", names)
         self.assertIn("STARTER", names)
-        self.assertEqual(names[-3:], ["DM HANGAR", "DM FIELD", "DM SHIPDECK"])
+        self.assertEqual(names[-4:], ["DM HANGAR", "DM FIELD", "DM SHIPDECK", "DM SPIRE"])
         for l in lines[-3:]:
             parts = l.split("|")
             self.assertLessEqual(len(parts[1]), 35)
