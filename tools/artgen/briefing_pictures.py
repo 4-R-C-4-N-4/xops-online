@@ -220,6 +220,59 @@ def generate_dmfield(out_dir: Path) -> Path:
                          world_min=(-260.0, -380.0), world_max=(260.0, 260.0))
 
 
+def render_spire_plan(level=32, size=384):
+    """Height-sliced original plan; omit the shell roof to reveal routes."""
+    doc = load_map(ROOT / "tools/mapgen/examples/dm_spire.json")
+    img = Image.new("RGB", (size, size), (18, 25, 36))
+    draw = ImageDraw.Draw(img)
+    def project(x, z):
+        return (int((x + 172) / 344 * size), int((z + 172) / 344 * size))
+    for block in doc["blocks"]:
+        if "vertices" in block:
+            vs = block["vertices"][:4]
+            if min(v[1] for v in vs) <= level <= max(v[1] for v in vs):
+                draw.polygon([project(v[0], v[2]) for v in vs], fill=(155, 130, 62))
+            continue
+        lo, hi = block["min"], block["max"]
+        if hi[1] == level and hi[1] - lo[1] <= 2:
+            color = (55, 100, 126)
+        elif lo[1] <= level + 18 and hi[1] > level + 2:
+            color = (120, 134, 145)
+        else:
+            continue
+        draw.rectangle([project(lo[0], lo[2]), project(hi[0], hi[2])], fill=color)
+    for pt in doc["points"]:
+        x,y,z = pt["pos"]
+        px,py = project(x,z)
+        if pt.get("p1") == 61 and y <= level <= y + pt["p3"]:
+            draw.ellipse((px-5,py-5,px+5,py+5), outline=(60,255,220), width=2)
+        elif abs(y-level) <= 3:
+            color = (255,220,90) if pt.get("p1") == 60 else (255,125,80)
+            draw.ellipse((px-3,py-3,px+3,py+3), fill=color)
+    draw.text((10, 8), f"DM SPIRE / Y={level}", fill=(240,240,240))
+    return img
+
+
+def generate_dmspire(out_dir: Path) -> Path:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    image = render_spire_plan().resize((SIZE, SIZE), Image.Resampling.NEAREST)
+    path = out_dir / "dmspire.bmp"
+    write_bmp8(image.convert("P", palette=Image.Palette.ADAPTIVE, colors=256), path)
+    return path
+
+
+def generate_spire_layout(path: Path) -> Path:
+    image = Image.new("RGB", (1152, 416), (18,25,36))
+    for i, level in enumerate((0,32,64)):
+        image.paste(render_spire_plan(level), (i*384,0))
+    ImageDraw.Draw(image).text((12,395),
+        "NORTH UP | gold: ramps / yellow: spawns / orange: weapons / cyan: lifts | safe drops: 32 units",
+        fill=(240,240,240))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    image.save(path)
+    return path
+
+
 def main() -> int:
     out_dir = ROOT / "assets" / "pack" / "data" / "briefing"
     path = generate_starter(out_dir)
@@ -232,6 +285,8 @@ def main() -> int:
     print(f"wrote {path4}")
     path5 = generate_dmfield(out_dir)
     print(f"wrote {path5}")
+    print(f"wrote {generate_dmspire(out_dir)}")
+    print(f"wrote {generate_spire_layout(ROOT / 'docs/img/dm/spire_layout.png')}")
     return 0
 
 

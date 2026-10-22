@@ -1,0 +1,1829 @@
+{
+  "schema": 1,
+  "textures": [
+    "hull.bmp",
+    "floor.bmp",
+    "ceiling.bmp",
+    "bulkhead.bmp",
+    "console.bmp",
+    "lightstrip.bmp",
+    "hazard.bmp",
+    "labpanel.bmp"
+  ],
+  "blocks": [
+    {
+      "comment": "foundation",
+      "min": [
+        -160,
+        -2.0,
+        -150
+      ],
+      "max": [
+        160,
+        0,
+        150
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "ceiling",
+      "min": [
+        -160,
+        108,
+        -150
+      ],
+      "max": [
+        160,
+        110.0,
+        150
+      ],
+      "texture_world_units": 32.0,
+      "texture": "ceiling.bmp"
+    },
+    {
+      "comment": "west shell [0]",
+      "min": [
+        -162.0,
+        0,
+        -150
+      ],
+      "max": [
+        -158.0,
+        108,
+        150
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "east shell [0]",
+      "min": [
+        158.0,
+        0,
+        -150
+      ],
+      "max": [
+        162.0,
+        108,
+        150
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "north shell [0]",
+      "min": [
+        -160,
+        0,
+        -152.0
+      ],
+      "max": [
+        160,
+        108,
+        -148.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south shell [0]",
+      "min": [
+        -160,
+        0,
+        148.0
+      ],
+      "max": [
+        160,
+        108,
+        152.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 mid floor",
+      "min": [
+        -156,
+        30.0,
+        -60
+      ],
+      "max": [
+        -92,
+        32,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "tower -1 ramp",
+      "vertices": [
+        [
+          -144,
+          32,
+          60
+        ],
+        [
+          -104,
+          32,
+          60
+        ],
+        [
+          -104,
+          0,
+          140
+        ],
+        [
+          -144,
+          0,
+          140
+        ],
+        [
+          -144,
+          28.0,
+          60
+        ],
+        [
+          -104,
+          28.0,
+          60
+        ],
+        [
+          -104,
+          -4.0,
+          140
+        ],
+        [
+          -144,
+          -4.0,
+          140
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "tower -1 ramp left [0]",
+      "min": [
+        -148.0,
+        0,
+        60
+      ],
+      "max": [
+        -144.0,
+        108,
+        140
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 ramp right [0]",
+      "min": [
+        -104.0,
+        0,
+        60
+      ],
+      "max": [
+        -100.0,
+        108,
+        140
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 outer wall [0]",
+      "min": [
+        -158.0,
+        0,
+        -60
+      ],
+      "max": [
+        -154.0,
+        68,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 north wall [0]",
+      "min": [
+        -156,
+        0,
+        -62.0
+      ],
+      "max": [
+        -136,
+        68,
+        -58.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 north wall [1]",
+      "min": [
+        -112,
+        0,
+        -62.0
+      ],
+      "max": [
+        -92,
+        68,
+        -58.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 inner wall [0]",
+      "min": [
+        -94.0,
+        0,
+        -60
+      ],
+      "max": [
+        -90.0,
+        68,
+        -14
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 inner wall [1]",
+      "min": [
+        -94.0,
+        0,
+        14
+      ],
+      "max": [
+        -90.0,
+        68,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower -1 ceiling",
+      "min": [
+        -156,
+        66,
+        -60
+      ],
+      "max": [
+        -92,
+        68.0,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "ceiling.bmp"
+    },
+    {
+      "comment": "tower -1 room cover",
+      "min": [
+        -132,
+        32,
+        25
+      ],
+      "max": [
+        -120,
+        42,
+        37
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "bridge -1 north leg",
+      "min": [
+        -136,
+        30.0,
+        -112
+      ],
+      "max": [
+        -112,
+        32,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "bridge -1 outside [0]",
+      "min": [
+        -138.0,
+        32,
+        -112
+      ],
+      "max": [
+        -134.0,
+        66,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge -1 inside [0]",
+      "min": [
+        -114.0,
+        32,
+        -112
+      ],
+      "max": [
+        -110.0,
+        66,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge -1 roof",
+      "min": [
+        -136,
+        66,
+        -112
+      ],
+      "max": [
+        -112,
+        68.0,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "ceiling.bmp"
+    },
+    {
+      "comment": "bridge -1 cross leg",
+      "min": [
+        -136,
+        30.0,
+        -128
+      ],
+      "max": [
+        -24,
+        32,
+        -104
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "bridge -1 north rail [0]",
+      "min": [
+        -136,
+        32,
+        -130.0
+      ],
+      "max": [
+        -24,
+        42,
+        -126.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge -1 south rail [0]",
+      "min": [
+        -112,
+        32,
+        -106.0
+      ],
+      "max": [
+        -24,
+        42,
+        -102.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge -1 hanging baffle",
+      "min": [
+        -70,
+        58,
+        -128
+      ],
+      "max": [
+        -58,
+        86,
+        -104
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "tower 1 mid floor",
+      "min": [
+        92,
+        30.0,
+        -60
+      ],
+      "max": [
+        156,
+        32,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "tower 1 ramp",
+      "vertices": [
+        [
+          104,
+          32,
+          60
+        ],
+        [
+          144,
+          32,
+          60
+        ],
+        [
+          144,
+          0,
+          140
+        ],
+        [
+          104,
+          0,
+          140
+        ],
+        [
+          104,
+          28.0,
+          60
+        ],
+        [
+          144,
+          28.0,
+          60
+        ],
+        [
+          144,
+          -4.0,
+          140
+        ],
+        [
+          104,
+          -4.0,
+          140
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "tower 1 ramp left [0]",
+      "min": [
+        100.0,
+        0,
+        60
+      ],
+      "max": [
+        104.0,
+        108,
+        140
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower 1 ramp right [0]",
+      "min": [
+        144.0,
+        0,
+        60
+      ],
+      "max": [
+        148.0,
+        108,
+        140
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower 1 outer wall [0]",
+      "min": [
+        154.0,
+        0,
+        -60
+      ],
+      "max": [
+        158.0,
+        68,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower 1 north wall [0]",
+      "min": [
+        92,
+        0,
+        -62.0
+      ],
+      "max": [
+        112,
+        68,
+        -58.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower 1 north wall [1]",
+      "min": [
+        136,
+        0,
+        -62.0
+      ],
+      "max": [
+        156,
+        68,
+        -58.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower 1 inner wall [0]",
+      "min": [
+        90.0,
+        0,
+        -60
+      ],
+      "max": [
+        94.0,
+        68,
+        -14
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower 1 inner wall [1]",
+      "min": [
+        90.0,
+        0,
+        14
+      ],
+      "max": [
+        94.0,
+        68,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "tower 1 ceiling",
+      "min": [
+        92,
+        66,
+        -60
+      ],
+      "max": [
+        156,
+        68.0,
+        60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "ceiling.bmp"
+    },
+    {
+      "comment": "tower 1 room cover",
+      "min": [
+        116,
+        32,
+        25
+      ],
+      "max": [
+        128,
+        42,
+        37
+      ],
+      "texture_world_units": 16.0,
+      "texture": "console.bmp"
+    },
+    {
+      "comment": "bridge 1 north leg",
+      "min": [
+        112,
+        30.0,
+        -112
+      ],
+      "max": [
+        136,
+        32,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "bridge 1 outside [0]",
+      "min": [
+        110.0,
+        32,
+        -112
+      ],
+      "max": [
+        114.0,
+        66,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge 1 inside [0]",
+      "min": [
+        134.0,
+        32,
+        -112
+      ],
+      "max": [
+        138.0,
+        66,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge 1 roof",
+      "min": [
+        112,
+        66,
+        -112
+      ],
+      "max": [
+        136,
+        68.0,
+        -60
+      ],
+      "texture_world_units": 32.0,
+      "texture": "ceiling.bmp"
+    },
+    {
+      "comment": "bridge 1 cross leg",
+      "min": [
+        24,
+        30.0,
+        -128
+      ],
+      "max": [
+        136,
+        32,
+        -104
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "bridge 1 north rail [0]",
+      "min": [
+        24,
+        32,
+        -130.0
+      ],
+      "max": [
+        136,
+        42,
+        -126.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge 1 south rail [0]",
+      "min": [
+        24,
+        32,
+        -106.0
+      ],
+      "max": [
+        112,
+        42,
+        -102.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "bridge 1 hanging baffle",
+      "min": [
+        58,
+        58,
+        -128
+      ],
+      "max": [
+        70,
+        86,
+        -104
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "spire mid landing",
+      "min": [
+        -28,
+        30.0,
+        -146
+      ],
+      "max": [
+        28,
+        32,
+        -92
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "spire ground ramp",
+      "vertices": [
+        [
+          -16,
+          32,
+          -92
+        ],
+        [
+          16,
+          32,
+          -92
+        ],
+        [
+          16,
+          0,
+          -12
+        ],
+        [
+          -16,
+          0,
+          -12
+        ],
+        [
+          -16,
+          28.0,
+          -92
+        ],
+        [
+          16,
+          28.0,
+          -92
+        ],
+        [
+          16,
+          -4.0,
+          -12
+        ],
+        [
+          -16,
+          -4.0,
+          -12
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "spire ramp west [0]",
+      "min": [
+        -24.0,
+        0,
+        -90
+      ],
+      "max": [
+        -20.0,
+        108,
+        -20
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "spire ramp east [0]",
+      "min": [
+        20.0,
+        0,
+        -90
+      ],
+      "max": [
+        24.0,
+        108,
+        -20
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "spire high gallery",
+      "min": [
+        -28,
+        62.0,
+        -146
+      ],
+      "max": [
+        28,
+        64,
+        -112
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "spire upper ramp",
+      "vertices": [
+        [
+          -16,
+          64,
+          -112
+        ],
+        [
+          16,
+          64,
+          -112
+        ],
+        [
+          16,
+          32,
+          -32
+        ],
+        [
+          -16,
+          32,
+          -32
+        ],
+        [
+          -16,
+          60.0,
+          -112
+        ],
+        [
+          16,
+          60.0,
+          -112
+        ],
+        [
+          16,
+          28.0,
+          -32
+        ],
+        [
+          -16,
+          28.0,
+          -32
+        ]
+      ],
+      "faces": [
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "floor.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "texture": "hazard.bmp",
+          "u": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "v": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "comment": "courtyard mid spur",
+      "min": [
+        -16,
+        30.0,
+        -32
+      ],
+      "max": [
+        16,
+        32,
+        -16
+      ],
+      "texture_world_units": 32.0,
+      "texture": "floor.bmp"
+    },
+    {
+      "comment": "spire top west [0]",
+      "min": [
+        -30.0,
+        64,
+        -146
+      ],
+      "max": [
+        -26.0,
+        104,
+        -112
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "spire top east [0]",
+      "min": [
+        26.0,
+        64,
+        -146
+      ],
+      "max": [
+        30.0,
+        104,
+        -112
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south court divider -1 [0]",
+      "min": [
+        -110,
+        0,
+        48.0
+      ],
+      "max": [
+        -89,
+        28,
+        52.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south court divider -1 [1]",
+      "min": [
+        -71,
+        0,
+        48.0
+      ],
+      "max": [
+        -50,
+        28,
+        52.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "north court divider -1 [0]",
+      "min": [
+        -110,
+        0,
+        -72.0
+      ],
+      "max": [
+        -85,
+        28,
+        -68.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "north court divider -1 [1]",
+      "min": [
+        -65,
+        0,
+        -72.0
+      ],
+      "max": [
+        -40,
+        28,
+        -68.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south court elbow -1 [0]",
+      "min": [
+        -42.0,
+        0,
+        70
+      ],
+      "max": [
+        -38.0,
+        28,
+        126
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "courtyard reactor -1",
+      "min": [
+        -60,
+        0,
+        -18
+      ],
+      "max": [
+        -40,
+        28,
+        18
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "south court crate -1",
+      "min": [
+        -133,
+        0,
+        98
+      ],
+      "max": [
+        -117,
+        10,
+        114
+      ],
+      "texture_world_units": 16.0,
+      "texture": "hazard.bmp"
+    },
+    {
+      "comment": "south court divider 1 [0]",
+      "min": [
+        50,
+        0,
+        48.0
+      ],
+      "max": [
+        71,
+        28,
+        52.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south court divider 1 [1]",
+      "min": [
+        89,
+        0,
+        48.0
+      ],
+      "max": [
+        110,
+        28,
+        52.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "north court divider 1 [0]",
+      "min": [
+        40,
+        0,
+        -72.0
+      ],
+      "max": [
+        65,
+        28,
+        -68.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "north court divider 1 [1]",
+      "min": [
+        85,
+        0,
+        -72.0
+      ],
+      "max": [
+        110,
+        28,
+        -68.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south court elbow 1 [0]",
+      "min": [
+        38.0,
+        0,
+        70
+      ],
+      "max": [
+        42.0,
+        28,
+        126
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "courtyard reactor 1",
+      "min": [
+        40,
+        0,
+        -18
+      ],
+      "max": [
+        60,
+        28,
+        18
+      ],
+      "texture_world_units": 16.0,
+      "texture": "labpanel.bmp"
+    },
+    {
+      "comment": "south court crate 1",
+      "min": [
+        117,
+        0,
+        98
+      ],
+      "max": [
+        133,
+        10,
+        114
+      ],
+      "texture_world_units": 16.0,
+      "texture": "hazard.bmp"
+    },
+    {
+      "comment": "south central screen",
+      "min": [
+        -16,
+        0,
+        76
+      ],
+      "max": [
+        16,
+        28,
+        84
+      ],
+      "texture_world_units": 16.0,
+      "texture": "bulkhead.bmp"
+    },
+    {
+      "comment": "north spawn screen -1 [0]",
+      "min": [
+        -154,
+        0,
+        -114.0
+      ],
+      "max": [
+        -122,
+        28,
+        -110.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south spawn screen -1 [0]",
+      "min": [
+        -122.0,
+        0,
+        118
+      ],
+      "max": [
+        -118.0,
+        28,
+        146
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "north spawn screen 1 [0]",
+      "min": [
+        122,
+        0,
+        -114.0
+      ],
+      "max": [
+        154,
+        28,
+        -110.0
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    },
+    {
+      "comment": "south spawn screen 1 [0]",
+      "min": [
+        118.0,
+        0,
+        118
+      ],
+      "max": [
+        122.0,
+        28,
+        146
+      ],
+      "texture_world_units": 32.0,
+      "texture": "hull.bmp"
+    }
+  ],
+  "points": [
+    {
+      "type": "raw",
+      "pos": [
+        -87,
+        0,
+        0
+      ],
+      "rotation": -1.5707963267948966,
+      "p1": 61,
+      "p2": 6,
+      "p3": 32
+    },
+    {
+      "type": "raw",
+      "pos": [
+        87,
+        0,
+        0
+      ],
+      "rotation": 1.5707963267948966,
+      "p1": 61,
+      "p2": 6,
+      "p3": 32
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0,
+        0,
+        -11
+      ],
+      "rotation": 3.141592653589793,
+      "p1": 61,
+      "p2": 6,
+      "p3": 32
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -140,
+        2,
+        -130
+      ],
+      "rotation": 0.8224182792713783,
+      "p1": 60,
+      "p4": 0
+    },
+    {
+      "type": "raw",
+      "pos": [
+        140,
+        2,
+        -130
+      ],
+      "rotation": -0.8224182792713783,
+      "p1": 60,
+      "p4": 1
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -150,
+        2,
+        130
+      ],
+      "rotation": 2.2848870254070546,
+      "p1": 60,
+      "p4": 2
+    },
+    {
+      "type": "raw",
+      "pos": [
+        150,
+        2,
+        130
+      ],
+      "rotation": -2.2848870254070546,
+      "p1": 60,
+      "p4": 3
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -60,
+        2,
+        110
+      ],
+      "rotation": 2.642245931909663,
+      "p1": 60,
+      "p4": 4
+    },
+    {
+      "type": "raw",
+      "pos": [
+        60,
+        2,
+        110
+      ],
+      "rotation": -2.642245931909663,
+      "p1": 60,
+      "p4": 5
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -140,
+        34,
+        40
+      ],
+      "rotation": 1.849095985800008,
+      "p1": 60,
+      "p4": 6
+    },
+    {
+      "type": "raw",
+      "pos": [
+        140,
+        34,
+        40
+      ],
+      "rotation": -1.849095985800008,
+      "p1": 60,
+      "p4": 7
+    },
+    {
+      "type": "raw",
+      "pos": [
+        -60,
+        34,
+        -116
+      ],
+      "rotation": 0.4773453823736719,
+      "p1": 60,
+      "p4": 8
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0,
+        66,
+        -132
+      ],
+      "rotation": 0.0,
+      "p1": 60,
+      "p4": 9
+    },
+    {
+      "type": "player_spawn",
+      "pos": [
+        -150,
+        2,
+        130
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 43
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -130,
+        2,
+        -120
+      ],
+      "rotation": 0.0,
+      "weapon_id": 1,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        130,
+        2,
+        -120
+      ],
+      "rotation": 0.0,
+      "weapon_id": 9,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -150,
+        2,
+        110
+      ],
+      "rotation": 0.0,
+      "weapon_id": 10,
+      "ammo": 90
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        150,
+        2,
+        110
+      ],
+      "rotation": 0.0,
+      "weapon_id": 3,
+      "ammo": 60
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        0,
+        2,
+        40
+      ],
+      "rotation": 0.0,
+      "weapon_id": 13,
+      "ammo": 4
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        60,
+        34,
+        -116
+      ],
+      "rotation": 0.0,
+      "weapon_id": 26,
+      "ammo": 50
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        0,
+        66,
+        -132
+      ],
+      "rotation": 0.0,
+      "weapon_id": 23,
+      "ammo": 20
+    },
+    {
+      "type": "weapon_pickup",
+      "pos": [
+        -124,
+        34,
+        0
+      ],
+      "rotation": 0.0,
+      "weapon_id": 24,
+      "ammo": 50
+    }
+  ]
+}
