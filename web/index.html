@@ -1,68 +1,55 @@
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
-<title>OpenXOPS browser preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XOPS ONLINE — Deathmatch</title>
+<link rel="stylesheet" href="ui/launcher.css">
 <style>
-body{margin:0;background:#151719;color:#ddd;font:16px monospace;text-align:center}
 canvas{display:block;margin:auto;width:min(100vw,960px);height:auto}
-button,input{margin:12px;padding:10px}pre{max-height:160px;overflow:auto;text-align:left;font-size:11px}a{color:#9cf}
-#status[data-error=true]{color:#ffab91;max-width:900px;margin:16px auto}
 #stage{display:none}
 body.playing{overflow:hidden}
 body.playing #stage,#stage:fullscreen{display:flex;position:fixed;inset:0;background:#000;align-items:center;justify-content:center;flex-direction:column;z-index:10;box-sizing:border-box;padding-bottom:48px}
 #stage canvas{display:block;margin:0;outline:none;flex:none;width:auto;height:auto;max-width:none}
 .gamebar{position:absolute;bottom:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:center;gap:16px;background:#151719;color:#ddd;font-size:13px}
 .gamebar button{padding:5px 12px;margin:0}
-#setup-controls{display:inline-flex;align-items:center;gap:8px;margin:8px}
-#setup-controls select{padding:8px;background:#202427;color:#eee;font:inherit}
 #resume-overlay{display:none;position:fixed;inset:0;z-index:30;background:#000000cc;align-items:center;justify-content:center;cursor:pointer}
 body.paused #resume-overlay{display:flex}
 body.paused #stage canvas{cursor:auto!important}
-#resume-game{display:block;font:20px/1.2 monospace;font-weight:bold;padding:20px 40px;min-width:240px;min-height:64px;background:#2b6cff;color:#fff;border:3px solid #fff;border-radius:10px;cursor:pointer}
-#resume-game:hover{background:#1d54d6}
-#resume-game:focus-visible{outline:4px solid #ffd54f;outline-offset:3px}
-#controls-dialog{max-width:560px;background:#202427;color:#eee;border:1px solid #8aa;padding:20px;text-align:left;font:16px/1.5 monospace}
+#resume-game{display:block;font:20px/1.2 monospace;font-weight:bold;padding:20px 40px;min-width:240px;min-height:64px;background:#802260;color:#fff;border:3px solid #fff;border-radius:0;cursor:pointer}
+#resume-game:hover{background:#a3297e}
+#resume-game:focus-visible{outline:4px solid #ff78d2;outline-offset:3px}
+#controls-dialog{max-width:560px;background:#202427;color:#eee;border:1px solid #827585;padding:20px;text-align:left;font:16px/1.5 monospace}
 #controls-dialog::backdrop{background:#000b}
 #controls-dialog h2{margin-top:0}
 #controls-dialog button{margin:8px 0}
 #controls-dialog{z-index:20}
 </style>
-<h2>OpenXOPS — browser preview</h2>
-<p><strong>Click Start game to play</strong> with the bundled free (CC0) data pack — no download needed.
-The free pack is an early work in progress: placeholder art, one original starter mission.</p>
-<details style="display:inline-block;text-align:left;max-width:800px"><summary>Optional: play with the classic X operations 0.96 data</summary>
-<ol>
-<li><a href="https://ftp.vector.co.jp/39/89/3471/xops096.zip" target="_blank" rel="noopener noreferrer"><strong>Download X operations 0.96 — xops096.zip (about 5 MB)</strong></a>
-from the original Vector distribution. <a href="https://www.vector.co.jp/soft/win95/game/se284467.html" target="_blank" rel="noopener noreferrer">Download page / fallback</a>.
-OpenXOPS engine/source downloads (1.080.zip / 1.080-src.zip) are not game data.</li>
-<li>Keep the ZIP as downloaded; do not extract it.</li>
-<li>Load it below. It layers over the free pack, adds the 58 classic missions and stays in this browser; it is not uploaded.</li>
-</ol></details><br>
+<main class="launcher">
+<header class="masthead"><h1><img src="ui/title.svg" alt="XOPS ONLINE" width="396" height="64"></h1><span>FREE PACK / EXPERIMENTAL MULTIPLAYER</span></header>
 <section id="mp-panel" aria-labelledby="mp-title">
-<h2 id="mp-title">Multiplayer deathmatch (experimental)</h2>
-<p>Host a room and send the link, or join with a code. <em>Same-browser test</em> connects tabs of this browser; <em>Online</em> connects browsers directly (WebRTC; signaling over public Nostr relays).</p>
-<p><label for="mp-map">Map (host picks):</label> <select id="mp-map"><option value="hangar">DM HANGAR</option><option value="field">DM FIELD</option><option value="shipdeck">DM SHIPDECK</option><option value="spire">DM SPIRE</option></select></p>
-<div id="mp-lobby"></div>
+<div class="section-heading"><h2 id="mp-title"><img src="ui/operate.svg" alt="Deathmatch" width="180" height="32"></h2><span>DEATHMATCH · 4 ARENAS</span></div>
+<div id="mp-lobby"><select id="mp-map" aria-label="Arena"><option value="hangar">DM HANGAR</option><option value="field">DM FIELD</option><option value="shipdeck">DM SHIPDECK</option><option value="spire">DM SPIRE</option></select></div>
 </section>
-<label for="archive">Load classic X operations data (optional):</label>
-<input id="archive" type="file" accept=".zip">
-<button id="play" disabled>Loading engine…</button>
-<button id="forget" type="button" disabled>Forget saved ZIP</button>
-<button id="controls-setup" type="button">Controls</button>
-<p id="setup-controls"><label for="preset">Input preset (applies next start):</label><select id="preset"><option value="classic">Classic — original bindings</option><option value="modern">Modern — WASD + mouse</option></select></p>
-<p>The validated ZIP is remembered on this browser/device. Clearing site data or using private browsing can remove it. <strong>Forget saved ZIP</strong> deletes the saved copy.</p>
-<p id="saved-archive" role="status"></p>
+<div class="setup-row"><div id="setup-controls"><label for="preset">Input preset</label><select id="preset"><option value="classic">Classic — original bindings</option><option value="modern">Modern — WASD + mouse</option></select></div><button id="controls-setup" type="button"><img src="ui/controls.svg" alt="Controls" height="24"></button></div>
 <p id="status" role="status">Preparing WASM…</p>
-<div id="resume-overlay" role="button" aria-label="Resume game" tabindex="-1"><button id="resume-game" type="button" aria-label="Resume game">Resume game</button></div>
+<details id="classic-options"><summary>Classic archive / single-player</summary>
+<p>Start single-player with the bundled free CC0 pack, or layer classic data over it.</p>
+<label for="archive">Classic X operations ZIP (optional)</label><input id="archive" type="file" accept=".zip">
+<div class="archive-actions"><button id="play" disabled>Loading engine…</button><button id="forget" type="button" disabled><img src="ui/forget.svg" alt="Forget saved ZIP" height="24"></button></div>
+<p id="saved-archive" role="status"></p>
+<p><a href="https://ftp.vector.co.jp/39/89/3471/xops096.zip" target="_blank" rel="noopener noreferrer">Download X operations 0.96 (about 5 MB)</a> · <a href="https://www.vector.co.jp/soft/win95/game/se284467.html" target="_blank" rel="noopener noreferrer">Download page / fallback</a></p>
+<p>Keep the ZIP unextracted. The classic game archive adds 58 missions; engine/source downloads are not game data. Your validated ZIP stays in this browser and is never uploaded. It is remembered on this device until you forget it or clear site data; private browsing may remove it.</p>
+</details>
+<details id="diagnostics"><summary>Diagnostics log</summary><pre id="log"></pre></details>
+<footer><span>Online: direct WebRTC · public Nostr signaling. Keep the host tab visible.</span><span><a href="LICENSE">Engine license</a> · <a href="ui/FONT-LICENSE.md">Font / provenance</a></span></footer>
+</main>
+<div id="resume-overlay" role="button" aria-label="Resume game" tabindex="-1"><button id="resume-game" type="button" aria-label="Resume game"><img src="ui/resume.svg" alt="Resume game" height="24"></button></div>
 <div id="stage">
 <div id="net-hud" hidden><ol id="net-scores"></ol><ul id="net-feed"></ul></div>
 <canvas id="canvas" width="640" height="480" tabindex="0" oncontextmenu="event.preventDefault()"></canvas>
-<div class="gamebar"><span>Click game for mouse · Esc releases</span><button id="controls" type="button">Controls</button><button id="fullscreen" type="button">Fullscreen</button></div>
+<div class="gamebar"><span>Click game for mouse · Esc releases</span><button id="controls" type="button"><img src="ui/controls.svg" alt="Controls" height="24"></button><button id="fullscreen" type="button"><img src="ui/fullscreen.svg" alt="Fullscreen" height="24"></button></div>
 </div>
-<dialog id="controls-dialog" aria-labelledby="controls-title" aria-describedby="controls-description"><h2 id="controls-title">Controls</h2><p id="controls-description"></p><button id="close-controls" type="button">Close</button></dialog>
-<p>Click canvas to capture mouse. Esc releases it. Choose a preset above; Classic preserves original key bindings.
-<a href="LICENSE">Engine license</a></p>
-<pre id="log"></pre>
+<dialog id="controls-dialog" aria-labelledby="controls-title" aria-describedby="controls-description"><h2 id="controls-title">Controls</h2><p id="controls-description"></p><button id="close-controls" type="button"><img src="ui/close.svg" alt="Close" height="24"></button></dialog>
 <script>
 const logElement=document.getElementById('log'),play=document.getElementById('play'),
  status=document.getElementById('status'),canvas=document.getElementById('canvas');
@@ -168,8 +155,8 @@ var Module={
    if(typeof Module._openxops_prepare_archive!=='function'||typeof Module._openxops_archive_error!=='function'){
      reportError('Engine/page version mismatch. Reload this page to load the current engine.');return;
    }
-   play.disabled=false;play.textContent='Start game';
-   status.textContent=savedArchive?'Saved classic data ready. Click Start game.':'Ready. Click Start game (free data), or load classic data first.'}
+   play.disabled=false;play.innerHTML='<img src="ui/start.svg" alt="Start game" height="24">';
+   status.textContent=savedArchive?'Ready. Saved classic data available in single-player options.':'Ready. Host a room or enter a code to join.'}
 };
 window.startGame=async(extraArgs=[])=>{
  const file=document.getElementById('archive').files[0];
@@ -221,7 +208,7 @@ canvas.onclick=()=>{canvas.focus();canvas.requestPointerLock?.();
 import { mountLobby } from './net/lobby.js';
 import { createTransport } from './net/transport.js';
 import { DM_MAPS, mapIndexById, armEngine, connectEngine, readNetState } from './net/game-net.js';
-const mapSelect=document.getElementById('mp-map');
+let mapSelect;
 let link=null, lobby=null;
 function engineReady(){return typeof Module!=='undefined'&&typeof Module._net_arm_buffer==='function'&&!document.getElementById('play').disabled;}
 async function begin(role,room,name,kind){
@@ -254,6 +241,7 @@ function refreshPeers(t){try{lobby.setPeers(t.peers().map(id=>({id,name:'peer '+
 lobby=mountLobby(document.getElementById('mp-lobby'),{
  onHost:(room,name,kind)=>begin('host',room,name,kind),
  onJoin:(room,name,kind)=>begin('client',room,name,kind)});
+mapSelect=document.getElementById('mp-map');
 const scoresEl=document.getElementById('net-scores'),feedEl=document.getElementById('net-feed');
 setInterval(()=>{
  if(!link)return;

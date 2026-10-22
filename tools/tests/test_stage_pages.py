@@ -57,6 +57,29 @@ class StagePagesTests(unittest.TestCase):
             self.assertTrue((dest / pack_name).exists())
             self.assertTrue((dest / 'NOTICE.md').exists())
 
+    def test_launcher_assets_staged_without_unlisted_neighbors(self):
+        with tempfile.TemporaryDirectory() as t:
+            root = Path(t)
+            build = root / 'build-web'
+            _write_build(build)
+            with (build / 'index.html').open('a') as page:
+                page.write('<link href="ui/launcher.css" rel="stylesheet">')
+            ui = build / 'ui'
+            ui.mkdir()
+            expected = ['launcher.css', 'title.svg', 'operate.svg', 'host.svg',
+                        'join.svg', 'copy.svg', 'controls.svg', 'fullscreen.svg',
+                        'resume.svg', 'close.svg', 'forget.svg', 'start.svg', 'FONT-LICENSE.md']
+            for name in expected:
+                (ui / name).write_text('synthetic launcher asset ' + name)
+            (ui / 'private.bin').write_bytes(b'never publish')
+            (root / 'NOTICE.md').write_text('notice')
+            stage_pages._original_md5s = lambda: set()
+            stage_pages.ROOT = root
+            destination = root / 'pages'
+            stage_pages.stage(build, destination)
+            self.assertEqual(sorted(p.name for p in (destination / 'ui').iterdir()),
+                             sorted(expected))
+
     def test_rejects_zip_member_matching_known_original_md5(self):
         # Synthetic bytes can't collide with the real reference MD5 list, so
         # monkeypatch _original_md5s to include a hash of our own test bytes.

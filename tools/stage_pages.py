@@ -50,6 +50,11 @@ def stage(build, destination):
         raise ValueError('Expected exactly one data-pack zip reference')
     pack_name = packs[0]
     names = ['index.html', scripts[0], wasm[0], pack_name, 'LICENSE']
+    if 'ui/launcher.css' in html:
+        names.extend('ui/' + name for name in (
+            'launcher.css', 'title.svg', 'operate.svg', 'host.svg',
+            'join.svg', 'copy.svg', 'controls.svg', 'fullscreen.svg',
+            'resume.svg', 'close.svg', 'forget.svg', 'start.svg', 'FONT-LICENSE.md'))
     # Detect accidental original assets even if renamed; metadata only is committed.
     originals = _original_md5s()
     for name in names:
@@ -63,6 +68,7 @@ def stage(build, destination):
         shutil.rmtree(destination)
     destination.mkdir(parents=True)
     for name in names:
+        (destination / name).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(build / name, destination / name)
     shutil.copyfile(ROOT / 'NOTICE.md', destination / 'NOTICE.md')
     # XOPS ONLINE: static network modules (allowlisted file types only)

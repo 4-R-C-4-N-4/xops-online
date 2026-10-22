@@ -35,6 +35,8 @@ def package(build, template):
     html = (html.replace('__ENGINE_SCRIPT__', js_name)
                 .replace('__ENGINE_WASM__', wasm_name)
                 .replace('__DATA_PACK__', pack_name))
+    # Fixed, reviewed launcher assets only; no user or game data.
+    shutil.copytree(ROOT / 'web/ui', build / 'ui', dirs_exist_ok=True)
     temporary = build / 'index.html.next'
     temporary.write_text(html)
     os.replace(temporary, build / 'index.html')

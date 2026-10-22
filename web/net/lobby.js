@@ -31,7 +31,8 @@ function el(tag, attrs = {}, children = []) {
 export function mountLobby(container, { onHost, onJoin } = {}) {
   if (!container) throw new Error('mountLobby: container is required');
 
-  const savedName = (localStorage.getItem(NAME_KEY) || '').slice(0, MAX_NAME_LEN);
+  let savedName = '';
+  try { savedName = (localStorage.getItem(NAME_KEY) || '').slice(0, MAX_NAME_LEN); } catch {}
   const { room: hashRoom } = parseHash(location.hash);
 
   const nameInput = el('input', {
@@ -61,16 +62,17 @@ export function mountLobby(container, { onHost, onJoin } = {}) {
     ]
   );
 
-  const hostBtn = el('button', { type: 'button' }, ['Host']);
-  const joinBtn = el('button', { type: 'button' }, ['Join']);
-  const copyBtn = el('button', { type: 'button' }, ['Copy link']);
+  const bitmap = (file, label) => el('img', { src: new URL(`../ui/${file}.svg`, import.meta.url).href, alt: label, height: '32' });
+  const hostBtn = el('button', { type: 'button' }, [bitmap('host', 'Host')]);
+  const joinBtn = el('button', { type: 'button' }, [bitmap('join', 'Join')]);
+  const copyBtn = el('button', { type: 'button' }, [bitmap('copy', 'Copy link')]);
 
   const status = el('p', { class: 'xops-status', role: 'status' }, ['']);
   const peerList = el('ul', { class: 'xops-peers' }, []);
 
   function persistName() {
     const v = nameInput.value.slice(0, MAX_NAME_LEN);
-    localStorage.setItem(NAME_KEY, v);
+    try { localStorage.setItem(NAME_KEY, v); } catch {}
     return v || 'Player';
   }
 
@@ -129,17 +131,24 @@ export function mountLobby(container, { onHost, onJoin } = {}) {
     }
   });
 
+  const mapSelect = document.getElementById('mp-map') || el('select', { id: 'mp-map' },
+    ['hangar', 'field', 'shipdeck', 'spire'].map(id => el('option', { value: id }, ['DM ' + id.toUpperCase()])));
   const root = el('div', { class: 'xops-lobby' }, [
-    el('h2', {}, ['XOPS Online']),
-    el('label', { for: 'xops-lobby-name' }, ['Name']),
-    nameInput,
-    el('label', { for: 'xops-lobby-room' }, ['Room code']),
-    roomInput,
-    el('label', { for: 'xops-lobby-transport' }, ['Transport']),
-    transportSelect,
-    el('div', { class: 'xops-row' }, [hostBtn, joinBtn]),
-    el('div', { class: 'xops-row' }, [copyBtn]),
-    status,
+    el('div', { class: 'identity-row' }, [
+      el('label', { for: 'xops-lobby-name' }, ['Player name', nameInput]),
+      el('label', { for: 'xops-lobby-transport' }, ['Connection', transportSelect]),
+    ]),
+    el('div', { class: 'play-actions' }, [
+      el('section', { class: 'host-action', 'aria-label': 'Host a room' }, [
+        el('h3', {}, ['01 / CREATE ROOM']),
+        el('label', { for: 'mp-map' }, ['Arena', mapSelect]), hostBtn,
+      ]),
+      el('section', { class: 'join-action', 'aria-label': 'Join a room' }, [
+        el('h3', {}, ['02 / ENTER ROOM']),
+        el('label', { for: 'xops-lobby-room' }, ['Room code', roomInput]), joinBtn,
+      ]),
+    ]),
+    el('div', { class: 'room-feedback' }, [copyBtn, status]),
     peerList,
   ]);
 
