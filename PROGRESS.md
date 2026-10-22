@@ -77,3 +77,10 @@ User playtest: "the map is bad" (DM HANGAR): too small/cramped, hard to get arou
 - 317 Python tests OK, 18 Node tests pass. Clean production package/staging succeeds. No QA exports.
 - Browser: 1280x577 fits without scrolling; 390x844 no horizontal overflow/broken images; Controls dialog and invalid code feedback work; share URL prefills room; WebRTC host and second-window Join launched SPIRE with both names on scoreboard.
 - Original proprietary font/data never inspected; web labels are local bitmap SVGs, regenerated offline without font runtime dependencies. Publishing launcher pass.
+
+### Geometry pass: z-fighting, blocked ramps, UFO FIELD v2
+- User: overlapping bodies render badly; HANGAR ramps had blocked passages; UFO FIELD let you jump to a barn island over a death pit with no way back.
+- z-fighting: new audit found 168 visible coplanar overlaps across the 9 free maps. `tools.mapgen build` now resolves them (tools/mapgen/zfight.py pushes the smaller face out 0.08 so flush details stay visible); `tools/geomcheck.py --all` = 0; `tools/rebuild_maps.py` rebuilds every map from source (`--check` is a test).
+- Gate additions (tests/dm/dmcheck.cpp): every walkable ramp must open onto play area at both ends and be walked up and down by the real player; `--outdoor` death-pit check; `--mission` mode for single-player maps. It reproduced the reports: HANGAR's two main ramps faced the central core 2 units away (third unreachable), SPIRE had two obstructed ramps and a dead-end ramp top, UFO FIELD had 8 death-pit edges.
+- Fixed (Codex workers, parent-verified): HANGAR core moved, ramp feet meet an open plaza (DMCHECK OK, 3 ramps); SPIRE ramps cleared (DMCHECK OK, 4 ramps); UFO FIELD v2 generator: continuous ground inside a 96-high boundary, two pasture gates, open through-barn with a hay-step loft, farmyard hay cover, mission points unchanged (UFO FIELD --mission --outdoor OK; DM FIELD death pits 0). UFO ESCAPE passes --mission --sealed.
+- 327 tests OK; validator 0 failures. Browser: farm boundary/barn/gate/dirt yard and hangar ramp plaza inspected in the test build.
