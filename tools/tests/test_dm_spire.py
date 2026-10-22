@@ -24,6 +24,35 @@ class SpireTests(unittest.TestCase):
         code, output = run('data/dmspire', 'spire.pd1', '--sealed')
         self.assertEqual(code, 0, output)
         self.assertIn('DMCHECK OK', output)
+        self.assertIn('METRIC walkable_ramps 4', output)
+
+    def test_ramp_clearance_and_landings(self):
+        doc = runpy.run_path(str(ROOT / 'tools/mapgen/examples/dm_spire.py'))['build_doc']()
+        ramps = [b for b in doc['blocks'] if 'vertices' in b]
+        self.assertEqual(len(ramps), 4)
+        for ramp in ramps:
+            v = ramp['vertices']
+            x0, x1, z0, z1 = v[0][0], v[1][0], v[0][2], v[2][2]
+            for z in range(int(z0) - 12, int(z1) + 13, 2):
+                t = max(0, min(1, (z - z0) / (z1 - z0)))
+                y = v[0][1] + t * (v[2][1] - v[0][1])
+                for x in (x0 + 3, (x0 + x1) / 2, x1 - 3):
+                    for block in doc['blocks']:
+                        if block is ramp:
+                            continue
+                        if 'vertices' in block:
+                            bounds = list(zip(*block['vertices']))
+                            lo, hi = list(map(min, bounds)), list(map(max, bounds))
+                        else:
+                            lo, hi = block['min'], block['max']
+                        if lo[0] <= x <= hi[0] and lo[2] <= z <= hi[2]:
+                            self.assertFalse(hi[1] > y + 0.1 and lo[1] < y + 28,
+                                             (ramp['comment'], x, y, z, block['comment']))
+                    if z < z0 or z > z1:
+                        self.assertTrue(any('min' in b and b['min'][0] <= x <= b['max'][0]
+                                            and b['min'][2] <= z <= b['max'][2]
+                                            and b['max'][1] == y for b in doc['blocks']),
+                                        (ramp['comment'], 'missing landing', x, y, z))
 
     def test_deterministic_pictures(self):
         with tempfile.TemporaryDirectory() as tmp:

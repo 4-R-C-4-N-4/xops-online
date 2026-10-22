@@ -50,6 +50,8 @@ def _gaps(lo, hi, gap):
     if gap is None:
         return [(lo, hi)]
     ga, gb = gap
+    if gb <= lo or ga >= hi:
+        return [(lo, hi)]
     ga, gb = max(lo, ga), min(hi, gb)
     out = []
     if ga - lo > 0.5:
@@ -101,12 +103,12 @@ def face(dx, dz):
 
 # Sealed footprint, three walkable bands separated by a safe 32-unit drop.
 GND, MID, TOP = 0, 32, 64
-floor_slab("foundation", -160,160,-150,150,0)
-ceiling_slab("ceiling", -160,160,-150,150,108)
-wall_x("west shell",-160,-150,150,0,108)
-wall_x("east shell",160,-150,150,0,108)
+floor_slab("foundation", -160,160,-150,156,0)
+ceiling_slab("ceiling", -160,160,-150,156,108)
+wall_x("west shell",-160,-150,156,0,108)
+wall_x("east shell",160,-150,156,0,108)
 wall_z("north shell",-150,-160,160,0,108)
-wall_z("south shell",150,-160,160,0,108)
+wall_z("south shell",156,-160,160,0,108)
 
 # Two lateral towers: broad raised rooms and independent ground access ramps.
 for side in (-1,1):
@@ -131,15 +133,19 @@ for side in (-1,1):
     x0,x1=(24,136) if side==1 else (-136,-24)
     floor_slab(f"bridge {side} cross leg",x0,x1,-128,-104,MID)
     wall_z(f"bridge {side} north rail",-128,x0,x1,MID,MID+10)
-    wall_z(f"bridge {side} south rail",-104,x0,x1,MID,MID+10,gap=(a+20,b-20))
-    box_obstacle(f"bridge {side} hanging baffle",side*64-6,side*64+6,58,86,-128,-104,"bulkhead.bmp")
+    rail_spans = [(x0, -68), (-28, x1)] if side == -1 else [(x0, x1)]
+    for rail_x0, rail_x1 in rail_spans:
+        wall_z(f"bridge {side} south rail",-104,rail_x0,rail_x1,MID,MID+10,gap=(a+20,b-20))
+    box_obstacle(f"bridge {side} hanging baffle",side*80-6,side*80+6,60,88,-128,-104,"bulkhead.bmp")
 
 # North tower landing and high gallery: ramp, lift and safe drop choices.
 floor_slab("spire mid landing",-28,28,-146,-92,MID)
-ramp_block_z("spire ground ramp",-16,16,-12,-92,0,MID)
-# Side walls stop at the landing so both bridges connect without obstructions.
-wall_x("spire ramp west",-22,-90,-20,0,108)
-wall_x("spire ramp east",22,-90,-20,0,108)
+ramp_block_z("spire ground ramp",-64,-32,-12,-92,0,MID)
+floor_slab("spire ground ramp landing",-64, -16,-104,-92,MID)
+# Offset the ground route from the upper ramp: no low ceiling at its exit.
+# The 12-unit landing joins the west bridge and the original spire landing.
+wall_x("spire ramp west",-70,-90,-20,0,108)
+wall_x("spire ramp east",-26,-90,-20,0,108)
 floor_slab("spire high gallery",-28,28,-146,-112,TOP)
 ramp_block_z("spire upper ramp",-16,16,-32,-112,MID,TOP)
 # Mid ramp toe is served by an open elevated courtyard spur.
@@ -150,16 +156,16 @@ wall_x("spire top east",28,-146,-112,TOP,104)
 # Ground route dividers form four connected courts; doorways provide loops.
 for side in (-1,1):
     wall_z(f"south court divider {side}",50,side*80-30,side*80+30,0,28,gap=(side*80-9,side*80+9))
-    wall_z(f"north court divider {side}",-70,side*75-35,side*75+35,0,28,gap=(side*75-10,side*75+10))
+    wall_z(f"north court divider {side}",-70,side*75-35,side*75+35,0,28,gap=((-68,-28) if side == -1 else (65,85)))
     wall_x(f"south court elbow {side}",side*40,70,126,0,28)
-    box_obstacle(f"courtyard reactor {side}",side*50-10,side*50+10,0,28,-18,18,"labpanel.bmp")
-    box_obstacle(f"south court crate {side}",side*125-8,side*125+8,0,10,98,114,"hazard.bmp")
+    box_obstacle(f"courtyard reactor {side}",side*50-10,side*50+10,0,28,28,48,"labpanel.bmp")
+    box_obstacle(f"south court crate {side}",side*80-8,side*80+8,0,10,98,114,"hazard.bmp")
 # Offset tall cover in the central south court.
 box_obstacle("south central screen",-16,16,0,28,76,84,"bulkhead.bmp")
 
 for side in (-1,1):
     wall_z(f"north spawn screen {side}",-112,side*138-16,side*138+16,0,28)
-    wall_x(f"south spawn screen {side}",side*120,118,146,0,28)
+    wall_x(f"south spawn screen {side}",side*80,118,146,0,28)
 
 DM_SPAWNS = [(-140,2,-130),(140,2,-130),(-150,2,130),(150,2,130),
              (-60,2,110),(60,2,110),(-140,34,40),(140,34,40),
