@@ -40,3 +40,9 @@ User playtest: "the map is bad" (DM HANGAR): too small/cramped, hard to get arou
 - `tools/dmcheck.py` + `tests/dm/dmcheck.cpp`: real-engine map gate (standing-spot graph with walk/jump/drop/lift edges, lift physics ride, one-way traps, sight-line fraction, spawn exposure, ambiguous ledge heights, void leaks). Jump limit measured with a step fixture: walking + jump clears 16, not 17.
 - The original DM HANGAR fails the gate exactly as the playtest said: play area 42.6k (the catwalk is cut off from the floor), 87% of pairs see each other, spawns visible from up to 96% of the map. DM FIELD (open field) also fails sight lines (64%).
 - Rules in docs/DM-MAP-GUIDE.md. Workers dispatched: DM HANGAR rebuild, DM SHIPDECK (new), DM SPIRE (new, Lockout-inspired towers + lifts).
+
+### DM SHIPDECK integration acceptance
+- Sonnet workers exhausted provider rate limits; preserved all partial work and resumed each in isolated Codex CLI processes.
+- Integrated SHIPDECK: 134 blocks, three decks (0/32/64), 12 spawns, 9 pickups, 3 lifts. Parent reran DMCHECK: sightline fraction 0.129, worst spawn exposure 0.19, zero traps/ambiguous ledges/void leaks.
+- Folded provenance sidecar into authoritative ledger, recomputed hashes, added required curation fields, retargeted asset test to ledger. Full suite: 306 tests OK; validator: 0 failures, 347 warnings.
+- Parent browser acceptance on local test build: textured upper catwalk/reactor view inspected, host simulation running; rode lift from (30,0.5,20) to (37.05,64.48,20), HP 200. Not yet deployed; other two maps still in progress.

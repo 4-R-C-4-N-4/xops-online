@@ -43,7 +43,7 @@ class ShipdeckTests(unittest.TestCase):
             self.assertTrue((DATA.parent / lines[index].replace('\\', '/')).is_file())
         self.assertLessEqual(len(lines[9:]), 14)
         self.assertTrue(all(len(line) <= 52 for line in lines[9:]))
-        records = [json.loads(line) for line in (ROOT / 'PROVENANCE-ADD.jsonl').read_text().splitlines()]
+        records = [json.loads(line) for line in (ROOT / 'assets/provenance.jsonl').read_text().splitlines()]
         for path in list((DATA / 'dmship').iterdir()) + [DATA / 'briefing/dmship.bmp']:
             record = next(r for r in records if r['path'] == path.relative_to(DATA.parent).as_posix())
             self.assertEqual(record['sha256'], hashlib.sha256(path.read_bytes()).hexdigest())
