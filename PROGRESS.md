@@ -57,3 +57,8 @@ User playtest: "the map is bad" (DM HANGAR): too small/cramped, hard to get arou
 - Combined suite: 314 tests OK. Pack validator: 0 failures, 360 warnings. Four lobby entries share stable map indices (hangar/field/shipdeck/spire).
 - Parent browser SPIRE check: textured routes/bridges, running host; lift carried player from (-87,0.5,0) to (-94.03,32.32,0), HP 200. All three indoor arenas have local browser rendering/lift checks, not full multiplayer combat playthroughs.
 - Building clean production candidate without QA exports, then deploying and checking live.
+
+### Four arenas live
+- Deployment https://github.com/4-R-C-4-N-4/xops-online/actions/runs/39697792675 succeeded for 345ed05. Live engine 73b17dcd0bf70bc5, no QA exports; all four arena choices present.
+- Parent opened live SPIRE host and joined a second browser window over WebRTC; client role 2/local slot 1 and both players in scoreboard, correct map rendered. Same machine only, not cross-NAT. Local clean production SHIPDECK host/client join also passed.
+- Play: https://4-r-c-4-n-4.github.io/xops-online/ . Remaining networking limits unchanged: no prediction, client ammo HUD incomplete, hidden host stalls, no TURN. Numeric layout gates and lift rides are not full combat playtesting; further map feel feedback remains useful.
