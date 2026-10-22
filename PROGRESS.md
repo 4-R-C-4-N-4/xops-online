@@ -51,3 +51,9 @@ User playtest: "the map is bad" (DM HANGAR): too small/cramped, hard to get arou
 - 106 blocks, play area 96,448 (previously 42,624), three ramps and two gravity lifts, side rooms, sheltered spawns, hanging cover. Parent DMCHECK OK: sightline fraction 0.221, worst spawn exposure 0.24; zero trapped spots, ambiguous ledges or void leaks.
 - Fixed native session test fixture: random spawn facing hit new cover, so use a known clear ground-floor lane for the command replication check; retained original movement/drift assertions. Full integrated suite: 309 tests OK. Validator: 0 failures/347 warnings.
 - Browser: hosted rebuilt hangar, inspected textured ground/upper routes; gravity lift raised player from y0.5 to upper platform y~30 with HP 200. No deployment yet, awaiting SPIRE integration.
+
+### Four-arena release candidate
+- Integrated SPIRE: 72 blocks, three lifts, 10 spawns/8 pickups, 97,808 play area. Parent reran DMCHECK OK: sightline fraction 0.199, worst spawn exposure 0.21, zero traps/ambiguous ledges/void leaks.
+- Combined suite: 314 tests OK. Pack validator: 0 failures, 360 warnings. Four lobby entries share stable map indices (hangar/field/shipdeck/spire).
+- Parent browser SPIRE check: textured routes/bridges, running host; lift carried player from (-87,0.5,0) to (-94.03,32.32,0), HP 200. All three indoor arenas have local browser rendering/lift checks, not full multiplayer combat playthroughs.
+- Building clean production candidate without QA exports, then deploying and checking live.

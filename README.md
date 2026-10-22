@@ -11,6 +11,16 @@ who enters it and presses Join. "Online (WebRTC)" connects browsers directly
 connects two windows of one browser. Keep the host's window visible: browsers
 pause hidden tabs. Players behind strict NATs may not connect yet (no TURN).
 
+Four arenas: rebuilt DM HANGAR (side rooms, ramps and lifts), DM SHIPDECK
+(three alien-ship decks), DM SPIRE (towers and bridges), and the open DM FIELD.
+The three indoor arenas pass a real-engine traversal/lift/sight-line gate;
+FIELD deliberately remains the open-map option. Start with MP5 + M92F;
+frags, deaths, kill feed and respawns are host-authoritative.
+
+Known prototype limits: no movement prediction, client ammunition HUD is not
+fully synchronized, no bots or match timer, and no TURN relay. Internet play
+has been checked with two windows on one machine, not separate networks.
+
 Unofficial fan project; not affiliated with the original X operations.
 
 ---
