@@ -46,3 +46,8 @@ User playtest: "the map is bad" (DM HANGAR): too small/cramped, hard to get arou
 - Integrated SHIPDECK: 134 blocks, three decks (0/32/64), 12 spawns, 9 pickups, 3 lifts. Parent reran DMCHECK: sightline fraction 0.129, worst spawn exposure 0.19, zero traps/ambiguous ledges/void leaks.
 - Folded provenance sidecar into authoritative ledger, recomputed hashes, added required curation fields, retargeted asset test to ledger. Full suite: 306 tests OK; validator: 0 failures, 347 warnings.
 - Parent browser acceptance on local test build: textured upper catwalk/reactor view inspected, host simulation running; rode lift from (30,0.5,20) to (37.05,64.48,20), HP 200. Not yet deployed; other two maps still in progress.
+
+### DM HANGAR rebuilt and integrated locally
+- 106 blocks, play area 96,448 (previously 42,624), three ramps and two gravity lifts, side rooms, sheltered spawns, hanging cover. Parent DMCHECK OK: sightline fraction 0.221, worst spawn exposure 0.24; zero trapped spots, ambiguous ledges or void leaks.
+- Fixed native session test fixture: random spawn facing hit new cover, so use a known clear ground-floor lane for the command replication check; retained original movement/drift assertions. Full integrated suite: 309 tests OK. Validator: 0 failures/347 warnings.
+- Browser: hosted rebuilt hangar, inspected textured ground/upper routes; gravity lift raised player from y0.5 to upper platform y~30 with HP 200. No deployment yet, awaiting SPIRE integration.

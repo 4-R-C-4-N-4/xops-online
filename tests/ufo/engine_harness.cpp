@@ -446,6 +446,10 @@ int main(int argc, char** argv) {
         int me=cli.GetLocalSlot();
         assert(me>0 && me!=objects.GetPlayerID() && objects.GetNetControlled(me));
         assert(clientWorld.GetPlayerID()==me && clientWorld.GetNetPuppet());
+        // Isolate command replication from the randomly selected spawn's
+        // nearby cover. This measured ground-floor lane is clear for 60 ticks.
+        objects.GetHumanObject(me)->SetPosData(-100.0f,0.5f,-100.0f,0);
+        objects.GetHumanObject(me)->SetRxRy(0,0);
         // The client walks forward for 2 s via commands; the host world moves it.
         float x0,y0,z0; objects.GetHumanObject(me)->GetPosData(&x0,&y0,&z0,NULL);
         float face; objects.GetHumanObject(me)->GetRxRy(&face,NULL);

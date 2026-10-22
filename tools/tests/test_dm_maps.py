@@ -282,7 +282,8 @@ class HangarRebuildTests(unittest.TestCase):
 
     def test_sidecar_hashes_and_local_textures(self):
         import hashlib
-        records = [json.loads(line) for line in (ROOT / "PROVENANCE-ADD.jsonl").read_text().splitlines()]
+        records = [json.loads(line) for line in (ROOT / "assets/provenance.jsonl").read_text().splitlines()]
+        records = [r for r in records if r['path'].startswith('data/dmhangar/') or r['path'] == 'data/briefing/dmhangar.bmp']
         expected = set((ROOT / "assets/pack/data/dmhangar").iterdir())
         expected.add(ROOT / "assets/pack/data/briefing/dmhangar.bmp")
         self.assertEqual({r["path"] for r in records},
