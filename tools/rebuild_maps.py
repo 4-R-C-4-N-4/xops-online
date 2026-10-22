@@ -25,7 +25,7 @@ MAPS = [
     (None, "map10_demo.json", "data/map10", "op.pd1"),
     (None, "map10_demo.json", "data/menu", None),          # menu shares map10's blocks
     (None, "starter_compound.json", "data/starter", "start.pd1"),
-    (None, "ufo_field.json", "data/ufofield", "ufo.pd1"),
+    ("ufo_field.py", "ufo_field.json", "data/ufofield", "ufo.pd1"),
     ("ufo_escape.py", "ufo_escape.json", "data/ufoescape", "escape.pd1"),
     ("dm_hangar.py", "dm_hangar.json", "data/dmhangar", "hangar.pd1"),
     ("dm_field.py", "dm_field.json", "data/dmfield", "field.pd1"),

@@ -100,13 +100,21 @@ ZIP plus the 4 new weapons and 3 bolt textures would exceed 72.
   `tools/mapgen/examples/ufo_field.json`. Block textures (10 max): grass,
   dirt, hay, fence wood, barn red, barn roof, white trim, UFO hull, UFO
   light, dark interior.
-- Layout (world units, player height 20): floor 480×480. Fence on all four
-  edges at 24 high (jump apex is well under that). Barn north, outside the
-  fence, at about z = -300. UFO centred at about (0, -150): a stacked saucer
-  disc made of tapered blocks, legs, a light ring and a ramp descending south
-  from the hatch. Player spawns south at (0, 0, 200) facing north. About 10
-  hay bales (single and stacked) plus 8 cows scattered across the field.
-  Patrol paths fan out from the foot of the ramp.
+- Layout (world units, player height 20): continuous ground x=-280..280,
+  z=-400..280, enclosed by solid 96-high barn-red storage walls. These are
+  deliberately tall walls, not a modeled tree line. The 24-high pasture
+  fence is internal, with 60-wide north gates on both sides of the UFO.
+  Ground continues outside that fence, so jumping over it is safe.
+  The through barn at x=-72..72, z=-356..-260 has open north/south doors,
+  a west loft at 36, two hay stair routes rising by 12 per jump,
+  34 units of clearance underneath and 44 units of loft headroom.
+  Yard hay provides low and tall cover with routes around either side.
+  The UFO, south ramp, existing pasture hay, eight cows, spawn and alien
+  paths retain their original positions. The yard adds a quieter northern
+  flank; it does not move the scripted fighting out of the pasture.
+  [North-up layout](img/ufofield_layout.png) omits the barn roof to show
+  the interior. Source: `tools/mapgen/examples/ufo_field.py`, whose
+  `build_doc()` generates the committed JSON during the map rebuild.
 - Waves: wave 1 = 6 drones (p4 1), wave 2 = 8 troopers (p4 2), wave 3 =
   6 brutes (p4 3). All are held humans at the hatch top. Event line 0:
   wait 5 s → msg "WAVE 1" → deploy 1 → wait hostiles = 0 → wait 4 s →

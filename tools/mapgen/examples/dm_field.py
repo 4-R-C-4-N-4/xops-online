@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Programmatic authoring for DM FIELD: a deathmatch variant of UFO FIELD.
 
-Reuses the UFO FIELD geometry (grass pasture, fence, barn, hay bales, UFO,
-cows) verbatim from tools/mapgen/examples/ufo_field.json, but strips all
+Reuses the UFO FIELD geometry (continuous farm ground, tall boundary stores,
+gated pasture, through barn, loft, hay bales, UFO and cows) verbatim from tools/mapgen/examples/ufo_field.json, but strips all
 hostile humans / staged waves / AI waypoints / the scripted event chain and
 adds 10 DM spawns plus weapon pickups scattered around the hay bales, cows
 and the UFO. Cows (small_object, addon/cow.txt) are kept: they do not

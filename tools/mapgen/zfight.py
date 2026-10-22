@@ -7,10 +7,13 @@ as the camera moves. RenderMapdata() culls back faces and only draws texture
 ids 0..TOTAL_BLOCKTEXTURE-1, so opposite-facing or untextured faces never
 fight.
 
-resolve() insets the smaller face of each fighting pair by INSET units along
-its normal (moving that face's four vertices), repeating until nothing fights.
-The larger surface stays exactly where it was authored; collision changes by
-less than a tenth of a unit. Idempotent: a resolved map has no fights left.
+resolve() pushes the smaller face of each fighting pair OUT by INSET units
+along its normal (moving that face's four vertices), repeating until nothing
+fights. The smaller surface is the detail the author meant to see (a dirt
+patch flush on grass, a trim post flush with a wall), so it wins; the larger
+surface stays exactly where it was authored. Moving outward never opens a
+crack into the void. Collision changes by less than a tenth of a unit.
+Idempotent: a resolved map has no fights left.
 """
 from __future__ import annotations
 
@@ -191,9 +194,9 @@ def resolve(blocks, max_rounds=8):
             xs, ys, zs = list(blk.x), list(blk.y), list(blk.z)
             n = small["n"]
             for vi in FACE_VERTS[small["face"]]:
-                xs[vi] -= n[0] * INSET
-                ys[vi] -= n[1] * INSET
-                zs[vi] -= n[2] * INSET
+                xs[vi] += n[0] * INSET
+                ys[vi] += n[1] * INSET
+                zs[vi] += n[2] * INSET
             r = lambda vals: tuple(round(v, 4) for v in vals)
             blocks[small["block"]] = bd1.Block(x=r(xs), y=r(ys), z=r(zs), faces=blk.faces)
             moved += 1

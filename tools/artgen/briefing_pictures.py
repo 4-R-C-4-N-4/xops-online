@@ -191,12 +191,53 @@ def generate_for(map_json: Path, label: str, out_path: Path,
 
 
 def generate_ufofield(out_dir: Path) -> Path:
-    map_json = ROOT / "tools" / "mapgen" / "examples" / "ufo_field.json"
-    # Field is 480x480 (+/-240) and the barn pad extends to z=-360; pad the
-    # bounds a little beyond that so the whole scene (UFO, fence, barn,
-    # bales, cows, spawn, hatch) fits in frame.
-    return generate_for(map_json, "UFO FIELD", out_dir / "ufofield.bmp",
-                         world_min=(-260.0, -380.0), world_max=(260.0, 260.0))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    image = render_ufofield_plan(768)
+    write_bmp8(image.resize((SIZE, SIZE), Image.Resampling.LANCZOS).convert(
+        "P", palette=Image.Palette.ADAPTIVE, colors=256), out_dir / "ufofield.bmp")
+    return out_dir / "ufofield.bmp"
+
+
+def render_ufofield_plan(size=768):
+    """North-up roof-cutaway plan: show barn doors, loft and hay steps."""
+    doc = load_map(ROOT / "tools/mapgen/examples/ufo_field.json")
+    img = Image.new("RGB", (size, size + 70), (25, 30, 25))
+    draw = ImageDraw.Draw(img)
+    def project(x, z):
+        return (int((x+310)/620*size), int((z+430)/740*size))
+    colors = {"grass.bmp": (76,105,57), "dirt.bmp": (133,111,77),
+              "hay.bmp": (208,179,87), "barn_red.bmp": (150,65,53),
+              "fence.bmp": (168,139,104), "trim_white.bmp": (223,215,192)}
+    for b in doc['blocks']:
+        name = b.get('comment', '')
+        if name == 'barn roof' or name == 'barn door lintel' or name == 'ufo dome':
+            continue
+        color = colors.get(b.get('texture'), (122,155,163))
+        if 'min' in b:
+            lo,hi=b['min'],b['max']
+            draw.rectangle([project(lo[0],lo[2]),project(hi[0],hi[2])], fill=color)
+        else:
+            vs=b['vertices'][:4]
+            draw.polygon([project(v[0],v[2]) for v in vs], fill=color)
+    for pt in doc['points']:
+        if pt['type'] not in ('small_object','player_spawn'):
+            continue
+        x,y=project(pt['pos'][0],pt['pos'][2])
+        color=(245,245,225) if pt['type']=='small_object' else (80,235,255)
+        draw.ellipse((x-4,y-4,x+4,y+4),fill=color,outline=(20,20,20))
+    for text,x,z in [('BARN / LOFT 36',-68,-375),('GATE',-158,-238),
+                      ('GATE',105,-238),('UFO / 32',-40,-165),('SPAWN',12,204)]:
+        draw.text(project(x,z),text,fill=(255,255,255),stroke_width=1,stroke_fill=(25,25,25))
+    draw.text((12,size+8),'UFO FIELD | NORTH UP | barn roof omitted to show interior',fill='white')
+    draw.text((12,size+27),'Red: 96-high boundary stores / Gold: hay, 12-unit steps and 36-high loft',fill='white')
+    draw.text((12,size+46),'White: cows / Cyan: spawn / Continuous ground beneath every route',fill='white')
+    return img
+
+
+def generate_ufofield_layout(path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    render_ufofield_plan().save(path)
+    return path
 
 
 def generate_ufoescape(out_dir: Path) -> Path:
@@ -217,7 +258,7 @@ def generate_dmfield(out_dir: Path) -> Path:
     map_json = ROOT / "tools" / "mapgen" / "examples" / "dm_field.json"
     # Same footprint as UFO FIELD.
     return generate_for(map_json, "DM FIELD", out_dir / "dmfield.bmp",
-                         world_min=(-260.0, -380.0), world_max=(260.0, 260.0))
+                         world_min=(-310.0, -430.0), world_max=(310.0, 310.0))
 
 
 def generate_dmshipdeck(out_dir: Path) -> Path:
@@ -282,6 +323,7 @@ def main() -> int:
     out_dir = ROOT / "assets" / "pack" / "data" / "briefing"
     path = generate_starter(out_dir)
     print(f"wrote {path}")
+    generate_ufofield_layout(ROOT / "docs/img/ufofield_layout.png")
     path2 = generate_ufofield(out_dir)
     print(f"wrote {path2}")
     path3 = generate_ufoescape(out_dir)

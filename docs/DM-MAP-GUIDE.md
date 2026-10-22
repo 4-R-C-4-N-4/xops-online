@@ -98,7 +98,8 @@ exposure, ambiguous ledges are reported only).
 ## Rendering hygiene
 
 Faces that share a plane and overlap flicker (z-fighting). `tools.mapgen
-build` now insets the smaller face of every such pair by 0.08 units
+build` now pushes the smaller face of every such pair out by 0.08 units
+(so flush details such as a dirt patch on grass stay visible)
 (tools/mapgen/zfight.py), so overlapping corners and flush trims are safe to
 author; `python3 tools/geomcheck.py --all` audits the committed binaries and
 `python3 tools/rebuild_maps.py` rebuilds every pack map from its source.

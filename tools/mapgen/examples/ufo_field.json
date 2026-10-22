@@ -12,261 +12,1176 @@
     "ufo_light.bmp",
     "ufo_dark.bmp"
   ],
+  "points": [
+    {
+      "type": "player_spawn",
+      "pos": [
+        0.0,
+        0.0,
+        200.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 43,
+      "ai_path": 0,
+      "comment": "rancher, facing north into the field"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -40.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 44,
+      "team": 2,
+      "ai_path": 100,
+      "wave": 1,
+      "comment": "wave 1 staged human 0"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -24.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 44,
+      "team": 2,
+      "ai_path": 110,
+      "wave": 1,
+      "comment": "wave 1 staged human 1"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -8.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 44,
+      "team": 2,
+      "ai_path": 120,
+      "wave": 1,
+      "comment": "wave 1 staged human 2"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        8.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 44,
+      "team": 2,
+      "ai_path": 100,
+      "wave": 1,
+      "comment": "wave 1 staged human 3"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        24.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 44,
+      "team": 2,
+      "ai_path": 110,
+      "wave": 1,
+      "comment": "wave 1 staged human 4"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        40.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 44,
+      "team": 2,
+      "ai_path": 120,
+      "wave": 1,
+      "comment": "wave 1 staged human 5"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -40.0,
+        32.0,
+        -104.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 100,
+      "wave": 2,
+      "comment": "wave 2 staged human 0"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -28.6,
+        32.0,
+        -100.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 110,
+      "wave": 2,
+      "comment": "wave 2 staged human 1"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -17.1,
+        32.0,
+        -104.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 120,
+      "wave": 2,
+      "comment": "wave 2 staged human 2"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -5.7,
+        32.0,
+        -100.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 100,
+      "wave": 2,
+      "comment": "wave 2 staged human 3"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        5.7,
+        32.0,
+        -104.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 110,
+      "wave": 2,
+      "comment": "wave 2 staged human 4"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        17.1,
+        32.0,
+        -100.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 120,
+      "wave": 2,
+      "comment": "wave 2 staged human 5"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        28.6,
+        32.0,
+        -104.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 100,
+      "wave": 2,
+      "comment": "wave 2 staged human 6"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        40.0,
+        32.0,
+        -100.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 45,
+      "team": 2,
+      "ai_path": 110,
+      "wave": 2,
+      "comment": "wave 2 staged human 7"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -40.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 46,
+      "team": 2,
+      "ai_path": 100,
+      "wave": 3,
+      "comment": "wave 3 staged human 0"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -24.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 46,
+      "team": 2,
+      "ai_path": 110,
+      "wave": 3,
+      "comment": "wave 3 staged human 1"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        -8.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 46,
+      "team": 2,
+      "ai_path": 120,
+      "wave": 3,
+      "comment": "wave 3 staged human 2"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        8.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 46,
+      "team": 2,
+      "ai_path": 100,
+      "wave": 3,
+      "comment": "wave 3 staged human 3"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        24.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 46,
+      "team": 2,
+      "ai_path": 110,
+      "wave": 3,
+      "comment": "wave 3 staged human 4"
+    },
+    {
+      "type": "staged_human",
+      "pos": [
+        40.0,
+        32.0,
+        -112.0
+      ],
+      "rotation": 3.141592653589793,
+      "human_type": 46,
+      "team": 2,
+      "ai_path": 120,
+      "wave": 3,
+      "comment": "wave 3 staged human 5"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -100.0,
+        0.0,
+        60.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 0"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        100.0,
+        0.0,
+        60.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 1"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -140.0,
+        0.0,
+        -10.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 2"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        140.0,
+        0.0,
+        -10.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 3"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -50.0,
+        0.0,
+        170.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 4"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        50.0,
+        0.0,
+        170.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 5"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        -20.0,
+        0.0,
+        -100.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 6"
+    },
+    {
+      "type": "small_object",
+      "pos": [
+        20.0,
+        0.0,
+        -100.0
+      ],
+      "object_type": 12,
+      "map_collision": true,
+      "comment": "cow 7"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 17,
+      "p2": 5,
+      "p3": -101,
+      "p4": -100,
+      "comment": "opening: five seconds to take cover"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        2.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 18,
+      "p2": 0,
+      "p3": -102,
+      "p4": -101,
+      "comment": "event 1: message WAVE 1"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        4.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 41,
+      "p2": 1,
+      "p3": -103,
+      "p4": -102,
+      "comment": "event 2: deploy wave 1"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        6.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 40,
+      "p2": 0,
+      "p3": -112,
+      "p4": -103,
+      "comment": "wait until every alien in this wave is dead"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        8.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 18,
+      "p2": 1,
+      "p3": -105,
+      "p4": -104,
+      "comment": "event 4: message WAVE 2"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        10.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 41,
+      "p2": 2,
+      "p3": -106,
+      "p4": -105,
+      "comment": "event 5: deploy wave 2"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        12.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 40,
+      "p2": 0,
+      "p3": -113,
+      "p4": -106,
+      "comment": "wait until every alien in this wave is dead"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        14.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 18,
+      "p2": 2,
+      "p3": -108,
+      "p4": -107,
+      "comment": "event 7: message FINAL WAVE"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        16.0,
+        0.0,
+        -140.0
+      ],
+      "p1": 41,
+      "p2": 3,
+      "p3": -109,
+      "p4": -108,
+      "comment": "event 8: deploy wave 3"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        0,
+        32,
+        -100
+      ],
+      "mode": 1,
+      "p3": 101,
+      "p4": 100,
+      "comment": "top of UFO stairs"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        0,
+        0,
+        -30
+      ],
+      "mode": 1,
+      "p3": 102,
+      "p4": 101,
+      "comment": "foot of ramp"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        -70,
+        0,
+        20
+      ],
+      "mode": 1,
+      "p3": 103,
+      "p4": 102,
+      "comment": "flank"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        -90,
+        0,
+        95
+      ],
+      "mode": 1,
+      "p3": 104,
+      "p4": 103,
+      "comment": "advance"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        -30,
+        0,
+        150
+      ],
+      "mode": 1,
+      "p3": 102,
+      "p4": 104,
+      "comment": "press toward spawn, loop to flank"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        0,
+        32,
+        -100
+      ],
+      "mode": 1,
+      "p3": 111,
+      "p4": 110,
+      "comment": "top of UFO stairs"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        0,
+        0,
+        -30
+      ],
+      "mode": 1,
+      "p3": 112,
+      "p4": 111,
+      "comment": "foot of ramp"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        70,
+        0,
+        20
+      ],
+      "mode": 1,
+      "p3": 113,
+      "p4": 112,
+      "comment": "flank"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        90,
+        0,
+        95
+      ],
+      "mode": 1,
+      "p3": 114,
+      "p4": 113,
+      "comment": "advance"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        30,
+        0,
+        150
+      ],
+      "mode": 1,
+      "p3": 112,
+      "p4": 114,
+      "comment": "press toward spawn, loop to flank"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        0,
+        32,
+        -100
+      ],
+      "mode": 1,
+      "p3": 121,
+      "p4": 120,
+      "comment": "top of UFO stairs"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        0,
+        0,
+        -30
+      ],
+      "mode": 1,
+      "p3": 122,
+      "p4": 121,
+      "comment": "foot of ramp"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        0,
+        0,
+        45
+      ],
+      "mode": 1,
+      "p3": 123,
+      "p4": 122,
+      "comment": "centre"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        -45,
+        0,
+        105
+      ],
+      "mode": 1,
+      "p3": 124,
+      "p4": 123,
+      "comment": "advance left"
+    },
+    {
+      "type": "waypoint",
+      "pos": [
+        45,
+        0,
+        105
+      ],
+      "mode": 1,
+      "p3": 122,
+      "p4": 124,
+      "comment": "advance right, loop to centre"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0,
+        0,
+        -140
+      ],
+      "p1": 17,
+      "p2": 4,
+      "p3": -104,
+      "p4": -112,
+      "comment": "four seconds to reload between cleared waves"
+    },
+    {
+      "type": "raw",
+      "pos": [
+        0,
+        0,
+        -140
+      ],
+      "p1": 17,
+      "p2": 4,
+      "p3": -107,
+      "p4": -113,
+      "comment": "four seconds to reload between cleared waves"
+    }
+  ],
   "blocks": [
     {
-      "comment": "grass field floor",
+      "comment": "continuous farm ground",
       "min": [
-        -240.0,
-        -8.0,
-        -240.0
+        -280,
+        -8,
+        -400
       ],
       "max": [
-        240.0,
-        0.0,
-        240.0
+        280,
+        0,
+        280
       ],
       "texture": "grass.bmp",
       "texture_world_units": 32
     },
     {
-      "comment": "fence north",
+      "comment": "boundary farm store north",
       "min": [
-        -240.0,
-        0.0,
-        -248.0
+        -280,
+        0,
+        -408
       ],
       "max": [
-        240.0,
-        24.0,
-        -240.0
+        280,
+        96,
+        -400
       ],
-      "texture": "fence.bmp",
-      "texture_world_units": 16
+      "texture": "barn_red.bmp",
+      "texture_world_units": 32
     },
     {
-      "comment": "fence south",
+      "comment": "boundary farm store south",
       "min": [
-        -240.0,
-        0.0,
-        240.0
+        -280,
+        0,
+        280
       ],
       "max": [
-        240.0,
-        24.0,
-        248.0
+        280,
+        96,
+        288
       ],
-      "texture": "fence.bmp",
-      "texture_world_units": 16
+      "texture": "barn_red.bmp",
+      "texture_world_units": 32
     },
     {
-      "comment": "fence east",
+      "comment": "boundary farm store west",
       "min": [
-        240.0,
-        0.0,
-        -248.0
+        -288,
+        0,
+        -408
       ],
       "max": [
-        248.0,
-        24.0,
-        248.0
+        -280,
+        96,
+        288
       ],
-      "texture": "fence.bmp",
-      "texture_world_units": 16
+      "texture": "barn_red.bmp",
+      "texture_world_units": 32
     },
     {
-      "comment": "fence west",
+      "comment": "boundary farm store east",
       "min": [
-        -248.0,
-        0.0,
-        -248.0
+        280,
+        0,
+        -408
       ],
       "max": [
-        -240.0,
-        24.0,
-        248.0
+        288,
+        96,
+        288
       ],
-      "texture": "fence.bmp",
-      "texture_world_units": 16
+      "texture": "barn_red.bmp",
+      "texture_world_units": 32
     },
     {
-      "comment": "barn dirt pad",
+      "comment": "north pasture fence / open gates",
       "min": [
-        -100.0,
-        -8.0,
-        -360.0
+        -240,
+        0,
+        -248
       ],
       "max": [
-        100.0,
-        0.0,
-        -240.0
+        -160,
+        24,
+        -240
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "north pasture fence / open gates",
+      "min": [
+        -100,
+        0,
+        -248
+      ],
+      "max": [
+        100,
+        24,
+        -240
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "north pasture fence / open gates",
+      "min": [
+        160,
+        0,
+        -248
+      ],
+      "max": [
+        240,
+        24,
+        -240
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "pasture fence south",
+      "min": [
+        -240,
+        0,
+        240
+      ],
+      "max": [
+        240,
+        24,
+        248
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "pasture fence west",
+      "min": [
+        -248,
+        0,
+        -248
+      ],
+      "max": [
+        -240,
+        24,
+        248
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "pasture fence east",
+      "min": [
+        240,
+        0,
+        -248
+      ],
+      "max": [
+        248,
+        24,
+        248
+      ],
+      "texture": "fence.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "farmyard dirt surface",
+      "min": [
+        -220,
+        -3,
+        -380
+      ],
+      "max": [
+        220,
+        0,
+        -250
       ],
       "texture": "dirt.bmp",
       "texture_world_units": 32
     },
     {
-      "comment": "barn north wall",
+      "comment": "barn open gable",
       "min": [
-        -40.0,
-        0.0,
-        -324.0
+        -72,
+        0,
+        -356
       ],
       "max": [
-        40.0,
-        40.0,
-        -320.0
+        -24,
+        80,
+        -352
       ],
       "texture": "barn_red.bmp",
-      "texture_world_units": 16
+      "texture_world_units": 32
     },
     {
-      "comment": "barn south wall left",
+      "comment": "barn open gable",
       "min": [
-        -40.0,
-        0.0,
-        -280.0
+        24,
+        0,
+        -356
       ],
       "max": [
-        -10.0,
-        40.0,
-        -276.0
+        72,
+        80,
+        -352
       ],
       "texture": "barn_red.bmp",
-      "texture_world_units": 16
+      "texture_world_units": 32
     },
     {
-      "comment": "barn south wall right",
+      "comment": "barn door lintel",
       "min": [
-        10.0,
-        0.0,
-        -280.0
+        -24,
+        60,
+        -356
       ],
       "max": [
-        40.0,
-        40.0,
-        -276.0
+        24,
+        80,
+        -352
+      ],
+      "texture": "trim_white.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "barn open gable",
+      "min": [
+        -72,
+        0,
+        -264
+      ],
+      "max": [
+        -24,
+        80,
+        -260
       ],
       "texture": "barn_red.bmp",
-      "texture_world_units": 16
+      "texture_world_units": 32
     },
     {
-      "comment": "barn big door",
+      "comment": "barn open gable",
       "min": [
-        -10.0,
-        0.0,
-        -280.0
+        24,
+        0,
+        -264
       ],
       "max": [
-        10.0,
-        32.0,
-        -276.0
-      ],
-      "texture": "barn_roof.bmp",
-      "texture_world_units": 16
-    },
-    {
-      "comment": "barn east wall",
-      "min": [
-        36.0,
-        0.0,
-        -324.0
-      ],
-      "max": [
-        40.0,
-        40.0,
-        -276.0
+        72,
+        80,
+        -260
       ],
       "texture": "barn_red.bmp",
-      "texture_world_units": 16
+      "texture_world_units": 32
     },
     {
-      "comment": "barn west wall",
+      "comment": "barn door lintel",
       "min": [
-        -40.0,
-        0.0,
-        -324.0
+        -24,
+        60,
+        -264
       ],
       "max": [
-        -36.0,
-        40.0,
-        -276.0
+        24,
+        80,
+        -260
+      ],
+      "texture": "trim_white.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "barn side wall",
+      "min": [
+        -72,
+        0,
+        -356
+      ],
+      "max": [
+        -68,
+        80,
+        -260
       ],
       "texture": "barn_red.bmp",
-      "texture_world_units": 16
+      "texture_world_units": 32
+    },
+    {
+      "comment": "barn side wall",
+      "min": [
+        68,
+        0,
+        -356
+      ],
+      "max": [
+        72,
+        80,
+        -260
+      ],
+      "texture": "barn_red.bmp",
+      "texture_world_units": 32
     },
     {
       "comment": "barn roof",
       "min": [
-        -44.0,
-        40.0,
-        -328.0
+        -76,
+        80,
+        -360
       ],
       "max": [
-        44.0,
-        48.0,
-        -272.0
+        76,
+        83,
+        -256
       ],
       "texture": "barn_roof.bmp",
-      "texture_world_units": 24
+      "texture_world_units": 32
     },
     {
-      "comment": "barn trim NW",
+      "comment": "barn west loft",
       "min": [
-        -41,
-        0.0,
-        -323.0
+        -68,
+        34,
+        -352
       ],
       "max": [
-        -37,
-        40.0,
-        -319.0
+        -40,
+        36,
+        -264
       ],
-      "texture": "trim_white.bmp",
-      "texture_world_units": 8
+      "texture": "hay.bmp",
+      "texture_world_units": 32
     },
     {
-      "comment": "barn trim NE",
+      "comment": "loft upper hay step",
       "min": [
-        37,
-        0.0,
-        -323.0
+        -40,
+        0,
+        -340
       ],
       "max": [
-        41,
-        40.0,
-        -319.0
+        -20,
+        24,
+        -320
       ],
-      "texture": "trim_white.bmp",
-      "texture_world_units": 8
+      "texture": "hay.bmp",
+      "texture_world_units": 32
     },
     {
-      "comment": "barn trim SW",
+      "comment": "loft lower hay step",
       "min": [
-        -41,
-        0.0,
-        -281.0
+        -20,
+        0,
+        -340
       ],
       "max": [
-        -37,
-        40.0,
-        -277.0
+        0,
+        12,
+        -320
       ],
-      "texture": "trim_white.bmp",
-      "texture_world_units": 8
+      "texture": "hay.bmp",
+      "texture_world_units": 32
     },
     {
-      "comment": "barn trim SE",
+      "comment": "loft upper hay step",
       "min": [
-        37,
-        0.0,
-        -281.0
+        -40,
+        0,
+        -288
       ],
       "max": [
-        41,
-        40.0,
-        -277.0
+        -20,
+        24,
+        -268
       ],
-      "texture": "trim_white.bmp",
-      "texture_world_units": 8
+      "texture": "hay.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "loft lower hay step",
+      "min": [
+        -20,
+        0,
+        -288
+      ],
+      "max": [
+        0,
+        12,
+        -268
+      ],
+      "texture": "hay.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "barn hay cover",
+      "min": [
+        32,
+        0,
+        -324
+      ],
+      "max": [
+        56,
+        24,
+        -300
+      ],
+      "texture": "hay.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "yard low hay flank",
+      "min": [
+        -192,
+        0,
+        -302
+      ],
+      "max": [
+        -168,
+        12,
+        -278
+      ],
+      "texture": "hay.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "yard tall hay flank",
+      "min": [
+        -192,
+        0,
+        -354
+      ],
+      "max": [
+        -168,
+        24,
+        -330
+      ],
+      "texture": "hay.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "yard low hay flank",
+      "min": [
+        168,
+        0,
+        -302
+      ],
+      "max": [
+        192,
+        12,
+        -278
+      ],
+      "texture": "hay.bmp",
+      "texture_world_units": 32
+    },
+    {
+      "comment": "yard tall hay flank",
+      "min": [
+        168,
+        0,
+        -354
+      ],
+      "max": [
+        192,
+        24,
+        -330
+      ],
+      "texture": "hay.bmp",
+      "texture_world_units": 32
     },
     {
       "comment": "ufo leg 0",
@@ -1094,710 +2009,5 @@
       ]
     }
   ],
-  "points": [
-    {
-      "type": "player_spawn",
-      "pos": [
-        0.0,
-        0.0,
-        200.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 43,
-      "ai_path": 0,
-      "comment": "rancher, facing north into the field"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -40.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 44,
-      "team": 2,
-      "ai_path": 100,
-      "wave": 1,
-      "comment": "wave 1 staged human 0"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -24.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 44,
-      "team": 2,
-      "ai_path": 110,
-      "wave": 1,
-      "comment": "wave 1 staged human 1"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -8.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 44,
-      "team": 2,
-      "ai_path": 120,
-      "wave": 1,
-      "comment": "wave 1 staged human 2"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        8.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 44,
-      "team": 2,
-      "ai_path": 100,
-      "wave": 1,
-      "comment": "wave 1 staged human 3"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        24.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 44,
-      "team": 2,
-      "ai_path": 110,
-      "wave": 1,
-      "comment": "wave 1 staged human 4"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        40.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 44,
-      "team": 2,
-      "ai_path": 120,
-      "wave": 1,
-      "comment": "wave 1 staged human 5"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -40.0,
-        32.0,
-        -104.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 100,
-      "wave": 2,
-      "comment": "wave 2 staged human 0"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -28.6,
-        32.0,
-        -100.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 110,
-      "wave": 2,
-      "comment": "wave 2 staged human 1"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -17.1,
-        32.0,
-        -104.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 120,
-      "wave": 2,
-      "comment": "wave 2 staged human 2"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -5.7,
-        32.0,
-        -100.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 100,
-      "wave": 2,
-      "comment": "wave 2 staged human 3"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        5.7,
-        32.0,
-        -104.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 110,
-      "wave": 2,
-      "comment": "wave 2 staged human 4"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        17.1,
-        32.0,
-        -100.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 120,
-      "wave": 2,
-      "comment": "wave 2 staged human 5"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        28.6,
-        32.0,
-        -104.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 100,
-      "wave": 2,
-      "comment": "wave 2 staged human 6"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        40.0,
-        32.0,
-        -100.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 45,
-      "team": 2,
-      "ai_path": 110,
-      "wave": 2,
-      "comment": "wave 2 staged human 7"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -40.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 46,
-      "team": 2,
-      "ai_path": 100,
-      "wave": 3,
-      "comment": "wave 3 staged human 0"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -24.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 46,
-      "team": 2,
-      "ai_path": 110,
-      "wave": 3,
-      "comment": "wave 3 staged human 1"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        -8.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 46,
-      "team": 2,
-      "ai_path": 120,
-      "wave": 3,
-      "comment": "wave 3 staged human 2"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        8.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 46,
-      "team": 2,
-      "ai_path": 100,
-      "wave": 3,
-      "comment": "wave 3 staged human 3"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        24.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 46,
-      "team": 2,
-      "ai_path": 110,
-      "wave": 3,
-      "comment": "wave 3 staged human 4"
-    },
-    {
-      "type": "staged_human",
-      "pos": [
-        40.0,
-        32.0,
-        -112.0
-      ],
-      "rotation": 3.141592653589793,
-      "human_type": 46,
-      "team": 2,
-      "ai_path": 120,
-      "wave": 3,
-      "comment": "wave 3 staged human 5"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        -100.0,
-        0.0,
-        60.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 0"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        100.0,
-        0.0,
-        60.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 1"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        -140.0,
-        0.0,
-        -10.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 2"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        140.0,
-        0.0,
-        -10.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 3"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        -50.0,
-        0.0,
-        170.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 4"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        50.0,
-        0.0,
-        170.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 5"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        -20.0,
-        0.0,
-        -100.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 6"
-    },
-    {
-      "type": "small_object",
-      "pos": [
-        20.0,
-        0.0,
-        -100.0
-      ],
-      "object_type": 12,
-      "map_collision": true,
-      "comment": "cow 7"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        0.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 17,
-      "p2": 5,
-      "p3": -101,
-      "p4": -100,
-      "comment": "opening: five seconds to take cover"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        2.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 18,
-      "p2": 0,
-      "p3": -102,
-      "p4": -101,
-      "comment": "event 1: message WAVE 1"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        4.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 41,
-      "p2": 1,
-      "p3": -103,
-      "p4": -102,
-      "comment": "event 2: deploy wave 1"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        6.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 40,
-      "p2": 0,
-      "p3": -112,
-      "p4": -103,
-      "comment": "wait until every alien in this wave is dead"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        8.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 18,
-      "p2": 1,
-      "p3": -105,
-      "p4": -104,
-      "comment": "event 4: message WAVE 2"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        10.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 41,
-      "p2": 2,
-      "p3": -106,
-      "p4": -105,
-      "comment": "event 5: deploy wave 2"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        12.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 40,
-      "p2": 0,
-      "p3": -113,
-      "p4": -106,
-      "comment": "wait until every alien in this wave is dead"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        14.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 18,
-      "p2": 2,
-      "p3": -108,
-      "p4": -107,
-      "comment": "event 7: message FINAL WAVE"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        16.0,
-        0.0,
-        -140.0
-      ],
-      "p1": 41,
-      "p2": 3,
-      "p3": -109,
-      "p4": -108,
-      "comment": "event 8: deploy wave 3"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        0,
-        32,
-        -100
-      ],
-      "mode": 1,
-      "p3": 101,
-      "p4": 100,
-      "comment": "top of UFO stairs"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        0,
-        0,
-        -30
-      ],
-      "mode": 1,
-      "p3": 102,
-      "p4": 101,
-      "comment": "foot of ramp"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        -70,
-        0,
-        20
-      ],
-      "mode": 1,
-      "p3": 103,
-      "p4": 102,
-      "comment": "flank"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        -90,
-        0,
-        95
-      ],
-      "mode": 1,
-      "p3": 104,
-      "p4": 103,
-      "comment": "advance"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        -30,
-        0,
-        150
-      ],
-      "mode": 1,
-      "p3": 102,
-      "p4": 104,
-      "comment": "press toward spawn, loop to flank"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        0,
-        32,
-        -100
-      ],
-      "mode": 1,
-      "p3": 111,
-      "p4": 110,
-      "comment": "top of UFO stairs"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        0,
-        0,
-        -30
-      ],
-      "mode": 1,
-      "p3": 112,
-      "p4": 111,
-      "comment": "foot of ramp"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        70,
-        0,
-        20
-      ],
-      "mode": 1,
-      "p3": 113,
-      "p4": 112,
-      "comment": "flank"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        90,
-        0,
-        95
-      ],
-      "mode": 1,
-      "p3": 114,
-      "p4": 113,
-      "comment": "advance"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        30,
-        0,
-        150
-      ],
-      "mode": 1,
-      "p3": 112,
-      "p4": 114,
-      "comment": "press toward spawn, loop to flank"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        0,
-        32,
-        -100
-      ],
-      "mode": 1,
-      "p3": 121,
-      "p4": 120,
-      "comment": "top of UFO stairs"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        0,
-        0,
-        -30
-      ],
-      "mode": 1,
-      "p3": 122,
-      "p4": 121,
-      "comment": "foot of ramp"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        0,
-        0,
-        45
-      ],
-      "mode": 1,
-      "p3": 123,
-      "p4": 122,
-      "comment": "centre"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        -45,
-        0,
-        105
-      ],
-      "mode": 1,
-      "p3": 124,
-      "p4": 123,
-      "comment": "advance left"
-    },
-    {
-      "type": "waypoint",
-      "pos": [
-        45,
-        0,
-        105
-      ],
-      "mode": 1,
-      "p3": 122,
-      "p4": 124,
-      "comment": "advance right, loop to centre"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        0,
-        0,
-        -140
-      ],
-      "p1": 17,
-      "p2": 4,
-      "p3": -104,
-      "p4": -112,
-      "comment": "four seconds to reload between cleared waves"
-    },
-    {
-      "type": "raw",
-      "pos": [
-        0,
-        0,
-        -140
-      ],
-      "p1": 17,
-      "p2": 4,
-      "p3": -107,
-      "p4": -113,
-      "comment": "four seconds to reload between cleared waves"
-    }
-  ],
-  "world_units_note": "480x480 grass field, 24-high perimeter fence on all edges, barn north beyond the fence, UFO saucer near (0,-150) with a ramp stair south, hay bales and cows for cover, 3 staged alien waves on the hatch deck."
+  "world_units_note": "Continuous 560x680 farm ground; 96-high barn-red boundary stores; two north pasture gates; through barn with 36-high west loft and 12-unit hay steps. Original UFO, ramp, combat cover and all mission points preserved."
 }

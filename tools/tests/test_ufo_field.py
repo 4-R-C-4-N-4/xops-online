@@ -1,7 +1,7 @@
 """Tests for the UFO FIELD mission content (docs/MISSION-UFO-FIELD.md).
 
 Covers: deterministic build from JSON, block/point limits, a closed
-perimeter fence (no gaps), the player HUMANINFO/type, the 6/8/6 staged
+outer farm boundary (with internal pasture gates), the player HUMANINFO/type, the 6/8/6 staged
 wave groups, the event chain shape, the 8 cow small objects, and the
 addon/mif/msg/cow.txt file formats.
 """
@@ -43,6 +43,19 @@ class DeterministicBuildTests(unittest.TestCase):
     def test_matches_committed_binaries(self):
         self.assertEqual(self.result.bd1_bytes, BD1_PATH.read_bytes())
         self.assertEqual(self.result.pd1_bytes, PD1_PATH.read_bytes())
+
+    def test_generator_matches_json(self):
+        from tools.mapgen.examples.ufo_field import build_doc
+        self.assertEqual(build_doc(), self.doc)
+
+    def test_mission_outdoor_gate(self):
+        import subprocess
+        run = subprocess.run([sys.executable, str(ROOT / "tools/dmcheck.py"),
+                              "data/ufofield", "ufo.pd1", "--mission", "--outdoor"],
+                             cwd=ROOT, capture_output=True, text=True, timeout=180)
+        self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+        self.assertIn("METRIC death_pit_edges 0", run.stdout)
+        self.assertIn("DMCHECK OK", run.stdout)
 
     def test_within_limits(self):
         blocks = bd1.loads(self.result.bd1_bytes).blocks
