@@ -177,7 +177,7 @@ floor_slab("west loft bridge", X0, -RING_OUT, -20.0, 20.0, CAT_Y, units=16.0)
 # every ramp/lift landing so nobody gets walled off from a vertical route.
 RAIL_H0, RAIL_H1 = CAT_Y, CAT_Y + 10.0
 wall_z("rail north", -RING_IN, -RING_IN, RING_IN, RAIL_H0, RAIL_H1, texture="lightstrip.bmp",
-       gap=(30.0, 75.0), units=16.0)
+       gap=(-46.0, 16.0), units=16.0)
 wall_z("rail south", RING_IN, -RING_IN, RING_IN, RAIL_H0, RAIL_H1, texture="lightstrip.bmp",
        gap=(-10.0, 10.0), units=16.0)
 wall_x("rail east", RING_IN, -RING_IN, RING_IN, RAIL_H0, RAIL_H1, texture="lightstrip.bmp",
@@ -194,6 +194,8 @@ for i, (hx, hz) in enumerate(hang_positions):
     box_obstacle(f"hanging bulkhead {i}", hx - 9.0, hx + 9.0, HANG_Y0, HANG_Y1, hz - 9.0, hz + 9.0,
                  "bulkhead.bmp")
 
+# The central north ramp has its own approach, separate from the east/west
+# guards. The core is offset south to leave their feet open.
 # Ramps (<=0.4 rise per unit): east, west (both to/from the floor's open
 # middle) and a north auxiliary ramp offset from the lift column. Guard
 # rails along both lateral edges of every ramp stop its sheer sides from
@@ -204,38 +206,38 @@ box_obstacle("ramp east guard south", 20.0, 100.0, Y0, BAY_Y1, -22.0, -20.0, "bu
 ramp_block_x("ramp west", -100.0, -20.0, -20.0, 20.0, CAT_Y, Y0)
 box_obstacle("ramp west guard north", -100.0, -20.0, Y0, BAY_Y1, 20.0, 22.0, "bulkhead.bmp")
 box_obstacle("ramp west guard south", -100.0, -20.0, Y0, BAY_Y1, -22.0, -20.0, "bulkhead.bmp")
-ramp_block_z("ramp north-aux", 40.0, 64.0, -100.0, -20.0, CAT_Y, Y0)
-box_obstacle("ramp aux guard east", 64.0, 66.0, Y0, BAY_Y1, -100.0, -20.0, "bulkhead.bmp")
-box_obstacle("ramp aux guard west", 38.0, 40.0, Y0, BAY_Y1, -100.0, -20.0, "bulkhead.bmp")
+ramp_block_z("ramp north-aux", -12.0, 12.0, -100.0, -20.0, CAT_Y, Y0)
+box_obstacle("ramp aux guard east", 12.0, 14.0, Y0, BAY_Y1, -100.0, -20.0, "bulkhead.bmp")
+box_obstacle("ramp aux guard west", -14.0, -12.0, Y0, BAY_Y1, -100.0, -20.0, "bulkhead.bmp")
 
 # Gravity lifts (p1=61): shaft rises through the open middle of the bay
 # (clear of any floor/ceiling overhead) and is pushed toward the ring once
 # near the top; landing directly under a solid slab gets the shoulder-
 # height collision ray stuck on its underside well short of the target.
 LIFT_R = 7
-point("raw", (0.0, Y0, -93.0), rotation=math.pi, p1=61, p2=LIFT_R, p3=int(CAT_Y))
+point("raw", (-35.0, Y0, -93.0), rotation=math.pi, p1=61, p2=LIFT_R, p3=int(CAT_Y))
 point("raw", (0.0, Y0, 93.0), rotation=0.0, p1=61, p2=LIFT_R, p3=int(CAT_Y))
 
 # ---------------------------------------------------------------------------
 # Ground floor cover: pillars (>=18, full cover) and crates (8..14, low
 # cover) spread so every piece is flankable, clear of ramps/lift columns.
 # ---------------------------------------------------------------------------
-pillar_positions = [(-55.0, -55.0), (15.0, -55.0), (-55.0, 55.0), (55.0, 55.0)]
+pillar_positions = [(-55.0, -55.0), (30.0, -55.0), (-55.0, 55.0), (55.0, 55.0)]
 for i, (px, pz) in enumerate(pillar_positions):
     box_obstacle(f"pillar {i}", px - 7.0, px + 7.0, Y0, 40.0, pz - 7.0, pz + 7.0, "console.bmp", units=16.0)
 
 crate_positions = [
-    (-30.0, 35.0), (30.0, -35.0), (0.0, -40.0), (0.0, 40.0),
+    (-30.0, 35.0), (30.0, -35.0), (-35.0, -55.0), (0.0, 40.0),
     (-70.0, 20.0), (70.0, -20.0), (-20.0, -70.0), (20.0, 70.0),
     (-85.0, -45.0), (85.0, 45.0), (-45.0, 85.0), (45.0, -85.0),
 ]
 for i, (cx, cz) in enumerate(crate_positions):
     box_obstacle(f"crate {i}", cx - 8.0, cx + 8.0, Y0, Y0 + 12.0, cz - 8.0, cz + 8.0, "labpanel.bmp")
 
-# Central core: a tall blocking structure right in the middle of the bay,
-# clear of both lift shafts and all three ramps, that kills the long
+# Central core: a tall blocking structure south of the ramp approaches,
+# leaving full-width 12-unit landings at all three ramp feet, that kills the long
 # corner-to-corner sightlines a 260x260 open floor would otherwise have.
-box_obstacle("central core", -18.0, 18.0, Y0, 26.0, -18.0, 18.0, "bulkhead.bmp", units=16.0)
+box_obstacle("central core", -18.0, 18.0, Y0, 26.0, 46.0, 82.0, "bulkhead.bmp", units=16.0)
 
 # A couple of low steps (<=3) near the bay centre for minor texture variety
 # and to show the clear height-band policy in practice.

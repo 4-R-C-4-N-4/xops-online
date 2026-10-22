@@ -273,7 +273,7 @@ class HangarRebuildTests(unittest.TestCase):
             self.assertLessEqual((max(v[1] for v in top) - min(v[1] for v in top)) / run, 0.4)
             # Check the actual sloped walking surface, rather than its bounding box.
             a, b = (top[0], top[1]) if top[0][1] != top[1][1] else (top[0], top[3])
-            for t in (0.1, 0.3, 0.5, 0.7, 0.9):
+            for t in (0, 0.1, 0.3, 0.5, 0.7, 0.9, 1):
                 x, y, z = [a[i] + t * (b[i] - a[i]) for i in range(3)]
                 if a[0] == b[0]:
                     x = (lo[0] + hi[0]) / 2
@@ -284,8 +284,64 @@ class HangarRebuildTests(unittest.TestCase):
                         continue
                     low, high = _bounds(block)
                     if low[0] < x < high[0] and low[2] < z < high[2]:
-                        self.assertFalse(low[1] < y + 20 and high[1] > y + 1,
+                        self.assertFalse(low[1] < y + 28 and high[1] > y + 1,
                                          f"{ramp['comment']} blocked by {block['comment']}")
+
+    def _assert_open_landings(self, doc):
+        """Reserve the entire ramp width and 12 units beyond each end."""
+        for ramp in doc["blocks"]:
+            if not ramp.get("comment", "").startswith("ramp ") or "vertices" not in ramp:
+                continue
+            top = ramp["vertices"][:4]
+            axis = 0 if top[0][1] != top[1][1] else 2
+            cross = 2 if axis == 0 else 0
+            lo, hi = _bounds(ramp)
+            for end, direction in ((lo[axis], -1), (hi[axis], 1)):
+                y = next(v[1] for v in top if v[axis] == end)
+                landing_lo, landing_hi = list(lo), list(hi)
+                landing_lo[axis] = min(end, end + direction * 12)
+                landing_hi[axis] = max(end, end + direction * 12)
+                for block in doc["blocks"]:
+                    if block is ramp:
+                        continue
+                    low, high = _bounds(block)
+                    overlaps = all(low[i] < landing_hi[i] and high[i] > landing_lo[i]
+                                   for i in (0, 2))
+                    self.assertFalse(overlaps and low[1] < y + 28 and high[1] > y + 0.1,
+                                     f"{ramp['comment']} landing blocked by {block['comment']}")
+                # Require supporting floor throughout the approach, including its far edge.
+                for distance in (1, 6, 12):
+                    for across in (lo[cross] + 1, (lo[cross] + hi[cross]) / 2, hi[cross] - 1):
+                        pos = {axis: end + direction * distance, cross: across}
+                        self.assertTrue(any(
+                            "min" in b and abs(b["max"][1] - y) < 0.1
+                            and all(b["min"][i] <= pos[i] <= b["max"][i] for i in (0, 2))
+                            for b in doc["blocks"]), f"{ramp['comment']} landing lacks floor")
+
+    def test_ramp_ends_have_twelve_units_of_clear_floor(self):
+        self._assert_open_landings(json.loads(MAPS["hangar"]["json_src"].read_text()))
+
+    def test_landing_check_rejects_obstacles_within_twelve_units(self):
+        import copy
+        doc = json.loads(MAPS["hangar"]["json_src"].read_text())
+        ramps = [b for b in doc["blocks"] if "vertices" in b and b["comment"].startswith("ramp ")]
+        for ramp in ramps:
+            top = ramp["vertices"][:4]
+            axis = 0 if top[0][1] != top[1][1] else 2
+            cross = 2 if axis == 0 else 0
+            lo, hi = _bounds(ramp)
+            for end, direction in ((lo[axis], -1), (hi[axis], 1)):
+                for distance in (2, 11.9):
+                    with self.subTest(ramp=ramp["comment"], end=end, distance=distance):
+                        changed = copy.deepcopy(doc)
+                        y = next(v[1] for v in top if v[axis] == end)
+                        low, high = [0, y, 0], [0, y + 30, 0]
+                        low[axis] = end + direction * distance - 0.05
+                        high[axis] = low[axis] + 0.1
+                        low[cross], high[cross] = lo[cross], hi[cross]
+                        changed["blocks"].append(dict(comment="blocked landing", min=low, max=high))
+                        with self.assertRaisesRegex(AssertionError, "landing blocked"):
+                            self._assert_open_landings(changed)
 
     def test_sidecar_hashes_and_local_textures(self):
         import hashlib
