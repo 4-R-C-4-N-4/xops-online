@@ -22,7 +22,7 @@ secondary disclosures share a row. At 390px, identity fields stack and Host/Join
 remain adjacent. Inputs, selects, buttons and summaries have at least 44px targets.
 Long status/errors wrap. Body text uses a readable system monospace font.
 
-Parent browser acceptance (pending):
+Parent browser checklist (core launcher checks verified; remaining legacy/archive edge cases retain automated coverage):
 
 - At 1280×720 and 1280×577, confirm initial play controls are visible without scroll.
 - At 390px, confirm no horizontal overflow, readable selects and keyboard focus.
@@ -37,3 +37,12 @@ Automated coverage exercises actual lobby DOM construction and host/join callbac
 share URL prefilling, validation, storage denial, unique page IDs, collapsed sections,
 reproducible glyph outputs, packaging, and explicit asset staging allowlists. It does
 not substitute for browser geometry or multiplayer acceptance.
+
+Verified locally by parent: 1280x577 fits with no scrolling; 390x844 has
+scrollWidth 390 and accessible Host/Join targets; no broken images. Controls
+dialog opens/closes, malformed room code gives visible validation, shared hash
+prefills, WebRTC host and second-window join start SPIRE with both names in
+scoreboard. Clean production build has no QA exports. Full suite 317 tests
+OK, Node suite 18 tests passed. Typography/spacing inspected in both sizes.
+Self-audit: no gradients, glass, marketing hero, equal feature tiles or accent
+rails; action columns reflect the actual Host/Join flow.
