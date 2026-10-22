@@ -208,9 +208,9 @@ def generate_ufoescape(out_dir: Path) -> Path:
 
 def generate_dmhangar(out_dir: Path) -> Path:
     map_json = ROOT / "tools" / "mapgen" / "examples" / "dm_hangar.json"
-    # Hangar is 200x200 (+/-100); pad a little.
+    # Include the rebuilt hangar and all four side rooms.
     return generate_for(map_json, "DM HANGAR", out_dir / "dmhangar.bmp",
-                         world_min=(-120.0, -120.0), world_max=(120.0, 120.0))
+                         world_min=(-215.0, -215.0), world_max=(215.0, 215.0))
 
 
 def generate_dmfield(out_dir: Path) -> Path:

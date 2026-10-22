@@ -254,5 +254,47 @@ class MissionWiringTests(unittest.TestCase):
                 self.assertTrue(cfg["msg"].exists())
 
 
+class HangarRebuildTests(unittest.TestCase):
+    def test_ramps_are_gentle_and_clear_above_their_centrelines(self):
+        doc = json.loads(MAPS["hangar"]["json_src"].read_text())
+        ramps = [b for b in doc["blocks"] if b.get("comment", "").startswith("ramp ") and "vertices" in b]
+        self.assertEqual(len(ramps), 3)
+        for ramp in ramps:
+            top = ramp["vertices"][:4]
+            lo, hi = _bounds(ramp)
+            run = max(hi[0] - lo[0], hi[2] - lo[2])
+            self.assertLessEqual((max(v[1] for v in top) - min(v[1] for v in top)) / run, 0.4)
+            # Check the actual sloped walking surface, rather than its bounding box.
+            a, b = (top[0], top[1]) if top[0][1] != top[1][1] else (top[0], top[3])
+            for t in (0.1, 0.3, 0.5, 0.7, 0.9):
+                x, y, z = [a[i] + t * (b[i] - a[i]) for i in range(3)]
+                if a[0] == b[0]:
+                    x = (lo[0] + hi[0]) / 2
+                else:
+                    z = (lo[2] + hi[2]) / 2
+                for block in doc["blocks"]:
+                    if block is ramp or "min" not in block:
+                        continue
+                    low, high = _bounds(block)
+                    if low[0] < x < high[0] and low[2] < z < high[2]:
+                        self.assertFalse(low[1] < y + 20 and high[1] > y + 1,
+                                         f"{ramp['comment']} blocked by {block['comment']}")
+
+    def test_sidecar_hashes_and_local_textures(self):
+        import hashlib
+        records = [json.loads(line) for line in (ROOT / "PROVENANCE-ADD.jsonl").read_text().splitlines()]
+        expected = set((ROOT / "assets/pack/data/dmhangar").iterdir())
+        expected.add(ROOT / "assets/pack/data/briefing/dmhangar.bmp")
+        self.assertEqual({r["path"] for r in records},
+                         {p.relative_to(ROOT / "assets/pack").as_posix() for p in expected})
+        for record in records:
+            self.assertEqual(record["license"], "CC0-1.0")
+            self.assertEqual(record["sha256"], hashlib.sha256(
+                (ROOT / "assets/pack" / record["path"]).read_bytes()).hexdigest())
+        doc = json.loads(MAPS["hangar"]["json_src"].read_text())
+        for texture in doc["textures"]:
+            self.assertTrue((MAPS["hangar"]["bd1"].parent / texture).is_file())
+
+
 if __name__ == "__main__":
     unittest.main()
