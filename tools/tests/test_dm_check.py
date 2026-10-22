@@ -1,6 +1,5 @@
 """The DM map gate itself must work: jump calibration matches the guide and
-a known-good synthetic arena passes while the known-bad original hangar
-fails (it is a single box with an unreachable catwalk)."""
+the rebuilt sealed hangar passes using real engine collision and physics."""
 import pathlib
 import re
 import shutil
@@ -24,6 +23,12 @@ def metric(out, name):
 
 @unittest.skipUnless(shutil.which("g++"), "g++ required for the real-engine map gate")
 class DmCheckTests(unittest.TestCase):
+    def test_rebuilt_hangar_passes_sealed_engine_gate(self):
+        code, out = run("data/dmhangar", "hangar.pd1", "--sealed")
+        self.assertEqual(code, 0, out)
+        self.assertIn("DMCHECK OK", out)
+        self.assertEqual(metric(out, "lifts"), 2, out)
+
     def test_jump_limit_is_16(self):
         code, out = run("--jumpprobe")
         self.assertEqual(code, 0, out)
